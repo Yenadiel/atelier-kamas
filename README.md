@@ -10,7 +10,7 @@ Toutes les versions sont dans l'onglet **[Releases](../../releases)** :
 
 | Système | Fichier | Remarque |
 |---|---|---|
-| Windows | `AtelierKamas-X-Windows-Installation.exe` | installateur (raccourcis Bureau et menu Démarrer) |
+| Windows | `AtelierKamas-X-Windows-Installation.exe` | installation en un clic : l'appli s'installe dans ton profil, crée les raccourcis Bureau et menu Démarrer, puis se lance |
 | Windows | `AtelierKamas-X-Windows-Portable.exe` | sans installation |
 | macOS (Intel et Apple Silicon) | `AtelierKamas-X-macOS.dmg` | appli non signée : la première fois, clic droit sur l'appli → **Ouvrir** |
 | Linux | `AtelierKamas-X-Linux.AppImage` ou `.deb` | AppImage : `chmod +x` puis lancer |

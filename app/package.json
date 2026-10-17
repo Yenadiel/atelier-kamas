@@ -1,7 +1,7 @@
 {
   "name": "atelier-kamas",
   "productName": "Atelier Kamas",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Atelier Kamas : métiers et familier au meilleur prix (Dofus 3, serveur Dakal)",
   "author": "Yenadiel",
   "homepage": "https://github.com/Yenadiel/atelier-kamas",
@@ -57,14 +57,15 @@
       "icon": "build/icon.ico"
     },
     "nsis": {
-      "oneClick": false,
+      "oneClick": true,
       "perMachine": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
+      "runAfterFinish": true,
+      "createDesktopShortcut": "always",
       "createStartMenuShortcut": true,
       "shortcutName": "Atelier Kamas",
+      "deleteAppDataOnUninstall": false,
       "artifactName": "AtelierKamas-${version}-Windows-Installation.${ext}",
-      "language": "1036"
+      "include": "build/installer.nsh"
     },
     "portable": {
       "artifactName": "AtelierKamas-${version}-Windows-Portable.${ext}"
