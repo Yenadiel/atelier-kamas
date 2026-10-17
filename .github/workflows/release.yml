@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Version à publier (ex. v2.0.0)'
+        description: 'Version à publier (ex. v2.1.0)'
         required: true
 permissions:
   contents: write

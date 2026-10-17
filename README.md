@@ -2,10 +2,7 @@
 
 Outil perso pour **Dofus 3 (serveur Dakal)** : monter ses métiers de 1 à 200 au meilleur prix, gérer sa liste de courses et ses crafts, et choisir la nourriture de familier la plus rentable.
 
-Il existe en deux versions qui partagent le même code (`web/`) :
-
-- **l'appli de bureau** (Windows, macOS, Linux) : une petite fenêtre « compagnon » sans bordure, toujours au premier plan par-dessus le jeu ;
-- **le site** : une page web unique, aussi publiée en privé sur claude.ai.
+C'est une **appli de bureau pour Windows, macOS et Linux** : une petite fenêtre « compagnon » sans bordure, qui reste au premier plan par-dessus le jeu.
 
 ## Télécharger
 
@@ -20,7 +17,7 @@ Toutes les versions sont dans l'onglet **[Releases](../../releases)** :
 
 Windows peut afficher « Windows a protégé votre ordinateur » : clique « Informations complémentaires », puis « Exécuter quand même ». L'appli n'est pas signée par un éditeur.
 
-## L'interface compagnon (appli de bureau)
+## L'interface
 
 - **Une seule petite fenêtre** (380 × 640 par défaut, redimensionnable), sans bordure et toujours au premier plan. Elle repasse devant Dofus dès que tu cliques dans le jeu.
 - **Barre de titre** :
@@ -61,15 +58,30 @@ Windows peut afficher « Windows a protégé votre ordinateur » : clique « Inf
 - **Toutes les recettes** : coût, XP, kamas/XP et marge pour chaque recette.
 - **Familier** : classement des ressources par kamas par point d'XP.
 - **Prix HDV** : moyennes Dakal relevées le 10/10/2026. Tes prix passent toujours avant, et les prix par lot (×1, ×10, ×100, ×1000) sont gérés.
+- **Prix partagés** : les prix relevés par les contributeurs arrivent dans toutes les applis à chaque lancement (voir plus bas).
 - **Exporter / Importer** : sauvegarde de toutes les données dans un fichier JSON.
+
+## Prix partagés (contributeurs)
+
+Les prix bougent. Chaque contributeur peut mettre à jour les prix de tout le monde depuis l'appli, sans toucher au code.
+
+1. **Devenir contributeur** : le propriétaire du dépôt t'ajoute dans *Settings → Collaborators*. Il te faut un compte GitHub.
+2. **Relever les prix** : dans l'appli, tape tes prix HDV à côté des ressources, dans n'importe quel onglet. Ils sont datés automatiquement.
+3. **Envoyer** : *Paramètres → Prix partagés → Partager mes prix*. Une page GitHub s'ouvre, déjà remplie (une « issue » titrée `[Prix] Dakal · N prix · date`). Clique **Submit new issue**.
+4. **Intégration automatique** : un robot GitHub Actions (`.github/workflows/prices.yml`) fait le reste.
+   - Il vérifie que l'auteur est contributeur du dépôt.
+   - Il ajoute les prix dans [`prices/dakal.json`](prices/dakal.json). Pour un même objet, le relevé le plus récent gagne.
+   - Il répond avec un résumé (prix ajoutés, prix ignorés, écarts suspects de plus de 10× la moyenne), puis ferme l'issue.
+5. **Diffusion** : au lancement, chaque appli télécharge `prices/dakal.json` et l'utilise à la place des moyennes du 10/10/2026. Le fichier reste aussi en cache pour le hors-ligne. Les prix saisis par chacun sur sa propre appli passent toujours en premier.
+
+Un contributeur peut aussi modifier `prices/dakal.json` à la main, dans un commit. Le script de fusion est `tools/merge_prices.py`.
 
 ## Structure
 
 ```
-web/                    l'outil (chargé tel quel par l'appli)
-  index.html            page complète, version autonome
-  index.artifact.html   même page sans en-tête HTML : version publiée sur claude.ai
-  gm.css, gm.js         interface compagnon (actives seulement dans l'appli, ou avec ?app dans un navigateur)
+web/                    l'interface et les calculs (chargés tels quels par l'appli)
+  index.html            outil complet (plan, liste de courses, recettes, familier, prix)
+  gm.css, gm.js         habillage compagnon : barres, menu, page « En cours », paramètres
   fonts/                police Lexend (licence SIL OFL)
   data.json             recettes, objets, prix de référence, XP familier, listes vie/énergie et quête
   ico/                  planches d'icônes (48 px, 32 colonnes, 1024 par planche)
@@ -78,10 +90,14 @@ app/                    appli Electron
   preload.js            pont window.atelier (fenêtre, opacité, zoom, raccourcis)
   package.json          configuration electron-builder (Windows NSIS et portable, macOS dmg universel, Linux AppImage et deb)
   build/                icônes de l'appli
-.github/workflows/release.yml   construit les 3 systèmes et publie la release
+prices/dakal.json       prix partagés par les contributeurs (mis à jour par le robot)
+.github/workflows/
+  release.yml           construit les 3 systèmes et publie la release
+  prices.yml            intègre les prix envoyés depuis l'appli
 tools/
   build.py, match.py, km.py     reconstruisent data.json à partir des données du jeu et des relevés HDV
   flags.py                      ajoute les listes « vie / énergie » et « quête » à data.json
+  merge_prices.py               fusionne un envoi de prix dans prices/dakal.json
   sim.py                        vérification de la formule d'XP
 data/
   sources/hdv/p1..p5.txt        relevés HDV Dakal (Nom|niveau|prix, sections #Catégorie), 2074 prix moyens
@@ -105,11 +121,11 @@ npm install
 npm start          # lit directement ../web : modifie web/ et recharge avec Ctrl+R
 ```
 
-**Voir l'interface compagnon dans un navigateur**, sans Electron. La page doit être servie en http :
+**Aperçu rapide dans un navigateur**, sans Electron (pratique pour retoucher l'interface). La page doit être servie en http :
 
 ```bash
 cd web && python -m http.server 8000
-# puis ouvrir http://localhost:8000/?app   (sans ?app : la version site)
+# puis ouvrir http://localhost:8000/?app
 ```
 
 **Construire les paquets à la main** (chaque système se construit sur son propre OS) :
@@ -160,9 +176,8 @@ xp = floor(20 × niveauRecette × coef / 100 / (écart^1.1 / 10 + 1) × (1 + cor
 
 ### Stockage
 
-- **Clés** : `atelier-plan`, `atelier-prices` et `atelier-pet`.
-- **Appli et site en local** : `localStorage`. Les fenêtres se synchronisent entre elles via l'événement `storage`.
-- **Version claude.ai** : stockage privé par utilisateur, via les capacités `db` et `user`.
+- **Où** : dans le stockage local de l'appli (`localStorage`, origine `atelier://app`), sur l'ordinateur. Rien n'est envoyé ailleurs, sauf les prix que tu choisis de partager.
+- **Clés** : `atelier-plan`, `atelier-prices` et `atelier-pet` pour tes données, `atelier-ui` pour l'apparence et les raccourcis, `atelier-shared` pour le cache des prix partagés.
 
 ## Pistes / à faire
 

@@ -213,6 +213,11 @@
         <p class="hint" id="gmScWarn" hidden style="margin:0;color:var(--g-bad)">Un raccourci en rouge est déjà pris par une autre appli : choisis-en un autre.</p>
         <div><button class="btn sm ghost" id="gsScReset">Raccourcis par défaut</button></div>
       </div>
+      <div class="grp"><h3>Prix partagés</h3>
+        <p class="hint" style="margin:0">Les prix relevés par les contributeurs sont téléchargés à chaque lancement. ${typeof sharedInfo !== "undefined" && sharedInfo && sharedInfo.n ? `<b>${sharedInfo.n}</b> prix partagés en service (mise à jour du ${esc(sharedInfo.maj)}).` : "Aucun prix partagé pour l'instant."} Tes propres prix passent toujours en premier.</p>
+        <p class="hint" style="margin:0">Contributeur du dépôt ? Envoie tes prix saisis à tout le monde : une page GitHub s'ouvre déjà remplie, tu cliques « Submit » et tout le monde les reçoit au prochain lancement.</p>
+        <div><button class="btn sm gold" id="gsShare">Partager mes prix</button></div>
+      </div>
       <div class="grp"><h3>Données</h3>
         <p class="hint" style="margin:0">Prix, stock, progression et familier sont enregistrés sur cet ordinateur. Exporte-les pour les sauvegarder ou les passer sur un autre PC / la page web.</p>
         <div class="row" style="gap:8px"><button class="btn sm" id="gsExport">Exporter</button><button class="btn sm" id="gsImport">Importer</button></div>
@@ -239,6 +244,7 @@
       };
     });
     $("#gsScReset").onclick = () => { ui.shortcuts = { ...DEF_SC }; saveUi(); applyWindow(); renderSettings(); };
+    $("#gsShare").onclick = () => shareMyPrices();
     $("#gsExport").onclick = () => $("#btnSaveFile").click();
     $("#gsImport").onclick = () => $("#fileImport").click();
     markShortcutErrors();

@@ -1,0 +1,51 @@
+# Prix partagés : une issue « [Prix] … » envoyée depuis l'appli par un contributeur du dépôt
+# est intégrée automatiquement dans prices/dakal.json, que toutes les applis téléchargent au lancement.
+name: Prix partagés
+on:
+  issues:
+    types: [opened, edited]
+permissions:
+  contents: write
+  issues: write
+concurrency:
+  group: prix-partages
+  cancel-in-progress: false
+jobs:
+  merge:
+    if: startsWith(github.event.issue.title, '[Prix]')
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      NUM: ${{ github.event.issue.number }}
+      AUTHOR: ${{ github.event.issue.user.login }}
+      ASSOC: ${{ github.event.issue.author_association }}
+      ISSUE_BODY: ${{ github.event.issue.body }}
+    steps:
+      - name: Contributeur autorisé ?
+        run: |
+          case "$ASSOC" in OWNER|MEMBER|COLLABORATOR) echo "ok : $AUTHOR ($ASSOC)";;
+          *) gh issue comment "$NUM" --body "Merci ! Seuls les contributeurs du dépôt peuvent mettre à jour les prix partagés. Demande à @${{ github.repository_owner }} de t'ajouter comme collaborateur, puis renvoie tes prix depuis l'appli."
+             gh issue close "$NUM" --reason "not planned"; exit 1;;
+          esac
+      - uses: actions/checkout@v4
+      - name: Intégrer les prix
+        id: merge
+        run: |
+          set +e
+          python3 tools/merge_prices.py "$AUTHOR" summary.md
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+      - name: Enregistrer dans le dépôt
+        if: steps.merge.outputs.code == '0'
+        run: |
+          git config user.name "atelier-kamas-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add prices/dakal.json
+          git commit -m "Prix partagés : envoi de $AUTHOR (#$NUM)"
+          for i in 1 2 3; do git pull --rebase -q && git push && break; sleep 3; done
+      - name: Répondre et fermer
+        if: always() && steps.merge.outputs.code != ''
+        run: |
+          gh issue comment "$NUM" --body-file summary.md
+          if [ "${{ steps.merge.outputs.code }}" = "1" ]; then exit 0; fi
+          gh issue close "$NUM" --reason completed
