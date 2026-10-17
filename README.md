@@ -153,11 +153,36 @@ Les données de l'appli restent sur l'ordinateur, dans le stockage local de la p
 
 Ordre de priorité des prix :
 
-1. le prix saisi par l'utilisateur ;
-2. le meilleur prix unitaire par lot ;
-3. `ref[id] = [prix, source]`, où la source vaut 2 pour la moyenne HDV Dakal et 1 pour KamaMaster.
+1. le prix saisi par l'utilisateur dans son appli ;
+2. le meilleur prix unitaire par lot (×1, ×10, ×100, ×1000) ;
+3. `ref[id] = [prix, source]` :
+   - source 3 : prix partagé par un contributeur (`prices/dakal.json`, téléchargé au lancement) ;
+   - source 2 : moyenne HDV Dakal du relevé du 10/10/2026 ;
+   - source 1 : KamaMaster, en dernier recours.
 
 Le coût réel d'une quantité donnée combine les lots par programmation dynamique (`lotCost`).
+
+### Origine des données (relevé du 10/10/2026)
+
+Tout ce qui a servi à construire les prix et l'XP familier est dans `data/sources/`, pour pouvoir vérifier ou refaire le travail :
+
+| Étape | Fichiers | Contenu |
+|---|---|---|
+| 1. Captures | `captures/*.png` (309 images) | captures de l'HDV Dakal, catégorie par catégorie, avec le **prix moyen** de chaque ressource. Le dossier contient aussi les retours d'écran envoyés pendant le développement |
+| 2. Transcription | `hdv/p1.txt` … `p5.txt` | ces captures recopiées en texte, une ligne par ressource `Nom\|niveau\|prix`, avec un titre `#Catégorie` par section. 2074 prix au total |
+| 3. Association | `hdv_matched.json` | chaque nom relié à son identifiant d'objet du jeu (`tools/match.py`) |
+| 4. Complément | `km_A.txt`, `km_B.txt`, `kamamaster-export-*.txt` | exports KamaMaster Dakal, utilisés seulement pour les ressources absentes des captures (`tools/km.py`) |
+| 5. Familier | `familier-tableur-xp.tsv`, `dofustool-familier.txt` | XP familier par ressource : d'abord le tableur, mesuré par lots de 1000, puis DofusTool en complément |
+| 6. Assemblage | `web/data.json` | `tools/build.py` regroupe le tout (objets, recettes, `ref`, catégories, lots, icônes, XP familier), puis `tools/flags.py` ajoute les listes vie / énergie et quête |
+
+Quelques choix faits pendant le relevé :
+- **Lots** : la Quisnoa et la Pépite ont des prix par lot (×1, ×10, ×100, ×1000), saisis à la main dans `build.py`.
+- **Ressources rares de drop** : elles restent à leur prix réel, même très élevé. C'est le cas de la Fleur de Korriandre et de la Sève de Tremble.
+- **Intermédiaires** : règle « tout crafter ». Par défaut, un intermédiaire est fabriqué plutôt qu'acheté (réglable dans l'appli).
+
+**Pour un nouveau relevé complet** (tous les 2 à 3 mois), deux possibilités :
+- refaire les étapes 1 à 3 avec de nouvelles captures, puis relancer `build.py` ;
+- plus simple au quotidien, passer par les **prix partagés** : chaque prix envoyé remplace la moyenne du 10/10 dans toutes les applis.
 
 ### XP de craft
 
