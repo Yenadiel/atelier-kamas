@@ -13,8 +13,11 @@
   /* ---------- préférences d'interface ---------- */
   const UI_KEY = "atelier-ui";
   const DEF_SC = { toggle: "CommandOrControl+Shift+K", prev: "CommandOrControl+Shift+Left", next: "CommandOrControl+Shift+Right", done: "CommandOrControl+Shift+Enter" };
-  let ui = { theme: "or", opacity: 0.96, zoom: 1, onTop: true, shortcuts: { ...DEF_SC } };
+  let ui = { theme: "or", opacity: 1, zoom: 1, onTop: true, shortcuts: { ...DEF_SC } };
   try { const s = JSON.parse(localStorage.getItem(UI_KEY) || "null"); if (s) ui = { ...ui, ...s, shortcuts: { ...DEF_SC, ...(s.shortcuts || {}) } }; } catch (_) {}
+  // 2.1.5 : opacité 100 % par défaut (une fenêtre semi-transparente peut rester invisible
+  // à l'écran avec certaines cartes graphiques) ; l'ancien défaut 96 % est remis à 100 %.
+  if (!ui.opv) { if (ui.opacity === 0.96) ui.opacity = 1; ui.opv = 2; try { localStorage.setItem(UI_KEY, JSON.stringify(ui)); } catch (_) {} }
   const saveUi = () => { try { localStorage.setItem(UI_KEY, JSON.stringify(ui)); } catch (_) {} };
 
   const THEMES = [
@@ -169,6 +172,7 @@
     try { scErrors = (await A.setShortcuts(ui.shortcuts)) || []; } catch (_) { scErrors = []; }
     if (cur === "reglages") markShortcutErrors();
   }
+  if (A && A.onForceOpaque) A.onForceOpaque(() => { ui.opacity = 1; saveUi(); if (cur === "reglages") renderSettings(); toast("Fenêtre remise à 100 % d'opacité"); });
   if (A && A.onShortcut) A.onShortcut((name) => {
     if (name === "prev") clickIn("#cPrev");
     else if (name === "next") clickIn("#cNext");
@@ -201,6 +205,7 @@
       <div class="grp"><h3>Apparence</h3>
         <div><div class="lbl" style="margin-bottom:6px">Thème</div><div class="themes">${THEMES.map(([id, n, a, c]) => `<button class="th" data-th="${id}" aria-pressed="${ui.theme === id}" style="--a:${a};--c:${c}"><i></i>${n}</button>`).join("")}</div></div>
         <div class="row2"><span>Opacité</span><input type="range" id="gsOp" min="40" max="100" step="1" value="${Math.round(ui.opacity * 100)}" aria-label="Opacité"></div>
+        <p class="hint" style="margin:-4px 0 0">Sous 100 %, la fenêtre peut devenir invisible sur certains PC (visible en capture d'écran mais pas sur le moniteur). Dans ce cas : clic droit sur l'icône K près de l'horloge → « Fenêtre opaque ».</p>
         <div><div class="lbl" style="margin-bottom:6px">Taille du texte</div><div class="sizes">${ZOOMS.map(([z, n]) => `<button data-z="${z}" aria-pressed="${ui.zoom === z}">${n}</button>`).join("")}</div></div>
       </div>
       <div class="grp"><h3>Fenêtre</h3>

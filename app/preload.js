@@ -13,6 +13,7 @@ contextBridge.exposeInMainWorld('atelier', {
   setZoom: (z) => webFrame.setZoomFactor(Math.max(0.7, Math.min(1.5, +z || 1))),
   setShortcuts: (map) => ipcRenderer.invoke('set-shortcuts', map),
   onShortcut: (cb) => ipcRenderer.on('shortcut', (_e, name) => cb(name)),
+  onForceOpaque: (cb) => ipcRenderer.on('force-opaque', () => cb()),
   // compatibilité avec l'ancienne fenêtre compacte (inutilisée dans l'interface compagnon)
   toggleCompact: () => {},
   showMain: () => {}

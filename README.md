@@ -20,6 +20,7 @@ Windows peut afficher « Windows a protégé votre ordinateur » : clique « Inf
 ## En cas de souci (Windows)
 
 **La fenêtre ne s'affiche pas :**
+0. **La fenêtre apparaît en capture d'écran mais pas sur le moniteur** : c'est l'opacité. Une fenêtre semi-transparente n'est pas affichée par certaines cartes graphiques. Fais un clic droit sur l'icône K, puis **Fenêtre opaque**, et laisse l'opacité à 100 % dans les Paramètres. C'est le réglage par défaut depuis la 2.1.5.
 1. **Icône près de l'horloge** : cherche l'icône dorée « K » à côté de l'horloge (elle est peut-être dans les icônes cachées ^). Clic droit dessus, puis **Recentrer la fenêtre**.
 2. **Pilote graphique** : depuis la 2.1.4, l'appli dessine en mode logiciel sous Windows, ce qui évite les fenêtres qui restent invisibles avec certains pilotes. Pour réactiver l'accélération graphique, coche **Accélération graphique** dans le même menu. Si la fenêtre ne s'affiche plus ensuite, décoche-la.
 3. **Windows 11** : vérifie que **Contrôle intelligent des applications** (Sécurité Windows → Contrôle des applications et du navigateur) ne bloque pas l'appli. Ce contrôle refuse les applis non signées, parfois sans message clair. Il faut alors le mettre sur « Désactivé ».

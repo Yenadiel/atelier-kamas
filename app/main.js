@@ -132,6 +132,7 @@ function createTray() {
     const menu = () => Menu.buildFromTemplate([
       { label: 'Afficher Atelier Kamas', click: () => { if (!win) createWindow(); else { if (win.isMinimized()) win.restore(); win.show(); win.focus(); } } },
       { label: 'Recentrer la fenêtre', click: recenter },
+      { label: 'Fenêtre opaque (si elle est invisible)', click: () => { if (!win) return; win.setOpacity(1); layered = false; win.webContents.send('force-opaque'); win.show(); } },
       { type: 'separator' },
       { label: 'Accélération graphique (si la fenêtre s\'affiche bien)', type: 'checkbox', checked: !NO_GPU, click: () => {
           try {
@@ -159,7 +160,15 @@ function toggleWindow() {
 ipcMain.on('app-info', e => { e.returnValue = { version: app.getVersion(), platform: process.platform }; });
 ipcMain.on('win-minimize', () => win && win.minimize());
 ipcMain.on('win-close', () => win && win.close());
-ipcMain.on('win-opacity', (e, v) => { if (win) win.setOpacity(Math.max(0.4, Math.min(1, +v || 1))); });
+// Opacité : à 100 % on ne touche à rien (une fenêtre « superposée » peut ne pas s'afficher
+// sur le moniteur avec certains pilotes / l'affichage multiplan, tout en apparaissant en capture).
+let layered = false;
+ipcMain.on('win-opacity', (e, v) => {
+  if (!win) return;
+  const o = Math.max(0.4, Math.min(1, +v || 1));
+  if (o >= 0.999) { if (layered) { win.setOpacity(1); layered = false; } return; }
+  win.setOpacity(o); layered = true;
+});
 ipcMain.on('win-on-top', (e, v) => {
   onTop = !!v;
   if (!win) return;
