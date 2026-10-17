@@ -1,0 +1,48 @@
+# Construit l'appli Windows et publie une release GitHub quand on pousse un tag vX.Y.Z
+# (ou à la main depuis l'onglet Actions → "Release Windows" → Run workflow).
+name: Release Windows
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Version à publier (ex. v1.1.0)'
+        required: true
+permissions:
+  contents: write
+env:
+  ELECTRON: '33.2.1'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Version
+        id: v
+        run: echo "tag=${{ github.event.inputs.tag || github.ref_name }}" >> "$GITHUB_OUTPUT"
+      - name: Installateur léger
+        run: |
+          ./tools/build-installer.sh
+          mv dist/AtelierKamas-Installation.zip "AtelierKamas-Installation-${{ steps.v.outputs.tag }}.zip"
+      - name: Version portable complète
+        run: |
+          curl -sL -o electron.zip "https://github.com/electron/electron/releases/download/v${ELECTRON}/electron-v${ELECTRON}-win32-x64.zip"
+          mkdir -p "portable/Atelier Kamas" && unzip -q electron.zip -d "portable/Atelier Kamas"
+          cd "portable/Atelier Kamas"
+          mv electron.exe "Atelier Kamas.exe" && rm -f resources/default_app.asar
+          (cd locales && ls | grep -v -E '^(fr|en-US)\.pak$' | xargs rm -f)
+          mkdir -p resources/app && cp ../../app/{main.js,preload.js,package.json,icon.png,icon.ico} resources/app/
+          cp -r ../../web resources/app/web && rm -f resources/app/web/index.artifact.html
+          cp ../../installer/LISEZ-MOI.txt .
+          cd ../../tools/release && npm install --silent && node seticon.mjs "../../portable/Atelier Kamas/Atelier Kamas.exe" ../../app/icon.ico
+          cd ../../portable && zip -qr -9 "../AtelierKamas-Portable-${{ steps.v.outputs.tag }}-win64.zip" "Atelier Kamas"
+      - name: Publier la release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          T="${{ steps.v.outputs.tag }}"
+          gh release view "$T" >/dev/null 2>&1 || gh release create "$T" --title "Atelier Kamas $T (Windows)" --notes "Appli Windows Atelier Kamas. Installation : dézippe AtelierKamas-Installation, lance « Installer Atelier Kamas.bat ». Version portable : dézippe et lance « Atelier Kamas.exe »." --target "${{ github.sha }}"
+          gh release upload "$T" AtelierKamas-Installation-*.zip AtelierKamas-Portable-*.zip --clobber

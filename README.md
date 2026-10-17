@@ -7,6 +7,11 @@ Il existe en deux versions qui partagent le même code :
 - **le site** : une page HTML unique (`web/`) ;
 - **l'appli Windows** : Electron (`app/`), avec une fenêtre compacte qui reste par-dessus le jeu (Ctrl + Maj + K).
 
+## Télécharger l'appli Windows
+
+- **Installateur (8 Mo)** : [`releases/AtelierKamas-Installation-1.1.0.zip`](releases/AtelierKamas-Installation-1.1.0.zip). Dézippe, puis lance `Installer Atelier Kamas.bat`.
+- **Version portable complète (environ 110 Mo)** : elle est générée par la GitHub Action « Release Windows » et publiée dans l'onglet **Releases**. Pour la lancer : Actions → Release Windows → *Run workflow*, ou pousse un tag `v1.1.0`.
+
 ## Fonctionnalités
 
 - **Plan de métier**
