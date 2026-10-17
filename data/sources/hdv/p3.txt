@@ -1,0 +1,463 @@
+#Os
+Dent de Larve Émeraude|47|8
+Dent de Larve Rubis|49|10
+Dent de Larve Saphir|45|10
+Os de Chafer|5|14
+Dent de Larve Champêtre|56|15
+Corne de Buffalourd|50|21
+Croc de Trankilou|50|22
+Os de Mastodonte|80|23
+Mâchoire du Chafer Draugr|46|25
+Ongle de Kanigrou|70|35
+Canine de Gobelin|40|36
+Os rongé de Gobichon|40|37
+Bec de Vilain Petit Tofu|109|40
+Dent de Larve Dorée|51|49
+Dent de Tofu Mutant|36|51
+Bombe de Graboule|86|52
+Côtes du Rib|33|59
+Corne de Boufton|26|60
+Dent de Molette|95|62
+Mâchoire de Rib|33|68
+Coccyx du Corailleur|44|75
+Dent de Waddict|53|88
+Dentier du Chafer d'Élite|46|94
+Dent de Wabbit|44|96
+Dent de Bourbassingue|101|107
+Crâne d'Aventurier|114|111
+Bec du Kwak de Vent|44|114
+Corne de Boufmouth de guerre|112|114
+Colonne Vertébrale|34|147
+Corne de Berserkoffre|100|148
+Ivoire|80|158
+Tibia de Koalak Fossoyeur|106|160
+Os de Crocodaille|46|170
+Fragment d'Os|46|176
+Crâne de Chef Crocodaille|69|180
+Bec du Kwak de Glace|44|181
+Corne de Dragmatique|120|191
+Bec de Kwakao|130|192
+Pic de dragodinde dorée|70|197
+Bec du Kwak de Terre|44|200
+Os de Wabbit Squelette|52|200
+Côtes de Porkass|46|201
+Crocs de Rats|26|205
+Chicot du Flib|62|209
+Os Surprise du Chafer Fantassin|35|216
+Dent de Gargantûl|86|221
+Pince de Crustorail|42|254
+Crâne magique de Rate Atinée|110|255
+Dent de Chakaroze|160|260
+Pic de dragodinde|61|260
+Pince de Crabe Hijacob|82|261
+Incisive de Kami Givrefoux|160|286
+Crâne de Kardorim|10|297
+Sternum de Chachachovage|82|313
+Dent en Or de Craqueleur|61|323
+Dent de dragodinde|66|335
+Fémur du Chafer Archer|46|337
+Défense du Sanglier|24|343
+Pince de Crabe|46|354
+Pic de Prespic|26|360
+Bec du Tofu|13|361
+Croc de Dragoeuf Protecteur|120|385
+Bec du Kwak de Flamme|44|403
+Omoplate de Blérom|180|422
+Dent de Cycloporth|170|427
+Os de Jiangshi-Nobi|160|429
+Canine de Mergranlou|96|436
+Griffe de Blérauve|180|437
+Griffe de volkorne|60|462
+Clavicule de Boufmouth|112|467
+Malléole de Yomi Givrefoux|160|477
+Épine de Grath|110|496
+Dents de Mulou|100|510
+Os Invisible du Chafer Invisible|23|519
+Os de Nemroz|190|521
+Corne de Dragoss Protéiforme|96|523
+Incisive de Glourmand|190|556
+Stapes de Frimar|200|576
+Tibia du Guerrier Zoth|120|587
+Canine de Kanimate|200|595
+Griffe de Strigide|200|629
+Bec de Mansordide|200|632
+Corne de Dragoss Calcaire|96|633
+Dent de Garglyphe|36|658
+Astragale de Mécanofoux|200|692
+Griffe de Félygiène|154|696
+Maxillaire de Brikoglours|200|728
+Griffe de Grolours|50|731
+Dents de Wabbit Vampire|120|733
+Corne de Dragacé|120|756
+Dent du Kharnozor|100|771
+Ongle de Goulafre|200|776
+Pic de Pikoleur|200|795
+Incus de Verglasseur|200|818
+Pince du Fancrôme|140|833
+Corne de Gamino|124|914
+Dard de Morfrelon|180|922
+Griffe de Dragoeuf Albâtre|70|994
+Corne de Rhinoféroce|96|1002
+Dent de Crocodaille|46|1012
+Bec du Kido|101|1054
+Bec du Kwakwa|50|1068
+Canine de Cronnibal|200|1073
+Corne de Déminoboule|114|1123
+Fémur du Chafer Rônin|40|1128
+Arête géante du Shamansot|132|1231
+Bec de Truchon|118|1231
+Ossements sacrés de Givrefoux|200|1231
+Péroné du Marôdeur|184|1237
+Corne de Scaratos|114|1246
+Crâne de Chafer|36|1252
+Canine de Félygiène|154|1253
+Crâne de Wabbit Squelette|52|1254
+Rotule du Disciple Zoth|120|1274
+Côtes de Désosseur|200|1297
+Canine Vampiresque|35|1305
+Canine de Krakal|200|1307
+Corne de Gliglibido|146|1332
+Dent de Klémort|200|1373
+Défense de Gliglicérin|146|1488
+Osselet de Black Wabbit Squelette|54|1517
+Bec de Gélikan|82|1539
+Dent de Shin Larve|50|1541
+Crâne de Kamikabz|170|1578
+Dent de Lévitrof|200|1591
+Dent de Tilamproie|200|1655
+Pic de Pikténia|170|1670
+Griffe de Phorrêveur|150|1744
+Bec du Timansot|132|1758
+Dent de Phorreur|150|1799
+Pince de Crâme|200|1836
+Cubitus de Momie Koalak|112|1839
+Os de Mama Koalak|94|1854
+Épine de Diondin|200|1927
+Ulna de Solfataré|150|1934
+Corne de Père Phorreur|150|1994
+Dent de Kwoan|36|2123
+Corne de Méjaire|200|2144
+Os de Pékeualak|84|2170
+Dent de Bandleth|200|2205
+Cartilage de Quadrabz|170|2252
+Picot d'El Piko|130|2349
+Ethmoïde du Minotot|160|2418
+Dent de Fantômat|140|2437
+Corne de Malbois|150|2488
+Vertèbre de Trépavois|200|2548
+Pointe de Lance de Tournoyé|200|2731
+Griffe de Matougarou|150|2800
+Défense du Sanglacier|130|2885
+Crâne de Yokaï Givrefoux|160|2889
+Corne Brûlée du Minotoror|120|3001
+Corne brisée de Crocabulia|120|3077
+Humérus du Sparo|63|3303
+Dent de Smilomouth|130|3398
+Sacrum magistral|50|3460
+Dent de zarbivore|200|3481
+Dent de Vatenbière|200|3525
+Front osseux de Gropotam|200|3658
+Dent de Cuirboule|200|3661
+Défense de Brutapir|200|3664
+Sternum de Mansordide|200|3743
+Daguosseuse de Domptueuse|200|3788
+Bec de Dodox|200|3799
+Appendice Démoniaque|200|4075
+Molaire de Blérice|180|4090
+Molaire de Nessil|200|4102
+Griffe de Kanimate|200|4302
+Os de Sramouraï|130|4314
+Dent de Trezz|170|4522
+Corne de Mominotor|114|4724
+Griffe de Kolosso|190|5031
+Molaire de Ventrublion|200|5406
+Pince de Lucrane|180|5528
+Corne d'Amphibouc|200|6082
+Incisive de Stalak|200|6220
+Corne de Lapilope|200|6652
+Corne du Boufcoul|96|7086
+Bec de Strigide|200|7239
+Fémur de Sphincter Cell|150|7374
+Os Divinatoire de Voracle|200|7462
+Ethmoïde de Stalak|200|8258
+Pic du Nocturlabe|200|8354
+Pince de Crabe Yoloniste|200|8355
+Sabot de Gliglicérin|146|8407
+Os de Trooll|115|9191
+Manubrium de Wolvero|180|11318
+Pointe osseuse de Grasmera|200|11568
+Calcanéus de Meliglours|190|11879
+Fémur de Koalak Farouche|110|12378
+Peigne de Rhoarim|200|12524
+Crâne magique de Magouille|200|12669
+Croc de Krokille|175|13161
+Vomer d'Apériglours|180|13390
+Scapula du Comte Harebourg|200|13802
+Fausse dent de Grozilla|50|15919
+Vieil Os de Dragoeuf|70|16694
+Défense du Phossile|150|17087
+Corne de volkorne|60|17200
+Bec de Granduk|200|19677
+Griffe de Buboxor|200|19734
+Dentier de Dantinéa|200|22713
+Dent de Marzwel|60|22780
+Corne de Gyrafor|200|23642
+Chicots d'Halouine|100|25813
+Canine tranchante|200|28268
+Os de Scalarcin|50|32480
+Griffe de la Déchireuse|200|33595
+Ongle du Bworker|180|48091
+Os à Moil|174|55970
+Sphénoïde du Kimbo|160|57060
+Vertèbre d'Obsidiantre|160|61588
+Pince de Krabouilleur|200|66723
+Griffe de Tyranne|80|69477
+Corne de XLII|170|79283
+Corne de Typhomet|200|79638
+Dent en or de Rok Gnorok|90|80635
+Scapula de Ben le Ripate|150|95424
+Corne d'Ombre|190|108200
+Sabot du Minotot|160|108830
+Corne du Vénérable Endormi|200|114385
+Hamatum de Glourséleste|190|180912
+Corne de Corruption|200|186345
+Moelle de Demoël|130|236485
+Dent de zarbivore perturbé|200|251990
+Condyle de Fuji Givrefoux|190|776987
+Os du Captain Chafer|200|1237163
+Incisive de Sylargh|200|1498384
+#Patte
+Patte de Black Wabbit|50|9
+Patte de Wabbit|48|11
+Patte de Twakeuf|50|13
+Patte d'Arakne Majeure|44|51
+Papatte de Croc Gland|65|52
+Patte de Corbac|106|52
+Patte de Tofu Dodu|118|56
+Patte d'Arakne|18|103
+Patte de Gruche|122|129
+Patte d'Abrakne Irascible|134|183
+Patte de Tofukaz|36|195
+Patte de Masticroc|170|446
+Patte de Pupuce|110|615
+Patte de Termystique|200|620
+Patte de Bouledogre|93|672
+Patte de Tabacille|200|767
+Patte d'Arakne des Égouts|26|790
+Serre d'Ikargn|200|1164
+Tentacule de Tentaclaque|200|1346
+Patte de Soryo Givrefoux|160|1353
+Patte d'Arakne Magique|18|1357
+Patte de Rat Bougri|82|1519
+Patte de Nheur'Gueule|200|1978
+Patte de Kabombz|170|2262
+Patte de Kankreblath|40|3906
+Patte de Scoliopode|180|4747
+Patte de Korriandre|180|6561
+Patte de la Gardienne des Égouts|155|18568
+Patte de Li-Fo|200|24643
+Patte de Kabombz perturbé|170|34793
+#Peau
+Peau Égrotante|13|10
+Peau de Dragoeuf Albâtre|70|30
+Écaille de Dragoss Ardoise|96|43
+Peau de Larve Rubis|49|75
+Peau de Draguaindrop|120|77
+Peau de Rat|56|77
+Peau de Larve Jaune|18|79
+Écaille de Dragoss Argile|96|85
+Peau de serpentin|56|89
+Peau de Larve Émeraude|47|91
+Peau de Piralak|84|95
+Écaille de Dragoss Charbon|96|103
+Écaille de Dragoss Calcaire|96|104
+Peau de Crachefoux|140|110
+Écailles d'Ouroboulos|80|117
+Écaille poisseuse|18|126
+Peau de Larve Verte|18|132
+Peau de Koalak Immature|64|166
+Peau de Maître Koalak|114|191
+Peau de Gloot|2|195
+Peau de Roukouto|86|206
+Peau de Mansobèse|132|243
+Peau de Don Dorgan|100|261
+Peau de Dragueuse|120|261
+Peau de Larve Saphir|45|266
+Écaille de Harpirate|140|314
+Peau de Mandrine|104|332
+Écaille de Crocodaille|46|349
+Peau de Kraméléhon|114|369
+Peau de Cochon de Farle|94|370
+Peau de Dragnarok|120|384
+Peau de Mob l'Éponge|20|399
+Peau de Larve Orange|18|422
+Peau de Rouquette|140|443
+Peau de Gériatique|110|461
+Peau de Don Duss Ang|97|470
+Écaille de Grasmera|100|498
+Peau de Trémorse|170|550
+Peau de Larve Bleue|18|672
+Peau de Pataugerme|200|678
+Peau de Raul Mops|46|693
+Enrobage de Chocoskargo|130|732
+Peau de Krambwork|86|770
+Écaille de Grozilla|50|783
+Squame du Graogarm|100|918
+Peau d'Ouilleur|183|1032
+Peau de Minoskito|104|1117
+Peau de Bworkette|50|1234
+Peau de Kanihilan|156|1292
+Peau de Minos|104|1591
+Peau de Crocabulia|120|1648
+Peau de Ramane d'Égoutant|54|1741
+Peau de Moon|100|1939
+Peau pourrie de Dolid|200|2048
+Peau de Larve Champêtre|56|2628
+Écaille de Chef Crocodaille|69|2715
+Peau de Shin Larve|50|2877
+Peau de Métaphorreur|150|2914
+Peau de Drakoalak|94|3043
+Écaille de Gambaf|200|3387
+Peau de Trithon|200|3640
+Peau de Larve Dorée|51|3686
+Peau de Chevaucheur Koalak|108|3847
+Épine Dorsale de Grozilla|150|4593
+Peau de Tivelo|86|4938
+Peau de zarbivore|200|7346
+Peau de Vindeux|170|9475
+Peau de Torréfactueur|200|18727
+Peau du Bworker|180|19424
+Peau de Skeunk|120|22932
+Scalp d'Anatak|160|191710
+Écaille de Torkélonia|200|397568
+Peau du Grand Kongoku|200|604745
+Écaille dorée de Léviathon|200|2220211
+#Pierre brute
+Pierre Médicinale|74|41
+Pierre d'Émeraude|30|42
+Pièce du Puzzle de la Griffe|43|44
+Corail usé|44|47
+Pierre du Craqueleur|61|52
+Pierre de Rubis|30|59
+Pierre de Topaze|110|103
+Pierre d'Agathe|150|141
+Pierre de Mofette|150|198
+Pierre de Fumrirolle|150|206
+Pierre de Cristal|30|229
+Cœur de Craqueleur|61|275
+Méga Pierre du Craqueleur|65|276
+Boule polie|99|304
+Pierre d'Aigue-Marine|150|308
+Tuf de Mofette|150|363
+Pierre de Diamant|30|368
+Nacre brute|45|371
+Corail Kouraçao|42|379
+Pierre d'Atomystique|150|385
+Corail Malibout|42|400
+Fragment de Pierre Polie|65|430
+Silex|66|509
+Cœur de pierre poli|102|580
+Pierre de Granit|26|692
+Pierre du Courtilieur|187|776
+Pierre du Craqueleur Légendaire|70|849
+Fragment du Gorgouille|100|909
+Pierre de Saphir|30|944
+Cœur de Crapeur|150|1013
+Fragment de Pierre Pointue|65|1078
+Corail Passaoh|42|1100
+Résidu de Solfataré|150|1120
+Pierre du Koulosse|100|1200
+Corail Morito|42|1258
+Pierre de Serpiplume|124|1405
+Yokayu|170|1691
+Pierre de souillure verte impure|1|2101
+Corail Magistral|50|2110
+Pierre de souillure bleue impure|1|2177
+Méga Pierre du Craqueleur Légendaire|70|2413
+Fragment de pépite de Sakaï|185|2479
+Fronde de Boufbos|200|2603
+Scorie d'Obsidiantre|160|2906
+Pierre de souillure jaune impure|1|3205
+Pierre Angulaire|200|3860
+Téphra d'Atomystique|150|3997
+Deuxième Fragment de Feu|125|7957
+Premier Fragment d'Eau|125|8344
+Troisième Fragment de Feu|125|9720
+Quatrième Fragment de Feu|125|10033
+Premier Fragment de Terre|125|10081
+Deuxième Fragment d'Air|125|10217
+Quatrième Fragment d'Eau|125|11007
+Pavé|200|11408
+Deuxième Fragment de Terre|125|11737
+Troisième Fragment de Terre|125|13861
+Deuxième Fragment d'Eau|125|14057
+Quatrième Fragment d'Air|125|14070
+Quatrième Fragment de Terre|125|14155
+Troisième Fragment d'Air|125|15330
+Troisième Fragment d'Eau|125|15858
+Pierre de Sélénite|150|19676
+Premier Fragment de Feu|125|20947
+Premier Fragment d'Air|125|21842
+Basalte|200|42513
+Andésite|200|902559
+#Pierre précieuse
+Ambre|44|61
+Rubis|50|222
+Saphir|30|274
+Ambre d'Abraknyde Sombre Irascible|130|425
+Pierre de Crystaloboule|62|469
+Pépite|1|492
+Kaokurimono|170|530
+Boule en or de Piloztère|200|605
+Agathe|150|694
+Émeraude|50|711
+Ambre d'Abraknyde|44|729
+Artefact Pandawushu Feu|140|940
+Topaze|110|1007
+Artefact Pandawushu Bois|110|1122
+Cristal|40|1182
+Artefact de Fumrirolle|150|1329
+Nacre|40|1574
+Kristalite|120|1739
+Diamant|50|1983
+Pierre Précieuse Zoth|122|2330
+Ambre d'Abraknyde Sombre|78|3134
+Corne de Kamasterisk|200|3284
+Ambre du Chêne Mou|140|3551
+Fragment de cerveau poli|102|4000
+Artefact Pandawushu Vent|140|4029
+Artefact Pandawushu Eau|130|4417
+Aigue-Marine|150|4747
+Pierre de Dopeul|41|5096
+Scarabée Chrysonéfritin|200|6452
+Artefact Pandawushu Roc|130|7301
+Joyau de la couronne du roi Nidas|200|7547
+Grenat de Momistik|200|14213
+Cachet du bizut|1|14524
+Ambre de muldo|60|20231
+Artefact Pandawushu|150|21727
+Fragment de Rubis Fertile|140|25190
+Bézoard Ardent de Grozilla|150|54091
+Tourmaline|10|55217
+Joyau des Scalptaras|80|59390
+Ambre des profondeurs|200|60191
+Pierre de Terre|1|93374
+Pierre d'Air|1|99998
+Ambre du Tynril|140|128131
+Pierre de Feu|1|137830
+Pierre d'Eau|1|167908
+Éclat temporel|190|1005312
+Cristal temporel|200|1881726
+Cristal intemporel|200|1914754
+#Planche
+Planche Contreplaquée|20|34
+Planche Agglomérée|1|412
+Planche à Griller|40|1194
+Planche de Surf|60|2579
+Planche à Repasser|80|2819
+Planche à Pain|160|4522
+Planche de Toilette|100|5423
+Planche à Pâtisserie|120|8264
+Planche de Gravure|140|12365
+Planche à Dessin|180|15234
+Planche de Salut|200|27530

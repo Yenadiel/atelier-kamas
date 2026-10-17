@@ -1,0 +1,291 @@
+#Aile
+Ailes cassées|1|2
+Aile du Tofu Maléfique|26|30
+Aile de Bourdard|56|53
+Aile du Bitouf des Plaines|103|74
+Ailes du Scarafeuille Noir|44|75
+Ailes de Scarafeuille Vert|38|93
+Ailes de Scarafeuille Bleu|38|117
+Ailes de Scarafeuille Rouge|38|145
+Ailes de Scarafeuille Blanc|38|153
+Aile de volkorne orchidée|60|298
+Aile de dragodinde|61|316
+Aile de volkorne indigo|60|336
+Ailes de Moskito|18|385
+Aile de Draguaindrop|120|407
+Aile de Gruche|122|548
+Aile de volkorne pourpre|60|678
+Aile de volkorne ébène|60|680
+Aile de Nocturlabe|200|732
+Ailes du Scarabosse Doré|40|796
+Aile de dragodinde rousse sauvage|66|861
+Aile d'Eninferno|200|1296
+Aile de Kérigoule|200|1601
+Aile de dragodinde dorée|70|1763
+Aile de Sinistrofu|200|2169
+Aile de Mansobèse|132|2641
+Aile Atrophiée de Tofu Dodu|118|2798
+Aile de Puceronde|180|3261
+Aile de Gloursaya|190|6387
+Aile de Larve de Koutoulou|200|258944
+Aile de Vortex|200|491970
+#Alliage
+Ferrite|1|174
+Aluminite|20|395
+Ébonite|40|3850
+Rutile|160|4810
+Magnésite|60|6456
+Bakélélite|80|9209
+Pyrute|180|9759
+Kouartz|100|13463
+Kobalite|140|15835
+Kriptonite|120|17543
+Grizite|30|24503
+Plaque d'acier|100|25619
+Ardonite|200|34268
+Alliage Ivre|150|241786
+#Bois
+Bois de Châtaignier|20|16
+Bois de Noyer|40|37
+Bois de Frêne|1|68
+Bois d'Érable|80|69
+Sourcils de Tronknyde|39|82
+Bois de Bombu|70|86
+Bois de Bambou|110|93
+Bois de Chêne|60|97
+Bois de Tremble|200|100
+Bois d'Oliviolet|90|109
+Branche de Tiwabbit Kiafin|44|115
+Bois de Bambou Sacré|190|136
+Bois de Bambou Sombre|170|137
+Bois de Noisetier|130|137
+Bois de Pin|90|157
+Bois de Merisier|120|188
+Bois de Kaliptus|150|208
+Bois d'If|100|218
+Bois de Charme|160|238
+Bois d'Ébène|140|242
+Souche de l'Abrakleur clair|156|601
+Bois d'Orme|180|807
+Bois de Tronknyde|39|1003
+Rondelle de Bois|36|1350
+Nœud de l'Abrakleur clair|156|1375
+Bois Vermoulu|18|1479
+Bois d'Aquajou|200|1671
+Mât de Fantômat|140|1787
+#Bourgeon
+Bourgeon de Pirolienne|86|62
+Bourgeon d'Abraknyde Sombre Irascible|130|85
+Bourgeon d'Abraknyde Ancestral|90|2794
+Bourgeon explosif de Damadrya|110|4598
+Bourgeon de Fourbasse|100|15055
+#Carapace
+Carapace vide de Crabe|46|72
+Carapace Verte|50|74
+Carapace Rouge|50|359
+Carapace Jaune|50|382
+Carapace Bleue|50|478
+Carapace de Scaratos|114|483
+Carapace de Krabouilleur|200|1120
+Chitine de Nécrotique|180|2275
+Carapace de Termystique|200|3588
+Carapace du Mantiscore|80|4530
+Carapace de Ver des Sables|170|5006
+Carapace d'Exécrabe|200|15840
+Carapace de Supervizœuf|170|1137447
+#Céréale
+Blé|1|8
+Orge|20|13
+Avoine|40|20
+Houblon|60|20
+Lin|80|74
+Riz|100|141
+Malt|120|170
+Seigle|100|349
+Chanvre|140|368
+Avoine Magique|86|401
+Maïs|160|454
+Frostiz|200|660
+Millet|180|774
+Quisnoa|200|1899
+Blé d'Or|1|4988
+Avoine Aurifère|20|6908
+Houblon Brillant|60|8885
+Lin Tempête|80|9996
+Seigle Résistant|100|12099
+Riz Cola|100|12130
+Chanvre Euphorique|70|19464
+Malt Husse|120|19856
+Maïssého|160|27229
+Orge en Sucre|20|28072
+Millet Zime|180|32544
+Frostiz soufflé|200|2936070
+#Champignon
+Volve d'Aminite|5|76
+Champignon|66|121
+Lamelle de Champa Rouge|39|139
+Épine du Champ Champ|18|143
+Lamelle de Champa Bleu|39|234
+Lamelle de Champa Marron|39|310
+Lamelle de Mérulette|170|394
+Volve de Fongeur|170|464
+Champignon Luidegît|35|584
+Lamelle de Champa Vert|39|861
+Sporme du Champ Champ|18|967
+Trompe de la Tromperelle|176|1299
+Volve de Mérulor|200|1504
+Pédoncule de Mérulette|170|1722
+Lamelle de Champbis|176|2174
+Pédoncule de Fongeur|170|3636
+Lamelle de Dramanite|170|6324
+Volve de Fistulor|170|6324
+Pédoncule de Mérulor|200|12757
+Fragment d'Ougalurette|180|16707
+Épine d'Ougah|180|54311
+Mycoses gelées|200|80591
+Sporme de Dremoan|180|211914
+#Coquille
+Coquille de Dragoeuf Calcaire|70|28
+Coquille de Dragoeuf Argile|70|65
+Coquille de Dragoss Protéiforme|96|127
+Coquille de Dragoss Argile|96|344
+Coquille de Dragoeuf Ardoise|70|370
+Coquille de Dragoeuf Charbon|70|751
+Coco du Bitouf des Plaines|103|875
+Coquille de Harpirate|140|938
+Coquille de Virustine|200|947
+Coquille du Kaskargo|154|1310
+Coco du Bitouf aérien|152|1695
+Coquille de Dragoss Charbon|96|2684
+Coquille de Submergé|200|4015
+Coquille de Dragoss Ardoise|96|5529
+Coquille de Fantimonier|140|5591
+Coco du Bitouf Sombre|136|6566
+Coquille de Krokille|125|15210
+Aquarakne de Crânonier|200|37667
+#Cuir
+Cuir du Cochon de Lait|33|14
+Cuir de Gargrouille|36|37
+Cuir de Boostache Prépubère|36|44
+Cuir de Porsalu|86|101
+Cuir de Bouftou Noir|26|117
+Courroie en cuir|56|238
+Cuir de Gliglibido|146|374
+Cuir de Déminoboule|114|388
+Cuir du Sanglacier|130|538
+Cuir de Peunch|200|595
+Cuir Violet de Mégabwork|86|657
+Cuir de Bouftonmouth|112|800
+Cuir de Porkass|46|864
+Cuir d'Eskoglyphe|200|866
+Cuir de Bouftou Royal|30|911
+Cuir de Grodruche|200|913
+Cuir d'Empaillé|200|932
+Cuir de Cuirboule|200|1119
+Cuir de Ouassingue|36|1350
+Cuir de Scélérat Strubien|26|1981
+Cuir de Glouragan|190|2616
+Cuir de Maho Givrefoux|160|3102
+Cuir de Capsaaloocke|110|4495
+Cuir de Tengu Givrefoux|170|8787
+Cuir de Fuji Givrefoux|190|13261
+Cuir synthétique|199|31605
+Cuir Onique|120|240683
+Cuir de Psikopompe|200|3208617
+#Écorce
+Roue de Tivelo|86|79
+Écorce d'Abrakne Sombre|86|188
+Écorce d'Abraknyde Vénérable|80|382
+Écorce de Brouture|133|1236
+Écorce de Liroye Merline|78|1637
+Écorce d'Abrazif|170|1736
+Écorce de Floribonde|135|2140
+Écorce de Champaknyde|171|2675
+Écorce de Fécorce|134|3324
+Écorce de Nerbe|132|5539
+Écorce de Chiendent|131|6519
+#Étoffe
+Tissu Invisible|23|38
+Étoffe de Rat Bougri|82|42
+Étoffe du Wabbit|48|46
+Tissu Sombre|36|53
+Étoffe de Dok Alako|74|59
+Linceul|46|75
+Serviette de Plage|18|143
+Étoffe de Kurookin|140|280
+Étoffe de Ouassingue|92|337
+Fibre criminelle|66|403
+Étoffe Zoth|110|438
+Étoffe du Mulou|96|438
+Étoffe du Sanglier|24|658
+Étoffe de Firefoux|140|702
+Étoffe de Gliglidoudur|146|768
+Tissu de Graboule|86|791
+Étoffe de Kaniglou|130|849
+Étoffe de Meupette|149|1031
+Étoffe d'Écurouille|26|1181
+Étoffe de Draegnerys|70|1185
+Étoffe sanglante|200|1188
+Étoffe du Wa Wabbit|60|1517
+Étoffe de Choudini|90|1547
+Tissu Pourpre|86|1570
+Étoffe de Vigie Pirate|140|1763
+Étoffe de Foufayteur|66|2299
+Fibre de Chanvre|176|2346
+Étoffe de Glourmand|190|2363
+Étoffe Magique de Moon|100|2466
+Étoffe de Grodruche|200|3686
+Étoffe de la Cour Sombre|200|4027
+Soie chatoyante|200|4059
+Étoffe de Samouraï fantôme|160|4067
+Étoffe de Kaniblou|155|4211
+Trame Dimensionnelle|100|5208
+Tissu de Rapiéçage|1|6043
+Étoffe de Croleur|180|6372
+Étoffe du Roissingue|196|7377
+Étoffe de Gourlo le Terrible|70|7489
+Étoffe de Sphincter Cell|150|7902
+Étoffe du Fauchalak|114|11290
+Étoffe Mystérieuse|1|29603
+Tissu spectral de Fantômayte|150|437255
+Étoffe de Kolosso|190|531862
+#Fleur
+Fleur de Pissenlit Diabolique|18|25
+Pétale de Tournesol Sauvage|18|40
+Pétale Morito|43|41
+Pétale Passaoh|43|48
+Pétale Kouraçao|43|53
+Fleur de Blopignon|54|61
+Orchidée Freyesque|80|64
+Pétale Malibout|43|78
+Pétale de Rose Démoniaque|16|101
+Fleur de Gloutovore|100|104
+Fleur de Kaliptus|80|110
+Edelweiss|100|124
+Pétale Diaphane|2|125
+Belladone|160|137
+Fleur de Gloutoblop|60|206
+Pétale Magique du Tournesol Affamé|20|515
+Perce-Neige|200|597
+Fleur d'Onabu-Geisha|160|612
+Carniflore|60|783
+Pétale de Rose Obscure|23|809
+Fleur de Cactiflore|130|1616
+Fleur de Blop Coco Royal|60|1716
+Fleur des protecteurs du Sanctuaire|200|1815
+Fleur de Blop Reinette Royal|60|2039
+Clochettes|1|2052
+Pétale de Gangredogue|200|2505
+Fleur de Blop Multicolore Royal|120|2685
+Fleur de Blop Griotte Royal|60|3341
+Tulipe en papier|200|4120
+Fleur de Blop Indigo Royal|60|4761
+Orchidée de Génie|80|10278
+Fleur des protecteurs|200|10650
+Edelweiss Marguerite|100|19784
+Fleur de Cendrepierre|190|34546
+Belladonzelle|160|39049
+Fleur de Nenufor Tilotus|120|228847
+Fleur de Korriandre|180|425962
+Bouquet de lianes de la Princesse Maudite|200|2360571
+Étoile des Neiges|200|3500132

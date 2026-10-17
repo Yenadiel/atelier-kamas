@@ -1,0 +1,502 @@
+#Plante
+Trèfle à 5 feuilles|40|16
+Bulbe Morito|43|38
+Sauge|20|50
+Menthe Sauvage|60|51
+Pollen de Bulbiflore|110|57
+Bulbe Malibout|43|60
+Pistil de Floristile|110|72
+Ortie|1|75
+Feuille de Tikoko|50|107
+Bractée de Chiendent|131|110
+Épine de Bulbuisson|110|116
+Ginseng|140|147
+Langue d'Épouvanteur|18|147
+Bulbe Kouraçao|43|151
+Bulbe Passaoh|43|189
+Carpelle de Brouture|133|202
+Feuille de Fourbasse|100|239
+Sépale de Nerbe|132|279
+Pom de Pin|50|306
+Pousse de Malzerb|150|431
+Crinière fleurie|100|454
+Mandragore|180|532
+Tige de Bambouto|110|572
+Calice de Fécorce|134|629
+Étamine de Floribonde|135|643
+Feuille de Branche Soignante|138|743
+Salikrone|200|818
+Feuille de Tournesol Sauvage|18|879
+Mousse de Caméliache|200|888
+Feuille de Blop Royal|60|949
+Pétale de Malter|150|981
+Feuille de Blop Multicolore Royal|120|1272
+Feuille de Cawotman|120|1357
+Herbe à chacha|1|1499
+Épine d'Armuguet|200|1601
+Bractée de Droséràle|200|2013
+Feuille de Rose Obscure|23|3141
+Herbe Folle|18|3238
+Ortie Roïde|1|3374
+Pistil du Tynril|140|4495
+Sauge Divine au Rhum|20|4899
+Feuille de Fujibakama|30|5477
+Trèfle Agare|40|6187
+Liane de Soldalia|200|12122
+Menthe Religieuse|60|12812
+Pétale d'encre|200|14873
+Sépale de Droséràle|200|21372
+Ginsengoku|140|31312
+Mandragorgonzola|180|35272
+Ronce ephedryenne|1|47734
+Pétale de Papier|200|65266
+#Plume
+Plume de Tofubine|115|36
+Plume de Crowneille|66|37
+Plume de Piou Bleu|13|37
+Plume de Piou Rose|14|39
+Plumeau de Tofuzmo|114|40
+Plume de Piou Jaune|13|42
+Plume de Piou Violet|13|48
+Plume de Piou Vert|13|56
+Plume de Domoizelle|100|62
+Plume du Kwak de Terre|44|71
+Plume de Thomondor|50|77
+Plume de Gélikan|82|105
+Plume de Piou Rouge|13|111
+Plume du Kwak de Glace|44|114
+Plume du Timansot|132|121
+Plume du Serpiplume|124|133
+Plume de fesse du Kido|101|137
+Plume du Kwak de Flamme|44|147
+Plume de Corbac Apprivoisé|105|221
+Plume de Tofu|36|258
+Plume de Dostrogo|100|359
+Plume de Buveur|105|392
+Duvet de Truchon|118|429
+Houpette de Vilain Petit Tofu|109|439
+Plume du Kwak de Vent|44|562
+Plume Chimérique|1|607
+Plume de Granduk|200|612
+Plume de Dodox|200|635
+Plume de Truchideur|120|637
+Plume de Brabuzar|200|923
+Plume du Kwakwa|50|1172
+Plume Pointue de Renarbo|106|1177
+Plume de Tofu Royal|120|1237
+Plume de Gobvious|94|1304
+Plume du Rasboul Majeur|100|1418
+Plume du Mansot Royal|140|1604
+Plume de Batofu|40|1941
+Plume de Tofu Maléfique|26|2114
+Plume Graisseuse du Tofu Ventripotent|44|2757
+Plume Vibrante du Tofu Royal|120|2872
+Plume de Cycloïde|200|3584
+Duvet du Maître Corbac|120|4254
+Plume du Cavalier|200|6020
+Plume de Misère|200|33375
+Plume de l'Aziz|200|46639
+Plume d'Ilyzaelle|200|128508
+#Poil
+Moustache de Kolérat|66|20
+Poil d'Abrakne|46|23
+Fourrure de Timongouste|50|32
+Moustache précieuse|100|39
+Poils de Barbe du Bwork Mage|45|39
+Duvet de Tofoune|36|40
+Poils de Koalak Forestier|84|45
+Poil de Capsaaloocke|110|50
+Houpette de Koalak Sanguin|108|56
+Poils du Milimulou|26|56
+Poil de Vétauran|66|61
+Poils de Guerrier Koalak|106|62
+Poils de Barbe du Grand Pa Wabbit|56|69
+Moustaches de Tiwabbit|45|75
+Poil de Rat d'Égoutant|60|79
+Poil de Wobot Kiafin|80|90
+Duvet du Kilibriss|104|104
+Poils de Founamboul|140|114
+Poils de Mulounoké|96|136
+Touffe de Cheveux Blancs|46|136
+Sourcil de Moskito|13|157
+Barbe inexistante du Barbroussa|64|188
+Poils de barbe de dragodinde|66|190
+Moustache du Mufafah|100|194
+Poils de Black Tiwabbit|46|222
+Tignasse de Kanihilan|156|240
+Poils de Boumbardier|140|265
+Moustache de muldo pourpre|60|275
+Moustache de muldo ébène|60|282
+Moustaches de Cactoblongo|130|288
+Touffe de cheveux de Soissanth|170|317
+Crinière de Troollaraj|115|320
+Moustache de muldo indigo|60|342
+Cheveux d'Alhyène|156|344
+Poils de Darit|26|387
+Touffe de Poils de Rubise|120|408
+Poil de Gamino|124|450
+Touffe rousse du Flib|62|479
+Poils de Pétartifoux|140|484
+Poil de Rat Brâkmarien|110|487
+Moustache de muldo orchidée|60|488
+Duvet de Mamansot|132|520
+Poils de Koalak Griotte|84|542
+Mèche de Serpyn|190|565
+Crinière d'Orfélin|155|566
+Poils de Koalak Coco|84|602
+Poil de Gliglitch|146|682
+Poils de Koalak Reinette|84|686
+Poil de Rat Bontarien|110|693
+Poils de Wo Wabbit|56|698
+Poil de Renarbo|106|721
+Poils magiques de Tanuki|130|739
+Poil de Troolléolé|116|744
+Poil de barbe du Shamansot|132|765
+Poils de Boulglours|190|787
+Pelage aérodynamique|140|813
+Crinière de Scélérat Strubien|23|927
+Barbe du Cyclophandre|200|937
+Cheveux de Draegnerys|70|1010
+Crinière de Rat Blanc|110|1047
+Moustache de muldo doré|60|1055
+Pelage chocolaté|130|1066
+Barbe du Chouque|90|1085
+Crinière de Rat Noir|110|1136
+Duvet de Nelween|70|1148
+Barbe du Wa Wobot|80|1153
+Poils du Minotoror|120|1166
+Poil de Bworkette|50|1204
+Sourcil de Barbétoal|200|1261
+Poils de Goultime|200|1266
+Duvet de Bourdard|56|1362
+Poils de Koalak Indigo|84|1438
+Poils de souris|1|1487
+Moustache de Boostache|40|1542
+Rouflaquettes d'Halouine|100|1748
+Poil du Wa Wabbit|60|1811
+Poil de Dragon Cochon|100|1939
+Poil de Chachachovage|82|1975
+Poils d'Arakne Malade|13|1977
+Touffe de Kabombz|170|1984
+Poils de Smilomouth|130|2087
+Poil de Skeunk|120|2165
+Poil de Ben le Ripate|150|2490
+Poils de Kerubim|10|2666
+Tresse du Koulosse|100|2777
+Poils de Kanigroula|160|3104
+Poils de Barbe d'Enutrofor|200|3281
+Tresse du Poolay|150|3509
+Poils d'Hordémon|170|3630
+Moustache de Frimar|200|3666
+Crinière de Krakal|200|4002
+Frange d'Ébourifauve|200|4270
+Poils de barbe de Marteau-Aigri|190|4509
+Poil d'aisselle de Missiz Frizz|200|5059
+Tresse de Domptueuse|200|5189
+Moustache de Klime|200|5236
+Crinière du Vénérable Endormi|200|5274
+Barbe de Seith|170|5473
+Moustache de Rilur|200|5988
+Barbe de Merkator|200|6162
+Poil de Chacrebleu|160|6606
+Poils de Barbe du Warko Violet|112|6974
+Poils de barbe de Barbélier|200|12555
+Mèche Rebelle d'Hell Mina|150|15928
+Poil de Blérauve|180|19688
+Mèche de Pralicienne|200|26440
+Mise en plis de Voracle|200|40446
+Moustache du Docteur Eggob|190|46231
+Poils de Zatoïshwan|150|60538
+Moustache du Shogun Tofugawa|160|80144
+Cheveu d'Atcham|200|109743
+Moustache de Ush|160|113698
+Poil de Simbadas|90|133090
+Cheveux de Naganita|100|139942
+Poil de Meno|200|149445
+Poil de Katigrou|140|166981
+Poils du Comte Razof|190|174808
+Cheveux de Tal Kasha|200|184824
+Touffe de cheveux du YeCh'Ti|170|395978
+Crinière de Qilin|200|536399
+Poil de Rhoarim perturbé|200|641056
+Toison de la Déchireuse|200|5852358
+#Poisson
+Goujon|1|4
+Poisson Pané|50|10
+Greuvette|10|24
+Truite|20|32
+Dorade Grise|110|35
+Anguille|100|37
+Raie Bleue|130|37
+Crabe Sourimi|30|41
+Carpe d'Iem|60|46
+Pichon Eud'Compet|1|55
+Poisson-Chaton|40|65
+Brochet|80|69
+Morue|170|73
+Requin Marteau-Faucille|150|94
+Bar Rikain|160|111
+Lotte|140|119
+Sardine Brillante|70|119
+Perche|120|143
+Kralamoure|90|153
+Pichon Magique|120|182
+Tanche|180|263
+Espadon|190|268
+Poisskaille|200|695
+Patelle|200|2462
+Pichon d'encre|200|3249
+Poisson Igloo|50|4513
+Goujon Kiye|1|6896
+Sardine Sombre|70|13403
+Poisson-Tigre|40|14165
+Truite Ancestrale|20|14599
+Brochet Tupe-Halett|80|15363
+Kralamoure Unique|90|16547
+Greuvette Horreur|10|18208
+Anguille Souroche|100|22927
+Crabe Sourimi Exotique|30|24022
+Glotte|140|47879
+Bar Iton|160|49917
+Chaton-Perche|120|65936
+Daurade Royale|110|74068
+Carpette des sables|60|76923
+Requin Marché-Libre|150|263122
+Raie de Farle|130|274256
+Tanche Hantée|180|562343
+Morue Barbue|170|682324
+Espadon Quichotte|190|1278727
+Poisskaille Givré|200|1637888
+#Poudre
+Levure de Boulanger|1|17
+Mesure de Poivre|1|24
+Poudre de Perlinpainpain|1|36
+Cendres de Tofutoflamme|114|37
+Mesure de sel|1|70
+Poudre d'Artifice|1|92
+Poudre Temporelle|1|111
+Poudre explosive|70|178
+Sable Fin|80|208
+Cendres Éternelles|1|324
+Blague de Soufre|1|1476
+Poudre Novice|75|1497
+Poudre Mature|125|2194
+Poudre Juvénile|25|2201
+Cendres Vénérables|175|2794
+Poudre Vénérable|175|3150
+Sel de Baleine|200|4732
+Cendres Novices|75|5185
+Cendres Juvéniles|25|6504
+Cendres Matures|125|9052
+Farine Humée|158|9270
+Farine de contrebande|30|11939
+Poudre glaciale|190|12483
+Poudre à canon de Carlita|100|237545
+#Préparation
+Potion de Souvenir|30|2089
+Shampoing Rhoarim|200|2369
+Potion de Vieillesse|95|3182
+Poison cinglant|100|4251
+Potion des Ancêtres|135|8943
+Potion de Glandage|175|18136
+Potion d'altération|145|36484
+Potion minérale|55|44233
+Jus d'Écumouth pressé|60|46485
+Philtre de Longévité|158|97324
+Potion de Sésanabolisant|180|295773
+Dissolvant Phosphorescent|185|599999
+#Queue
+Queue de Fennex|80|50
+Queue de Boostache Prépubère|36|55
+Queue de Scordion Bleu|80|57
+Queue de Chapardam|4|73
+Queue de Black Wabbit|52|74
+Pompon Brunâtre|54|90
+Queue de dragodinde sauvage|66|98
+Queue de Rat du Gang|139|143
+Queue du Fu Mansot|132|164
+Queue de Mère Veilleuse|150|197
+Queue de Fantomalamère|140|297
+Queue de Sanglier des Plaines|44|314
+Queue de Meliglours|190|525
+Queue de Wolvero|180|617
+Queue du Mulou|96|673
+Queue de Chevrotine|190|685
+Queue du Boufmouth légendaire|112|777
+Queue d'Écumouth|130|1098
+Queue de Rat d'Hyoactif|56|1532
+Queue de Blérom|180|2173
+Queue Magique de Founoroshi|140|2453
+Queue de Yomi Givrefoux|160|2698
+Queue de Brikoglours|200|3532
+Queue de Mantaze|200|5984
+Queue de Glourséleste|190|6170
+Queue de Chasquatch|160|8637
+Queue du Royalmouth|120|9464
+Queue emplumée du Rasboul Majeur|110|30746
+Queue de Sinistrofu|200|35742
+Queue de Bethel Akarna|200|225730
+Queue de Kanigroula|160|325828
+#Racine
+Racine de Tronkoblop|52|19
+Racine d'Abraknyde Vénérable|80|296
+Racine d'Abraknyde|44|542
+Racine d'Abraknyde Sombre|78|557
+Racine du Chêne Mou|140|1660
+Racine d'Abraknyde Ancestral|90|2667
+Racine d'Abrazif|170|7069
+Racine de synthèse|180|37903
+Racine cristalline|200|92493
+#Ressource de combat
+Trident Cassé|46|19
+Couteau de Roukouto|86|34
+Lance de Chika Rat|110|42
+Lance-Pierre de Scélée Rate|110|91
+Sarbacane en Bambou|130|95
+Katana de Kwamouraï|130|98
+Canif Rouillé|90|185
+Miséricorde du Chafer d'Élite|46|187
+Tuyau Rouillé de Rate Iboisée|110|197
+Boomerang Abîmé de Diamantine|120|202
+Épaulière de Kabushido|160|210
+Boomerang du Warko Marron|78|307
+Bolas de Maltrio|150|379
+Boomerang du Dok Alako|74|420
+Lame brisée de Lichangoro|140|449
+Croissant de Tsukinochi|160|709
+Tête de lance de Fangshu|140|905
+Armure de Blindur|190|1123
+Poing de Coquelicogne|200|1374
+Fronde de Boufronde|190|1809
+Diadème de Belilith|200|2359
+Pique du Soldat|200|2551
+Mèche de bombe de Terristocrate|200|3024
+Grenade de Moribombe|200|3709
+Lame tranchante|200|4003
+Plastron de Tambouraï|160|4373
+Gros Boulet|40|8381
+Trident de Tryde|200|11175
+Boomerang du Koalak Sanguin|108|13962
+Boomerang du Maître Koalak|114|21150
+Spalière de Krâradia|200|22782
+Sceptre brisé de Kabahal|200|191371
+Masque cauchemardesque de*|200|228077
+#Anomalie temporelle
+Boucle intemporelle|200|16812
+Boucle temporelle|200|17894
+Fragment d'anomalie|1|19455
+Relique de Bébémoth|200|4129888
+#Songes
+Reflet onirique|1|782
+Fragment de prysmaradite|200|43490
+Légende animale de Poukachi|200|933159
+Légende du Miroir|200|1291983
+Légende animale de Magicrabe|200|1438776
+Légende de Misère|200|1627323
+Légende du Destin|200|1652230
+Légende d'Amayiro|200|1823758
+Légende de Servitude|200|1828963
+Légende de Mille Lieues|200|1986299
+Légende du Cul Botté|200|2062741
+Légende animale de Bakushana|200|2234820
+Légende de Ganymède|200|2236288
+Légende de Buhorado|200|2726483
+Légende de Fallanster|200|3812461
+Légende d'Henual|200|3898243
+Légende de Brumaire|200|3987722
+Légende de Dodge|200|4231036
+Légende d'Helséphine|200|6067777
+Légende de Corruption|200|6430380
+Légende de Crocobur|200|6518171
+Légende de Menalt|200|6718429
+Légende de Rykke Errel|200|7932184
+Légende de Brâm Barbe-Monde|200|11714622
+Légende du Trompe-la-Mort|200|14828636
+Légende de Guerre|200|20540131
+Légende animale de Kwakarticho|200|23969769
+Légende de Jahash Jurgen|200|28187155
+Légende de Dame Jhessica|200|31704765
+Légende d'Oto Mustam|200|59333333
+Légende de Mériana|200|64333331
+Légende de Thanatena|200|92666665
+#Sève
+Sève de Châtaignier|20|5062
+Sève de Frêne|1|5332
+Sève de Noyer|40|12445
+Sève d'Érable|80|14192
+Sève d'If|100|16827
+Sève de Bombu|70|17150
+Sève d'Oliviolet|90|18727
+Sève de Bambou|110|19310
+Sève de Noisetier|130|20799
+Sève de Chêne|60|24524
+Sève de Merisier|120|24746
+Sève de Bambou Sombre|170|26192
+Sève d'Ébène|140|26281
+Sève d'Orme|180|28819
+Sève de Kaliptus|150|29001
+Sève de Charme|160|37956
+Sève de Bambou Sacré|190|48631
+Sève de Tremble|200|10916597
+#Substrat
+Substrat de Buisson|20|2041
+Substrat de Bocage|40|3713
+Substrat de Futaie|60|5007
+Substrat de Fascine|80|5221
+Substrat de Forêt primaire|160|5403
+Substrat de Fourré|120|10485
+Substrat de Bosquet|100|10675
+Substrat de Forêt|140|17938
+Substrat de Forêt vierge|180|37655
+Substrat de Sylve|200|53672
+Substrat Astral|200|84575
+#Teinture
+Teinture Magique de Rougeur|55|874
+Teinture Magique Sombre|10|4455
+Teinture Magique Verdâtre|15|6847
+Teinture Magique Orange|20|11851
+Teinture Magique Bleutée|55|17757
+Teinture Orange Sanguine|155|38522
+Teinture Magique Ténébreuse|174|134536
+#Viande
+Viande Minérale|40|11
+Viande Tendre|50|11
+Viande Frelatée|30|14
+Viande Avariée|70|32
+Viande Hachée|10|58
+Viande Intangible|1|89
+Viande Exsudative|100|100
+Viande Faisandée|20|106
+Viande Persillée|130|135
+Viande Ladre|60|188
+Viande Séchée|110|221
+Viande Saignante|120|348
+Viande Rassie|90|416
+Viande Macérée|140|459
+Viande Noire|190|598
+Viande de Brousse|150|719
+Viande Goûtue|200|814
+Viande Maigre|170|830
+Viande Sanguinolente|80|918
+Viande Fraîche|160|953
+Viande Gâtée|180|1687
+Bidoche Faisandée|20|3589
+Bidoche Ladre|60|3780
+Bidoche Minérale|40|3811
+Bidoche Tendre|50|3985
+Bidoche Frelatée|30|4575
+Bidoche Avariée|70|6894
+Bidoche Exsudative|100|7904
+Bidoche Intangible|10|8349
+Bidoche Rassie|90|8468
+Bidoche Sanguinolente|80|8983
+Bidoche Séchée|110|8984
+Bidoche Saignante|120|11367
+Bidoche Macérée|140|22557
+Bidoche Persillée|130|24301
+Bidoche de Brousse|150|27299
+Bidoche Fraîche|160|27756
+Bidoche Maigre|170|33343
+Bidoche Gâtée|180|38119
+Bidoche Noire|190|42096
+Bidoche Goûtue|200|57028

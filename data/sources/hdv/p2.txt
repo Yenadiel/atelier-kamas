@@ -1,0 +1,359 @@
+#Fruit
+Noix de Grokoko Traumatisée|50|9
+Noix de Kokoko|50|46
+Cerise|1|51
+Fraise|58|77
+Aubergine|1|306
+Citron|1|461
+Bananagrume|57|2257
+Orange amère|200|2554
+Framboise|1|6856
+#Galet
+Galet cramoisi|50|2517
+Galet Saisonnier|50|7779
+Galet rutilant|100|22809
+Galet Lunaire|100|39201
+Galet rayonnant|150|112031
+Galet Solaire|150|201077
+Galet brasillant|195|211495
+#Gelée
+Gelée Sbihaine|1|6
+Gelée Menthe Royale|60|168
+Gelée à la Fraise|58|210
+Gelée Bleuet|54|225
+Gelée Fraise Royale|60|233
+Gelée Citron|60|268
+Gelée Bleuet Royale|60|380
+Gelée à la Menthe|56|500
+Gelée Citron Royale|60|956
+Pâte à Tra Khben|1|12087
+#Graine
+Gland|26|9
+Haricot|1|41
+Noix de Pécan|50|100
+Graine de Pandouille|120|106
+Noisette|26|106
+Graine de Pavot|18|127
+Noix de Cajou|43|166
+Graine de Scorbute|66|330
+Graine de Sésame|1|510
+Graine de Tournesol|18|530
+Graine de l'Abrakleur sombre|137|700
+Graine de la Discorde|41|948
+Gland de Fouduglen|10|2179
+Graines de Citwouille Maudites|100|2522
+Gland de l'Écumouth|130|5108
+Pandouille de Trois|120|27223
+#Haïku
+Haïku d'encre : Invisible|1|272
+Haïku d'encre : Ombre|1|281
+Haïku de papier : Granouille|1|376
+Haïku de papier : Qilin|1|782
+Haïku de papier : Cygrue|1|883
+Haïku d'encre : Illusion|1|1005
+Haïku d'encre : Conte|1|1109
+Haïku de papier : Cochon|1|1343
+Haïku d'encre : Mystère|1|3717
+Haïku de papier : Chtigre|1|3903
+Haïku des deux Royaumes : Fermenta*|1|5845
+Haïku des deux Royaumes : Floraison|1|8980
+Haïku des deux Royaumes : Passage|1|9723
+Haïku des deux Royaumes : Sommeil|1|12451
+Haïku des deux Royaumes : Moisson|1|17165
+Haïku de Pandala : Aerdala|1|33165
+Haïku de Pandala : Feudala|1|48630
+Haïku de Pandala : Terrdala|1|50523
+Haïku de Pandala : Plantala|1|67307
+Haïku du Wukin : Soir|1|94446
+Haïku du Wukang : Chaleur|1|99990
+Haïku du Wukin : Sakoura|1|110589
+Haïku de Pandala : Taverne interdite|1|113796
+Haïku du dragon : Destruction|1|129852
+Haïku du dragon : Création|1|152650
+Haïku du Wukang : Blanc|1|169762
+Haïku des samouraïs : Été|1|177669
+Haïku du Wukang : Matin|1|179703
+Haïku du Wukin : Épouvantail|1|179869
+Haïku des samouraïs : Printemps|1|180345
+Haïku de Pandala : Akwadala|1|197439
+Haïku du Wukang : Sakoura|1|258106
+Haïku des samouraïs : Automne|1|262740
+Haïku de Pandala : Grobe|1|274976
+Haïku du dragon : Passion|1|302951
+Haïku du Wukin : Noir|1|347956
+Haïku du dragon : Résolution|1|361364
+Haïku du Wukang : Tonnerre|1|376135
+Haïku des samouraïs : Hiver|1|499599
+Haïku du dragon : Renaissance|1|545451
+Haïku du Wukin : Froid|1|772574
+Haïku des samouraïs : Nouvel an|1|1083517
+#Huile
+Gratrooll|116|73
+Huile à frire|1|125
+Huile de Palme|32|493
+Huile de Fantimonier|140|919
+Huile de Riz|1|989
+Huile de Pichon|140|1364
+Gratrooll Industriel|1|1475
+Huile de Noix|32|1784
+Huile de Sésame|1|2003
+Huile de Mamansot|132|2140
+Huile de Tournesol Sauvage|12|4714
+Huile de Koode|32|5386
+Huile de Frostiz|200|7156
+Huile de Pikoleur|200|40533
+Huile de Mekamouth|200|4055064
+#Laine
+Laine de Bouftou|19|53
+Laine du Chef de Guerre Bouftou|29|61
+Laine de Ramane Strubien|23|92
+Laine Céleste|3|200
+Laine du Boufcoul|96|233
+Laine de Dardalaine|86|249
+Laine de Boufmouth|112|314
+Laine de Yokaï Givrefoux|160|424
+Laine de Maho Givrefoux|160|464
+Laine de Boufmouth légendaire|112|610
+Laine de Bouftou Royal|30|667
+Laine de Boufton Noir|26|1615
+Laine du Royalmouth|120|1707
+Laine de Sylargh|200|4248
+Laine de Tengu Givrefoux|170|5830
+Laine du Trooll Furieux|115|9215
+Laine de Fuji Givrefoux|190|11459
+Laine de Glouragan|190|16738
+Laine de Bouflouth|120|127392
+#Légume
+Feuille de salace|26|86
+Concombre|130|256
+Oignon|1|330
+Pomme de Terre|1|342
+Pommes de Terre épluchées|1|612
+Cawotte|44|811
+Pwimen|1|977
+Cawotte Transgénique|120|1297
+#Liquide
+Sang de Bouftou|19|15
+Sang de Vampire|35|25
+Eau Potable|1|50
+Boue du Boo|27|57
+Bave de Bouftou|7|65
+Eau calme|1|105
+Bave de Ouassingue|98|114
+Fluide Glacial|18|115
+Bave de muldo|60|131
+Venin de Serpentin|56|146
+Bave de Rose Démoniaque|16|197
+Lait de Tortue|50|235
+Sueur Froide de Fantôme|46|279
+Résine|44|362
+Sang de Scorbute|36|365
+Jus de Toubibz|170|415
+Nectar de l'Orient|110|430
+Eau Ferrugineuse|10|442
+Sang de Viandargh|190|519
+Bave de Champ à Gnons|176|527
+Eau de Kwapa|130|578
+Sang de Harpo|200|612
+Sang de Karkanik|200|612
+Kole|100|689
+Jus de Cacterre|130|730
+Bave de Brokouillon|190|793
+Rhum de Qualité|90|931
+Jus de Ouassingue|92|1016
+Bave du Kaskargo|154|1070
+Boue Novice|75|1140
+Boue Juvénile|25|1143
+Sang de Wabbit Garou|120|1150
+Glouto Rhum|100|1291
+Bave de Marthos|190|1405
+Flaque Juvénile|25|1429
+Sang de Ventrublion|200|1603
+Shampooing au Kaliptus de Saphira|120|1638
+Venin d'Éperfide|180|2580
+Flaque Novice|75|2720
+Bave de Nessil|200|2728
+Sueur de dragodinde|60|2845
+Jus de poisson|95|3618
+Flaque Vénérable|175|3870
+Fluide nasal de Prim|200|4261
+Lait de Cochon de Lait|43|4488
+Boue Vénérable|175|4721
+Cocktail cacterre|200|5023
+Boue Mature|125|6215
+Pluie de Pandala|130|7209
+Sang de Calciné|200|7309
+Bave de Mol Usk|200|7311
+Flaque Mature|125|7427
+Venin de Mureine|200|15585
+Sang du Kido|101|19977
+Sang du Toxoliath|180|40633
+Larme de Givrefoux|170|118374
+Jus de poisson abominable|60|218096
+Parfum de Pantèroz|130|296755
+Sang du Shushu Debruk'Sayl|180|827891
+Jus de poisson asphyxiant|130|966331
+Miel de Viti Glourson|200|2464732
+Jus de poisson méphitique|200|8999996
+#Matériel d'alchimie
+Tube longiforme|1|6
+Grande fiole|1|23
+Bocal|1|224
+Fiole de gaz draconique|200|899
+Fiole de fumée de Nelween|70|2782
+Fiole à élément|10|3206
+Breuvage Musculaire|190|17976
+#Matériel d'exploration
+Volant hydraulique|200|534541
+Lest anti-tourbillon|200|721907
+Attrape-peur|200|830452
+Sceau des fondateurs|200|1123485
+Accélérateur de propulsion|200|1488802
+Statuette de Snedon|200|1548363
+#Métaria
+Sphère à Métarias|1|194
+Métaria Triame rouge|1|380
+Métaria Triame verte|1|1302
+Métaria jaune|1|1564
+Métaria rouge|1|1640
+Métaria bleue|1|1809
+Métaria Triame bleue|1|2233
+Métaria Triame jaune|1|2347
+Métaria Mage jaune|1|3873
+Métaria verte|1|4835
+Métaria Mage bleue|1|5805
+Métaria Mage verte|1|7561
+Métaria Mage rouge|1|16057
+#Minerai
+Cuivre|20|52
+Bauxite|140|114
+Bronze|40|128
+Or|160|148
+Fer|1|156
+Kobalte|60|252
+Charbon|65|287
+Silicate|100|333
+Manganèse|80|455
+Cendrepierre|180|491
+Étain|100|570
+Dolomite|180|654
+Argent|120|808
+Obsidienne|200|1104
+Cristal pliable|200|1349
+Cristal liquide|200|1577
+Écume de mer|200|2249
+Minerai Étrange|56|3273
+#Nowel
+Blague Glutine|1|36
+Flocon de Neige Doré|1|160
+Antennes du Cafard Fadet|125|451
+Fond de Culotte de Glugubrr|25|636
+Nez-Rouge de Redolphe|85|1570
+Cire de Gligli Améliorée|1|1707
+Râtelier d'Oogie Betty|150|2602
+Moule de Clef de la Caverne de Nowel|110|2749
+Flocon de Neige|1|14372
+Paquet Cadeau du Minotoboule de Nowel|197|51024
+Patron de Redolphe|85|70841
+Patron du Glutin|25|124770
+Patron du Nowel Cauchemardesque|150|159768
+Patron du Père Fwetar|190|292596
+Patron Hirsute|1|333319
+#Œil
+Œil de Raul Mops|46|13
+Œil de Kwoan|35|17
+Œil de Léolhyène|80|61
+Œil de Cocholou|96|76
+Œil de Craquelope|66|104
+Œil Bionique|51|109
+Œil de Tofu Noir|36|127
+Œil de Rat du Gang|134|130
+Œil d'Arakmuté|13|166
+Œil de Truchtine|119|203
+Œil d'Abrakne|46|233
+Œil de Saltik|86|283
+Œil de Madura|170|422
+Œil de Champmane|176|527
+Œil de Boufmouth de guerre|112|737
+Œil de Ramane Strubien|26|770
+Œil de Cycloïde|200|792
+Œil de Morcac|110|834
+Œil de Branche Soignante|138|887
+Œil de Pikdoa|26|965
+Œil de Harrogant|200|973
+Œil de Vigie Pirate|140|1103
+Œil torve de Fricochère|130|1135
+Œil de Crowneille|66|1205
+Œil de Kanigrou|70|1442
+Cornée de Kami Givrefoux|160|1467
+Œil de Crabe Hijacob|82|1503
+Œil de Dawaj|200|1558
+Œil du Kharnozor|100|1931
+Œil de Harpille|200|1944
+Œil de Branche Invocatrice|138|1992
+Œil de Shokkoth|200|2056
+Œil de Phozami|150|2536
+Œil de Gouligane|200|3215
+Œil de Wabbit Céphale|120|3611
+Œil de Crocodaille albinos|200|3649
+Œil de Sapeur|181|3973
+Œil de Halbardent|200|4519
+Œil de Dramanite|170|6285
+Œil de Harpo|200|6295
+Œil de Krokille|75|6927
+Œil de Feutôme|200|12851
+Œil de Fleuro|180|14262
+Iris de Boulglours|190|17498
+Œil de Verminocule|200|46551
+Œil du Père Ver|170|51829
+Globe oculaire de Musha|80|54761
+Œil de verre|200|75853
+Œil de Korriandre|180|512774
+#Œuf
+Œuf de Tofu|36|151
+Œuf Pourri|36|177
+Œuf de Tofubine|115|447
+Œuf de Dragoeuf Ardoise|74|697
+Jaune d'Œuf de Krokille|25|715
+Œuf Chimérique|1|786
+Œuf de Gobus|189|788
+Œuf de Dragoeuf Argile|74|957
+Zœuf de Kamikabz|170|1590
+Œuf de Dragoeuf Calcaire|74|2423
+Zœuf de Balebz|170|2458
+Zœuf de Toubibz|170|2831
+Œuf de Dragoeuf Charbon|74|2867
+Zœuf de Quadrabz|170|6959
+Œuf de Crapeur|150|7539
+Œuf du Mansot Royal|140|11128
+Œuf de Haute Truche|130|30495
+Œuf d'Ali Grothor|130|79980
+Œuf inerte|200|592614
+#Oreille
+Oreille de Guerrier Mental|56|27
+Oreille de Douzdoa|26|43
+Oreille de Bouftonmouth|112|69
+Oreille percée du Fricochère|130|114
+Oreille de Foufayteur|66|115
+Oreille de Kaniglou|130|129
+Oreille de Kakoalak|130|158
+Oreille de Rat Plapla|110|230
+Oreille de Soryo Givrefoux|160|372
+Oreille de Rhinoféroce|96|497
+Oreille de Kaniblou|155|525
+Oreille du Grand Pa Wabbit|56|593
+Oreille de Griffotep|200|610
+Oreille de Croleur|180|721
+Oreille de Bouledogre|93|787
+Oreille de Médibwork|86|878
+Oreilles de Wabbit Fluo|120|1142
+Oreille du Fu Mansot|132|1156
+Oreille de Chargus|160|1451
+Oreille de Fleuro|180|1722
+Oreille de Gobosteur|180|1897
+Oreille de Lapilope|200|2114
+Oreille d'Apériglours|180|2785
+Oreilles du Tiwabbit|45|2966
+Oreille de Blérice|180|4854
+Oreille de Mécanofoux|200|5057
+Oreille de Fistulor|170|7839

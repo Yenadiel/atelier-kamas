@@ -1,0 +1,511 @@
+#Ressource diverse
+Encre d'Oktapodas|1|2
+Ticket pour l'île de Moon|1|3
+Ficelle en Lin|1|7
+Bourse Suspecte|45|8
+Capsule Explosive|45|8
+Miroir de Dopeul|41|9
+Flèche du Chafer Archer|46|10
+Passe pour l'îlot Estitch|1|11
+Sceau Royal Contrefait|43|11
+Ballon bleu|1|20
+Poupée Vaudou Eth|60|21
+Paupière d'Étoile|46|23
+Griffes de Kwak|44|25
+Cœur de Boue du Boo|27|26
+Griffe de Muloubard|96|36
+Chaînes Brisées|47|37
+Estomac de Wo Wabbit|56|37
+Papier Charbon|41|37
+Kamiam|40|39
+Sac à Patates Sombre|42|40
+Sac à Patates Clair|42|42
+Pièce du Trésor du Badoul|43|43
+Poupée Vaudou Jav|60|43
+Lunettes de Tiwobot|80|44
+Ver d'Air|44|45
+Ours Déchiqueté|46|47
+Main de Boo|66|49
+Langue de Mimikado|100|51
+Antennes de Vilinsekt|36|53
+Graisse Gélatineuse|54|53
+Antenne de Trésantène|100|54
+Pustule de Rat Sio|110|54
+Poupée Vaudou Tam|60|57
+Dédicace de Skeunk pour Émeraude|120|59
+Ver de Terre|44|59
+Estomac de Black Wo Wabbit|80|63
+Poupée Vaudou Ark|60|63
+Kokopaille|50|64
+Éclat du Mawabouaino|60|66
+Ver de Feu|44|68
+Jouet de Gamine Zoth|118|69
+Dose de jus goûtu|1|71
+Corde de Boursoin|100|74
+Chaîne de Robot Fléau|56|75
+Poupée Vaudou Sarbak|60|75
+Ver d'Eau|44|75
+Viscères de Scarafeuille|38|75
+Épingle à Cheveux de Saphira|120|75
+Coque Endommagée|56|76
+Feu Intérieur|1|78
+Trukikol Mort|100|79
+Boules de Kanniboul|60|81
+Fil de Soie|18|82
+Livre du Bwork Mage|45|82
+Vieille Partition|46|86
+Boulet de Canondorf|90|87
+Langue de Grenufar|110|95
+Griffe de Robionicle|56|101
+Doigt de Branche Invocatrice|138|107
+Pic de Lance de Gobet|40|108
+Makroute Déchiqueté|46|112
+Couche usagée de Warko Violet|112|113
+Relique d'Incarnam|5|113
+Langue de Craquelope|66|114
+Conque Marine|18|117
+Poterie cassée de Lolojiki|130|124
+Enfumoir Zoth|114|127
+Boulier Zoth|126|155
+Intestin d'Araknosé|13|155
+Arakne Majeure Morte|44|165
+Croupion de Truchmuche|121|165
+Boulon Wabbit|80|168
+Vieille Ventouse de Kralamoure|106|168
+Souris verte|56|169
+Blop mort|44|171
+Bol|1|177
+Pelote de laine boufcoul|100|177
+Bâton de Blanc Pa Wabbit|80|181
+Emballage Suspect|52|184
+Pixel de Segmantid|120|187
+Épices|1|190
+Pixel de Farfacette|120|193
+Nœud de Marin|90|197
+Charnière Cassée|56|207
+Longue-vue de Gob-Trotteur|40|209
+Collier Cassé de Macien|66|210
+Rembourrage de Meupette|149|210
+Porte-bonheur de Malalfa|150|211
+Chélicères d'Arapex|86|212
+Viscères de Scorbute|65|215
+Ouvrage magique d'Aloevée Rate|110|219
+Groin de Sanglier des Plaines|44|220
+Boule de Boulépique|80|226
+Estomac de Ouassingue|36|230
+Vieux Bouquin de Rat Li|110|236
+Glande d'Arak-haï|86|242
+Maraca de Lévito|130|244
+Bandelettes|86|255
+Flamme Spectrale|65|274
+Grelot|56|280
+Bout de Blop Coco|26|282
+Fil de Néfileuse|86|283
+Babines de Macien|66|295
+Tambour de Gobaladée|40|300
+Braise de Tofutoflamme|114|302
+Scalp de Mulounoké|96|310
+Scalp de Bizarbwork|86|326
+Nageoire de Compétition|18|328
+Tranche de Nodkoko|50|335
+Pixel de Brikablak|120|336
+Tourbe séchée de Tourbassingue|106|345
+Parchemin de Cactana|130|350
+Osier Enchanté|86|358
+Relique Familiale|46|363
+Croupion de Tofuzmo|114|379
+Arakne Irascible Écrasée|130|383
+Bâton du Kilibriss|104|392
+Testicules Magiques de Muloubard|96|401
+Mojo de Mergranlou|96|413
+Pense-bête de Rubise|120|414
+Calumet Zoth|130|431
+Boulon de Cybwork|179|439
+Estomac de Tofukaz|36|446
+Élastique de barbe de Sanglirok|190|446
+Manuel du Directeur Grunob|40|447
+Croupion du Bitouf aérien|152|455
+Glandes de Truchtine|119|458
+Langue de Gargrouille|36|474
+Bout de Blop Indigo|26|489
+Crème à bronzer|18|490
+Bout de Blop Griotte|26|506
+Pixel d'Éklatleth|120|507
+Faux menton du Bourbassingue|101|516
+Bandelette de Tromblion|130|518
+Sacoche de Kartouche|130|540
+Tête de Marteau en Jade|8|549
+Boostoplasme|40|586
+Cendres de Chause|200|594
+Coton Ancestral|18|594
+Pépite croquée|130|605
+Chauve-souris|35|607
+Place de Concert de Diamantine|120|612
+Arakne Écrabouillée|82|625
+Langue de Morsquale|170|627
+Cœur de Brandon|110|632
+Palpe de Pikbul|110|663
+Tatouage de Mauvais Garçon|46|663
+Bandelette du Mominotor|114|683
+Bout de Blop Reinette|26|690
+Pilule du Gang|139|698
+Protection usagée du Bworker|160|720
+Cœur de Buveur|106|735
+Cœur du Croqueleur|130|739
+Langue de Tiwabbit Kiafin|44|757
+Boulet lesté|200|763
+Élastique de Gobvious|94|765
+Viscères de Balebz|170|790
+Osier Sombre|65|832
+Diadème de Chocoligarque|200|834
+Kamatrix|100|841
+Engrais|18|853
+Écusson du Sergent Zoth|120|877
+Scalp du Meulou|100|879
+Fumée Juvénile|25|888
+Nez de Pipisteuse|200|890
+Chair de Zombruth|200|914
+Tête de mort|100|918
+Collier de Chak Rat|110|946
+Groin de Dragon Cochon|100|987
+Fléau de Robot Fléau|56|996
+Paille Vampiresque|43|1014
+Flûte de Klûtiste|200|1021
+Boîte de Vétauran|66|1036
+Kolérat Mort|66|1044
+Baballe|64|1065
+Éclat Obscur|190|1065
+Boule de Panthègros|154|1084
+Estomac de Mansocolat|130|1094
+Pièce de Koffrefor|100|1143
+Testicules Magiques du Meulou|100|1194
+Soie Baveuse|90|1196
+Tendon de Waccro|55|1277
+Rondelles de Milirat Strubien|26|1289
+Bougie du Mineur Sombre|24|1295
+Pixel de Gromorso|120|1298
+Lampe de Gyrafor|200|1299
+Scalp de Milimulou|26|1318
+Talon d'achille de l'Abrakleur sombre|137|1364
+Langue de Kashkaille|200|1370
+Langue d'Étoile|46|1372
+Corbac Mort|106|1439
+Lanterne usée|170|1447
+Scalp de Bwariok|200|1453
+Schéma de la Pince à Linge|1|1457
+Symbole de Xélomorphe|120|1507
+Antenne de Gloursaya|190|1546
+Flèche de Crâmbo|190|1550
+Restes d'Esprigné|200|1552
+Groin de Brutapir|200|1588
+Tranche Magique de Krambwork|86|1593
+Insigne de Malveilleur|130|1618
+Muqueuse de Moumoule|46|1632
+Gâtrool|116|1675
+Métronome du Début-Temps|120|1703
+Serrure du Coffre des Forgerons|50|1723
+Paire de boules de Haute Truche|130|1747
+Viscères du Scarabosse Doré|40|1754
+Tonneau en Bombu|172|1757
+La cambriole pour les Nuls|50|1781
+Journal Intime d'Émeraude|120|1782
+Fragment d'Épée Reptilienne|66|1793
+Noeul Mort|22|1821
+Manche de Fouet|200|1841
+Pièce d'armure des Gardiens du Sanctuaire|200|1857
+Fumée Novice|75|1897
+Apostrophe d'Imafugo|200|1947
+Biscuit de chance|100|2016
+Guillemets de Mabram|200|2043
+Bwak Squelettique|90|2047
+Furoncle de la Mama Bwork|174|2135
+Larve pétrifiée d'Ecaflipuce|110|2145
+Poing-virgule d'Imushin|200|2240
+Cédille d'Imetsu|200|2259
+Tentacule de N'Yalg|200|2264
+Bouteille de Bouchonnois|190|2407
+Toile d'Abrakne Sombre|86|2440
+Corde du Fancrôme|140|2453
+Carapace circonflexe de Rokoram|200|2488
+Langue de Truchmuche|121|2500
+Coffret maudit du Flib|24|2520
+Guillemets d'Imiyama|200|2609
+Langue de Pistilangue|200|2609
+Salace de poissons empoisonnée|153|2623
+Scalp de Bwork Archer|43|2644
+Mouchoir de la Gamine Zoth|120|2653
+Bandelette du Guerrier Koalak|106|2700
+Sablier miniature|100|2721
+Poing-virgule de Shinlam|200|2735
+Testicules du Tanukouï San|130|2944
+Encre de Poulpée|200|2963
+Piques à cheveux de Shihan|140|3068
+Frimousse d'Alhyène|156|3247
+Bidule inutile|56|3286
+Langue de Champodonte|176|3299
+Pile Steamer|200|3331
+Groin de Porkzebuth|200|3374
+Amygdales du Bitouf Sombre|136|3442
+Cocon de Ver à Soie|36|3479
+Parasite Aquatique|200|3499
+Estomac de Tofu Ventripotent|36|3501
+Cervelle de Peunch|200|3549
+Bracelet de Force de Trooll|115|3668
+Formule de Breuvage Musculaire|190|3678
+Terre Stérile|200|3680
+Bracelet de Ino-Naru|140|3723
+Cœur d'Empaillé|200|3808
+Mâchoire de Gropotam|200|3816
+Carte du Grand Jeu|200|3840
+Épaule de Maléphisto|200|3842
+Sang coagulé|200|3885
+Cœur du Capitaine Ekarlatte|130|3898
+Chope de Bière|200|3941
+Langue de Kraméléhon|114|3974
+Globule de Nyée|90|4025
+Testicules de Cocholou|96|4083
+Symbole des Obscuranti|190|4128
+Malleus de Karkanik|200|4162
+Morceau de clef de Paspartou|200|4162
+Antenne de Bacterrib|200|4168
+Bouée de Fantomalamère|140|4202
+Corde d'escalade|1|4344
+Flûte de Mastodonte|80|4525
+Langue d'Amphibouc|200|4543
+Morpion de Truchideur|120|4551
+Germes corrompus|200|4693
+Estomac de Gliglidoudur|146|4726
+Sac de boulanger frigostien|100|4749
+Mâchoire de Brutasmodan|200|4771
+Baguette Rythmique|200|4838
+Cloaque du Poolay|150|4926
+Tentacule de Grofond|200|5007
+Crochet rouillé|130|5201
+Carapace circonflexe d'Imorok|200|5381
+Poupée de Caïguille|200|5469
+Tentacule de Démoloch|200|5566
+Fragment de Chakanoubis|200|5780
+Ventouse du Kralamoure géant|200|5915
+Cervelle de Bouftou des Cavernes|96|5949
+Offrande aux esprits célestes|1|6192
+Linothorax|200|6538
+Lanière en cuir de Gliglitch|146|6701
+Fumée Mature|125|6734
+Langue de Diabélial|200|7110
+Sceau du Roi Joueur|200|7206
+Chaîne de Panthègros|154|7359
+Diacritique de la Reine Amirukam|200|7481
+Brûlâme encapsulé|200|7508
+Fumée Vénérable|175|7547
+Pic de Malépik|150|7585
+Moumoule|30|7954
+Clakoss|110|8138
+Diacritique du Roi Imagami|200|8371
+Lanterne de Tourthon|200|8515
+Schéma d'Implants Rustiques|190|8567
+Coffre-forge|30|8662
+Chaudron de Températurge|200|9862
+Cœur du Mantiscore|80|10051
+Fragment d'Ectorche|200|10118
+Collier d'esclave|200|11411
+Piège désamorcé de Mâchassin|200|11708
+Paupière Dorée de Rykaon|200|11760
+Aileron de Willorque|200|12499
+Brochette de Laikteur|30|12741
+Sceau Sylvestre|90|13173
+Poche de charbon de Grasmera|100|13349
+Pic de Ravageur|200|13736
+Plan de Pièges à Chasseur|190|14015
+Sac de boucher frigostien|100|14499
+Jeton du Bworker|100|15613
+Écumouth vivant|1|15934
+Langue de Krèvladal|200|16287
+Concassé de brume|160|16925
+Neurone de dragodinde|60|17567
+Métal abyssal|200|17781
+Pic d'Anerice|200|18148
+Cœur de Bworkcelhaine|33|21355
+Socle en coquillage|200|21718
+Poignée du Gorgouille|100|21901
+Goulobule rouge|200|22445
+Marque des grands fonds|200|22556
+Steamopompe|200|22658
+Filtre à frousse|200|23310
+Rossignol|130|23533
+Hélice en laiton|200|24302
+Jeton du Chazino des Ecaflipuces|110|24598
+Langue de Hacharné|200|25460
+Cédille de Tsunam|200|26988
+Poussière de Roche|1|27510
+Plombs de plongée|200|27608
+Cervelle de Verglasseur|200|28289
+Apostrophe de Fugokam|200|29118
+Bitte d'amarrage|179|31903
+Jeton du Chazino des Matougarous|160|32070
+Insigne des Justiciers|200|32784
+Vieille Tête de Marteau|200|32978
+Scie à glace|100|38449
+Élixir de Brumen|60|40375
+Cloche de Barbéryl Clochecuivre|190|40770
+Koinkoin de bain de Nagate|130|42529
+Glande du Pounicheur|110|43340
+Manche du Grattoir|1|52682
+Coffre de Pièges à Chasseur|190|52717
+Fragment d'armure|200|61609
+Plasmogrine gelée|200|62140
+Braises bleutées|170|63012
+Pelote d'Ecaflip|80|64055
+Gants de protection|100|65237
+Mandibule d'Abrakne Irascible|134|66124
+Rouage de Qil Bil|70|67925
+Pixel de Fraktale|120|69425
+Viscères de Tanuki|125|69978
+Boulon neuf|200|75425
+Extrémité du Grattoir|155|76443
+Masque à Zag|180|77384
+Cœur Gelé|140|78749
+Cœur de Cire Momore|200|83640
+Étoile d'Or d'El Piko|130|84331
+Implants Rustiques|190|95973
+Lanières de Knout|172|97987
+Poche de magma de Grasmera|200|128472
+Pointes de Knout|172|137509
+Seau de Pinces à Linge|137|141363
+Épaulière Massive du K.O.|180|151039
+Manche de Knout|172|152420
+Pic de Trukipik|100|155956
+Cervelle de Solar|200|169002
+Langue de Fojumo|140|176032
+Noyau de Protozorreur|200|179852
+Grattoir à dos inachevé|1|198968
+Verrou de Servitude|200|232242
+Scalp de Predagob|190|277546
+Enduit sufokien|200|317592
+Dé du Chalœil|200|338198
+Rouge à lèvres de Belladone|200|339128
+Éclat Kao brisé|200|342797
+Bouteille de Gein|200|351612
+Tablette Chocomancienne|200|378615
+Lueur abyssale|200|400707
+Batterie rechargeable de l'Hyperscampe|200|411970
+Encre du Kralamoure géant|200|485544
+Éclair de Flasho|190|508697
+Cire de Cire Momore|200|637328
+Cœur de Merkator|200|644793
+Nanogrine|200|833100
+Pommeau brisé de la Reine Écarlate|200|846068
+Pâte à tarte de Mama Ayuto|200|1216477
+Mèche enflammée du Dark Vlad|200|1330557
+Scalp de Klime|200|1372148
+Tablette Croquante|130|1945313
+Âme glacée du Chevalier de Glace|200|2823249
+Bandelette du Comte Harebourg|200|2975902
+Tablette Waddict|60|2999986
+Pied de Voldelor|200|3228885
+Cœur de Culbutœuf|200|4111512
+Binocles du Grand Chronomaître|200|4156562
+Dard d'abeille de Glourdorak|200|4191171
+Feu sacré de Gargandyas|200|4954676
+#Vêtement
+Casque cassé|1|2
+Slip de Bwork Archer|43|7
+Slip en cuir du Chafer Lancier|46|39
+Épaulière de Bwork|50|45
+Casque de Wobot|80|48
+Casque de Martoa|26|57
+Casque cassé de Bwork|50|69
+Bonnet de Gobaliste|40|72
+Masque Cassé d'Araknotron Irascible|130|73
+Slip en cuir de Cochon de Lait|49|78
+Gant de Sherpoa|26|84
+Masque de Shinibaru|130|97
+Foulard de Koalak Farouche|110|99
+Maillot de corps de Barbroussa|64|102
+Slip d'Elsoummo|130|102
+Short de Capoei Rat|110|105
+Foulard du Sparo|63|111
+Masque Brisé d'Araknotron|82|114
+Salopette Kwapa|130|123
+Poing rocheux d'Ishigro Pake|130|146
+Ruban d'Uchiwang|140|162
+Baguette de Tétonuki|130|173
+Casque du Chafer Primitif|36|173
+Caleçon Mignon du Pirate|90|187
+Slip en cuir de Porkass|46|199
+Casque Mâchouillé|160|230
+Bandeau du Black Tiwabbit|46|249
+Bandeau de Nakunbra|90|259
+Lunettes de Parashukouï|130|279
+Kapokaza|170|340
+Akaslip d'Akakwa|130|405
+Foulard de Milimaître|130|416
+Botte trouée de Mégabwork|86|445
+String de Pampactus|130|453
+Bandeau troué d'Air|175|465
+Bandeau troué de Feu|175|482
+Masque brisé|170|508
+Armure de Tanklume|200|600
+Masque du Vice|190|606
+Cagoule du Kanniboul Ebil|60|650
+Slip en Cuir Moulant du Garglyphe|36|658
+Casque de Statulipe|200|662
+Broderie de Malléfisk|100|663
+Bandeau troué d'Eau|175|668
+Masque de la Vivacité|190|879
+Casque Cassé du Chafer|40|1060
+Pagne de Trantroa|170|1118
+Morceau de caleçon de Gourlo|70|1168
+Bandeau de Black Wabbit Squelette|54|1335
+Braguette du Maître Zoth|120|1421
+Épaulière de Bourôliste|200|1475
+Bandeau troué de Terre|175|1480
+Collier de Chakichan|160|1560
+Écharpe de Hanshi|140|1669
+Masque du Vide|190|1804
+Épaulière de Ferrailleur|200|1818
+Caleçon de Cybwork|179|1888
+Masque de la Violence|190|2000
+Protection de Funespadon|200|2065
+Slip troué de Dramak|100|2193
+Ceinture de la Dame|200|2419
+Capuche de Skentu|200|3048
+String en Cuir de la Mama Bwork|174|3052
+Faux Visage de Choudini|90|3106
+Broderie de la Prêtresse de Kao|200|3726
+Caleçon Bleu|175|3759
+Boucle d'Orfélin|155|4019
+Culotte de Harrogant|200|4039
+Caleçon Brun|175|4180
+Broderie de Nileza|200|4310
+Épaulière de Troolligark|115|4673
+Boucle des Égarés|200|4772
+Caleçon Blanc|175|4829
+Chaussette trouée de Dramak|100|5066
+Chaussette du Cyclophandre|200|6485
+Bout d'Armure de Macrab|200|6744
+Pagne d'Alashasss|200|8368
+Masque de la Vengeance|190|8454
+Capuche d'Armécréante|200|8507
+Slip feuillu de Supervizœuf|170|9529
+Culotte de Frakacia|30|11575
+Bandeau d'Ébourifauve|200|12162
+Gilet du Valet|200|13952
+Slip de Troollaraj|115|15024
+Chouchou de Doublure|200|21094
+Bandeau de Voapah|200|21319
+Caleçon Rouge|175|21606
+Toque de Cabosseur|200|22175
+Jambière de Kasrok|200|25841
+Masque de protection|100|26083
+Coiffe déchiquetée de Drakoalak|94|29839
+Broderie d'Eskoglyphe|200|36826
+Fermeture éclair|200|79476
+Bouton de Monsieur Pingouin|130|93639
+Chaussette du Kimbo|160|109656
+Culotte à l'envers du Roissingue|196|157640
+Masque brisé de Vengeuse Masquée|160|247939
+Épaulière de Dazak Martegel|200|319780
+Broderie de la Reine des Voleurs|200|390756
+Bonnet de Guerre|200|399350
+Braguette de Nileza|200|739228
+Culotte de Missiz Frizz|200|1257616

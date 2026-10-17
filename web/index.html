@@ -1,0 +1,1397 @@
+<!doctype html><html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>[hidden]{display:none!important}body{margin:0}</style><title>Atelier Kamas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: crafting route. Job strip on top, the plan as numbered steps of inventory slots on the left, a sticky purse/summary on the right. */
+:root{
+  --bg:#eef1ec; --panel:#fbfcfa; --slot:#e3e9e2; --slot-edge:#cdd6cc; --line:#d6ddd7;
+  --ink:#18201c; --muted:#5d6b64; --faint:#8a978f;
+  --gold:#b97c0c; --gold-ink:#ffffff; --gold-soft:#f5e8c9; --gold-line:#e4c47f;
+  --leaf:#2b7a52; --leaf-soft:#dcefe3; --warn:#b03d2b; --warn-soft:#f8e2dc;
+  --shadow:0 1px 0 rgba(20,30,25,.04),0 6px 18px -10px rgba(20,30,25,.25);
+  --f-display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Nunito Sans","Segoe UI",system-ui,sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1412; --panel:#151d1a; --slot:#1c2622; --slot-edge:#2c3a34; --line:#25312c;
+  --ink:#e8eee9; --muted:#97a69e; --faint:#6c7b73;
+  --gold:#f0b440; --gold-ink:#1c1405; --gold-soft:#33290f; --gold-line:#6b5420;
+  --leaf:#71c79a; --leaf-soft:#173126; --warn:#f2917e; --warn-soft:#3a201b;
+  --shadow:0 1px 0 rgba(0,0,0,.25),0 10px 24px -14px rgba(0,0,0,.7); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1412; --panel:#151d1a; --slot:#1c2622; --slot-edge:#2c3a34; --line:#25312c;
+  --ink:#e8eee9; --muted:#97a69e; --faint:#6c7b73;
+  --gold:#f0b440; --gold-ink:#1c1405; --gold-soft:#33290f; --gold-line:#6b5420;
+  --leaf:#71c79a; --leaf-soft:#173126; --warn:#f2917e; --warn-soft:#3a201b;
+  --shadow:0 1px 0 rgba(0,0,0,.25),0 10px 24px -14px rgba(0,0,0,.7); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
+button{font-family:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:16px;padding-block:18px 64px;display:flex;flex-direction:column;gap:16px}
+
+/* en-tête */
+header{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .coin{width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe7a3,var(--gold) 60%,#7a5208);box-shadow:inset 0 -3px 0 rgba(0,0,0,.18),0 2px 6px -2px rgba(0,0,0,.4);display:grid;place-items:center;font:800 1.1rem var(--f-display);color:#5a3c05}
+h1{font-family:var(--f-display);font-weight:800;font-size:1.75rem;line-height:1;margin:0}
+h1 small{display:block;font:600 .8rem var(--f-body);color:var(--muted);margin-top:4px}
+h2{font-family:var(--f-display);font-weight:700;font-size:1.3rem;line-height:1.15;margin:0;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:700;font-size:1.05rem;margin:0}
+.status{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:.82rem;align-items:center}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--faint);margin-right:6px}
+.dot.ok{background:var(--leaf)}.dot.loc{background:var(--gold)}.dot.err{background:var(--warn)}
+
+/* onglets */
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+nav.tabs button{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;padding:8px 16px;font-weight:800;font-size:.92rem;cursor:pointer;white-space:nowrap;display:flex;gap:8px;align-items:center}
+nav.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+nav.tabs .n{font-family:var(--f-num);font-size:.72rem;background:var(--gold-soft);color:var(--ink);border-radius:999px;padding:0 7px}
+nav.tabs button[aria-selected="true"] .n{background:var(--gold);color:var(--gold-ink)}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);min-width:0}
+.pad{padding:16px}
+.stack{display:flex;flex-direction:column;gap:14px}
+.row{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end}
+.spread{justify-content:space-between;align-items:center}
+.lbl{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+label.f{display:flex;flex-direction:column;gap:5px}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:8px 10px;min-width:0}
+input[type=number]{font-family:var(--f-num);width:84px}
+textarea{width:100%;min-height:150px;font-family:var(--f-num);font-size:.82rem;resize:vertical}
+:is(input,select,textarea,button,summary):focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.btn{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:9px;padding:8px 14px;font-weight:800;font-size:.88rem;cursor:pointer;display:inline-flex;gap:6px;align-items:center;justify-content:center}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--gold-ink)}
+.btn.ghost{background:none;border-color:transparent;color:var(--muted)}
+.btn.sm{padding:5px 10px;font-size:.8rem}
+.btn:hover{filter:brightness(1.06)}
+.hint{color:var(--muted);font-size:.85rem;margin:0}
+.hint code{font-family:var(--f-num);font-size:.86em;background:var(--slot);padding:0 4px;border-radius:4px}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;font-weight:800;border-radius:999px;padding:2px 9px;background:var(--slot);color:var(--muted);white-space:nowrap}
+.pill.gold{background:var(--gold-soft);color:var(--ink)}
+.pill.leaf{background:var(--leaf-soft);color:var(--leaf)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:800;font-size:.9rem;z-index:40;box-shadow:var(--shadow)}
+
+/* icônes (planches d'icônes du jeu) */
+.ico{flex:none;width:var(--s,40px);height:var(--s,40px);background-repeat:no-repeat;image-rendering:auto}
+.ico.none{background:var(--slot-edge);border-radius:8px;opacity:.5}
+
+/* sélection du métier */
+.jobs{display:grid;grid-template-columns:repeat(auto-fill,minmax(146px,1fr));gap:8px}
+.job{display:flex;gap:9px;align-items:center;border:1px solid var(--line);background:var(--bg);border-radius:11px;padding:7px 9px;cursor:pointer;text-align:left;color:var(--ink)}
+.job .ico{--s:30px}
+.job b{display:block;font-size:.88rem;line-height:1.1}
+.job span{font-size:.7rem;color:var(--muted)}
+.job[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-soft);box-shadow:inset 0 0 0 1px var(--gold)}
+.controls{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:flex-end}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;padding:3px;background:var(--bg);gap:3px}
+.seg button{border:0;background:none;border-radius:7px;padding:7px 12px;font-weight:800;font-size:.86rem;color:var(--muted);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.lvlpair{display:flex;align-items:center;gap:8px}
+.lvlpair .arrow{color:var(--faint);font-weight:800}
+details.adv>summary{cursor:pointer;color:var(--muted);font-weight:800;font-size:.86rem;list-style:none}
+details.adv>summary::before{content:"▸ ";}
+details.adv[open]>summary::before{content:"▾ ";}
+details.adv[open]>summary{margin-bottom:10px}
+label.chk{display:flex;gap:8px;align-items:center;font-size:.9rem}
+
+/* mise en page plan + bourse */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px;align-items:start}
+@media (max-width:960px){.layout{grid-template-columns:minmax(0,1fr)}.purse{position:static!important;order:-1}}
+.purse{position:sticky;top:calc(12px + env(safe-area-inset-top,0px))}
+.big{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.big div{display:flex;flex-direction:column;gap:2px}
+.big b{font-family:var(--f-num);font-size:1.45rem;font-weight:600;line-height:1.1}
+.big b.gold{color:var(--gold)}
+.meter{height:8px;border-radius:999px;background:var(--slot);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--gold);border-radius:999px}
+.meter.leaf i{background:var(--leaf)}
+.purse hr{border:0;border-top:1px solid var(--line);margin:0}
+
+.gsrc{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:3px 10px 3px 4px;font-size:.8rem;font-weight:700}
+.chip .ico{--s:24px}
+a.ext{color:var(--gold);text-decoration:none;font-weight:800;padding:0 2px}
+a.ext:hover{text-decoration:underline}
+.inv .slot.inv-slot,.slot.inv-slot{grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:auto auto auto;align-items:center}
+.inv-slot .frame{grid-row:1 / span 3;grid-column:1}
+.inv-slot .nm,.inv-slot .pr,.inv-slot .sub2{grid-column:2}
+.inv-slot .nm{-webkit-line-clamp:2}
+.inv-slot .chk{grid-column:3;grid-row:1 / span 3}
+.sub2{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+label.have{display:inline-flex;gap:4px;align-items:center;font-size:.72rem;font-weight:700;color:var(--muted)}
+input.stock{width:64px;padding:2px 6px;font:500 .78rem var(--f-num);text-align:right;border-radius:6px}
+.rtable td{vertical-align:top}
+.rtable .ings{font-size:.76rem;line-height:1.35;margin-top:2px}
+.rtable .ings .miss{color:var(--gold);font-weight:700}
+.nm-copy{all:unset;cursor:copy;font:inherit;font-weight:700;border-bottom:1px dashed var(--faint);line-height:1.2}
+.nm-copy:hover{color:var(--gold);border-bottom-color:var(--gold)}
+.nm-copy:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.nm-copy.copied::after{content:" ✓";color:var(--leaf)}
+.craftbtn{cursor:pointer;border:1px solid var(--leaf);font:inherit}
+button.chip{color:var(--ink);font-size:.8rem;font-weight:700}
+button.pill.craftbtn{font-size:.72rem;font-weight:800}
+.sheet{position:fixed;inset:0;background:rgba(10,15,12,.55);z-index:30;display:flex;justify-content:flex-end;padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(12px + env(safe-area-inset-bottom,0px))}
+.sheet-card{width:min(640px,100%);max-height:100%;overflow:auto;background:var(--panel)}
+.sheet .rslot{--s:44px;width:56px;height:56px;border-radius:12px;background:var(--slot);border:1px solid var(--slot-edge);display:grid;place-items:center}
+label.acq{grid-column:3;grid-row:1 / span 3;align-self:center;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.68rem;font-weight:800;color:var(--leaf);cursor:pointer;padding:4px}
+label.acq input{width:22px;height:22px;accent-color:var(--leaf);cursor:pointer}
+.acqlist{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.acqrow{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto auto auto;gap:10px;align-items:center;padding:6px 10px;border-bottom:1px solid var(--line);cursor:pointer}
+.acqrow:last-child{border-bottom:0}
+.acqrow:hover{background:var(--slot)}
+.acqrow input{width:18px;height:18px;accent-color:var(--leaf)}
+.acqrow .ic{display:flex}.acqrow .ic .ico{--s:28px;display:block}
+.acqrow .an{font-weight:700;text-decoration:line-through;text-decoration-color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acqrow .aq,.acqrow .ap{color:var(--muted);font-size:.82rem}
+@media (max-width:600px){.acqrow{grid-template-columns:auto auto minmax(0,1fr) auto}.acqrow .ap,.acqrow .pill{display:none}}
+.slot.leaving{opacity:0;transform:scale(.96);transition:opacity .2s,transform .2s}
+details.acquired .chip{opacity:.8}
+.cartseg{align-self:flex-start}
+.cartseg button{font-size:.95rem;padding:9px 18px}
+.gauge{grid-column:2;display:flex;flex-direction:column;gap:3px;margin-top:2px}
+.gtop{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.gl{font-size:.74rem;font-weight:700;color:var(--muted);display:inline-flex;gap:4px;align-items:center}
+.gm{font-size:.74rem;color:var(--gold);font-weight:700}.gm b{font-size:.85rem}
+.gm.ok{color:var(--leaf)}
+.gbar{position:relative;height:22px;border-radius:999px;background:var(--slot-edge);overflow:hidden}
+.gbar::before{content:"";position:absolute;inset:0 auto 0 0;width:var(--p);background:var(--c);border-radius:999px;transition:width .15s}
+input.grange{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.gtxt{position:absolute;inset:0;display:block;line-height:22px;text-align:center;white-space:nowrap;font:600 .74rem var(--f-num);color:var(--ink);pointer-events:none;text-shadow:0 0 3px var(--panel),0 0 2px var(--panel)}
+.gctl{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.gctl button{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:7px;padding:2px 7px;font:700 .74rem var(--f-num);cursor:pointer}
+.gctl button:hover{border-color:var(--gold)}
+.gctl .gall{color:var(--leaf);border-color:var(--leaf)}
+.gl input.gval{width:70px;padding:2px 6px;font:500 .8rem var(--f-num);text-align:center;border-radius:7px;margin-left:4px}
+.ctarget{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ctarget input{width:78px;padding:3px 6px;font:500 .82rem var(--f-num);text-align:center;border-radius:7px}
+.cannow{font-size:.8rem;color:var(--warn);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cannow.ok{color:var(--leaf)}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+.ccard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.ccard .gauge{grid-column:auto;margin:0}
+.ccard .gbar{height:26px}.ccard .gbar .gtxt{line-height:26px;font-size:.8rem}
+.chead{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center}
+.chead .frame{position:relative;width:52px;height:52px;border-radius:12px;background:var(--slot);border:1px solid var(--slot-edge);display:grid;place-items:center}
+.chead .frame .q{position:absolute;right:-4px;bottom:-6px;font:700 .72rem var(--f-num);background:var(--ink);color:var(--panel);border-radius:999px;padding:1px 6px}
+.chead .nm{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chead .acq{display:flex;flex-direction:column;align-items:center;font-size:.7rem;font-weight:800;color:var(--leaf);cursor:pointer}
+.chead .acq input{width:22px;height:22px;accent-color:var(--leaf)}
+.ccard.cdone{opacity:.7}
+.cings{display:flex;flex-direction:column;gap:6px;border-top:1px dashed var(--line);padding-top:8px}
+.cing{display:grid;grid-template-columns:auto minmax(0,1fr) auto 46px;gap:8px;align-items:center;font-size:.85rem}
+.cing .cn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:600px){.cgrid{grid-template-columns:1fr}}
+.cneed{display:inline-flex;gap:4px;align-items:center;font-size:.78rem;white-space:nowrap}
+.cneed input{width:62px;padding:1px 5px;font:500 .76rem var(--f-num);text-align:right;border-radius:6px}
+.mini{display:block;height:8px;border-radius:999px;background:var(--slot-edge);overflow:hidden}
+.mini i{display:block;height:100%;width:var(--p);background:var(--c)}
+.warnb{border-color:var(--warn)!important;color:var(--warn)!important}
+.swbtn{margin-left:auto;color:var(--muted)}.swbtn:hover{color:var(--warn)}
+.swpick{border:1px solid var(--line);border-radius:12px;padding:8px 10px}.swpick summary{cursor:pointer;display:flex;gap:8px;align-items:center}
+.swpick input[type=search]{width:100%;margin:8px 0}
+.swlist{max-height:300px;overflow:auto;display:flex;flex-direction:column;gap:2px}
+.swrow{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:4px 6px;border-radius:8px;cursor:pointer}
+.swrow:hover{background:var(--slot)}.swrow.sel{background:color-mix(in srgb,var(--warn) 12%,var(--panel))}
+.swrow .an{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bysel{align-self:flex-start}.bysel button{font-size:.85rem;padding:6px 14px}
+.bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px}
+.bcard{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:14px;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.bcard.full{opacity:.75}
+.bhead{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:12px 14px 10px;background:var(--slot)}
+.bname{font-weight:800;font-size:1.05rem;display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}.bx{font:700 .9rem var(--f-num);color:var(--gold)}
+.bicon{width:68px;height:68px;border-radius:12px;background:var(--panel);border:1px solid var(--slot-edge);display:grid;place-items:center}
+.bprog{display:flex;gap:8px;align-items:center;margin-top:8px;font-size:.8rem}
+.bbar{flex:1;height:10px;border-radius:999px;background:var(--slot-edge);overflow:hidden}.bbar i{display:block;height:100%;width:var(--p);background:var(--c)}
+.bprog b{font-family:var(--f-num);color:var(--c)}.bcost{color:var(--warn);font-weight:700;white-space:nowrap}.bcost.ok{color:var(--leaf)}
+.brows{display:flex;flex-direction:column;padding:6px 10px}
+.brow{display:grid;grid-template-columns:auto minmax(0,1fr) 64px auto auto 40px;gap:8px;align-items:center;padding:5px 4px;border-bottom:1px dashed var(--line);font-size:.86rem}
+.brow:last-child{border-bottom:0}.brow.ok .bn .nm-copy{color:var(--leaf)}
+.bn{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:2px}.bn .nm-copy{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bn .pill{font-size:.66rem;padding:1px 7px}
+.bin{width:64px;padding:3px 6px;font:500 .82rem var(--f-num);text-align:right;border-radius:7px}
+.bdispo{font-size:.72rem;color:var(--muted);text-align:right}
+.bneed{font:700 .82rem var(--f-num);white-space:nowrap}
+.bmax{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:6px;padding:1px 6px;font:700 .7rem var(--f-num);cursor:pointer}.bmax:hover{color:var(--leaf);border-color:var(--leaf)}
+.brow{padding-left:calc(4px + var(--d,0) * 18px)}
+.brow.inter{background:color-mix(in srgb,var(--leaf) 8%,transparent);border-radius:8px;border-bottom:0;margin-top:4px}
+.brow.inter .bneed{color:var(--muted)}.bpct{font:700 .8rem var(--f-num);text-align:right}
+.brow.sub{border-left:2px solid color-mix(in srgb,var(--leaf) 40%,transparent);margin-left:calc(10px + (var(--d,1) - 1) * 18px);padding-left:10px}
+.bsub{font-size:.7rem;color:var(--leaf);font-weight:700;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.linkb{background:none;border:0;padding:0;color:var(--leaf);font:700 .72rem inherit;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.bready{margin-top:4px}.bready .lbl{white-space:nowrap}
+.bsert{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.bcard.flash{animation:flash 1.4s ease}@keyframes flash{0%,40%{box-shadow:0 0 0 4px var(--gold)}100%{box-shadow:0 0 0 0 transparent}}
+.calib{display:inline-flex;gap:6px;align-items:center;margin-top:6px;font-size:.74rem;color:var(--muted);font-weight:700}
+.calib input{width:80px;padding:2px 6px;font:500 .8rem var(--f-num);text-align:right;border-radius:7px}
+.bctl{display:flex;gap:14px;flex-wrap:wrap;padding:10px 14px 0;font-size:.8rem;font-weight:700;color:var(--muted)}.bctl label{display:flex;gap:6px;align-items:center}
+.bcard .cannow{padding:6px 14px 0}
+.brow.ko .bneed{color:var(--warn)}
+.brow .ic{display:flex;width:28px;height:28px;align-items:center;justify-content:center}.brow .ic .ico{--s:28px;display:block}
+.bfoot{display:flex;justify-content:flex-end;gap:8px;padding:8px 12px;border-top:1px solid var(--line);margin-top:auto}
+@media (max-width:600px){.bgrid{grid-template-columns:1fr}.brow{grid-template-columns:auto minmax(0,1fr) 58px auto auto;}.brow .mini{display:none}}
+.swcap{display:block;font-size:.75rem;color:var(--leaf);font-weight:700;white-space:normal}.swcap input{width:70px;padding:1px 5px;font:500 .78rem var(--f-num);text-align:right;border-radius:6px;margin:0 4px}
+.avl.out li.part .an{text-decoration:none;color:var(--gold)}
+.swcols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.avl li{display:grid!important;grid-template-columns:auto minmax(0,1fr) auto auto;gap:6px}.avl .an{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.avl.out li:not(.hint){text-decoration:none!important;opacity:1!important}.avl.out li .an{text-decoration:line-through;color:var(--warn)}
+.avl.in li .an{color:var(--leaf);font-weight:700}.avl li.hint{display:block!important}
+@media (max-width:600px){.swcols{grid-template-columns:1fr}}
+.avbtn{border:1px dashed var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:1px 8px;font:700 .7rem var(--f-ui,inherit);cursor:pointer}
+.avbtn:hover{border-color:var(--warn);color:var(--warn)}.avbtn.on{border-style:solid;border-color:var(--warn);color:var(--warn)}
+.sub2{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.avbox{border:1px solid var(--warn);border-radius:14px;padding:10px 12px;background:color-mix(in srgb,var(--warn) 7%,var(--panel));display:flex;flex-direction:column;gap:8px}
+.avopts{display:grid;gap:8px}
+.avopt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:10px;cursor:pointer}
+.avopt.sel{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 8%,var(--panel))}
+.avopt>span{display:flex;flex-direction:column;gap:2px}
+.avopt input#avMax{width:90px;padding:2px 6px;font:500 .82rem var(--f-num);text-align:right;border-radius:7px}
+.avgrid{display:grid;grid-template-columns:1fr auto 1fr 1fr;gap:10px;align-items:center;background:var(--slot);border-radius:12px;padding:10px}
+.avgrid>div{display:flex;flex-direction:column}.avgrid b{font-size:1.1rem}.avgrid .arrow{font-size:1.4rem;color:var(--muted)}
+.avl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}.avl li{display:flex;gap:6px;align-items:center;font-size:.85rem}
+.avl.out li{text-decoration:line-through;opacity:.7}
+@media (max-width:600px){.avgrid{grid-template-columns:1fr 1fr}.avgrid .arrow{display:none}}
+/* ===== mode compact (appli) ===== */
+body.compact{background:var(--panel);overflow-x:hidden}
+body.compact .wrap{display:none}
+#compact{display:flex;flex-direction:column;min-height:100vh;font-size:.86rem}
+.cbar{display:flex;align-items:center;gap:6px;padding:6px 8px;background:var(--ink);color:var(--bg);-webkit-app-region:drag;user-select:none}
+.cbar b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.8rem}
+.cbar button{-webkit-app-region:no-drag;background:transparent;border:0;color:var(--bg);font-size:.95rem;cursor:pointer;padding:2px 6px;border-radius:6px}
+.cbar button:hover{background:rgba(255,255,255,.15)}
+.cstep{padding:10px;display:flex;flex-direction:column;gap:8px}
+.chd{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center}
+.chd .frame{width:52px;height:52px;border-radius:12px;background:var(--slot);border:1px solid var(--slot-edge);display:grid;place-items:center}
+.chd .lv{font:700 .72rem var(--f-num);color:var(--gold)}.chd .nm{font-weight:800;font-size:.98rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chd .n{font:800 1.3rem var(--f-num);text-align:right}.chd .n small{display:block;font-size:.62rem;font-weight:600;font-family:inherit;color:var(--muted);letter-spacing:.04em}
+.cnav{display:flex;gap:6px;align-items:center}.cnav .btn{padding:4px 10px}.cnav .grow{flex:1}
+.clist{display:flex;flex-direction:column;gap:2px;padding:0 10px 10px;overflow:auto}
+.crow{display:grid;grid-template-columns:auto minmax(0,1fr) 58px auto 34px;gap:6px;align-items:center;padding:3px 0;border-bottom:1px dashed var(--line)}
+.crow .ic{display:flex}.crow .ic .ico{--s:24px;display:block}
+.crow .nm-copy{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.82rem}
+.crow input{width:58px;padding:1px 5px;font:500 .78rem var(--f-num);text-align:right;border-radius:6px}
+.crow .need{font:700 .78rem var(--f-num);white-space:nowrap}.crow.ok .nm-copy{color:var(--leaf)}
+.cfoot{margin-top:auto;padding:6px 10px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;font-size:.75rem;color:var(--muted)}
+/* ===== appli entière en fenêtre compacte (overlay) ===== */
+body.overlay #obar{position:sticky;top:0;z-index:50}
+body.overlay .wrap>header{display:none}
+body.overlay .wrap{padding:8px 8px 48px;gap:10px}
+body.overlay nav.tabs{position:sticky;top:34px;z-index:40;background:var(--bg);padding:4px 0}
+body.overlay nav.tabs{flex-wrap:wrap;overflow:visible}
+body.overlay nav.tabs button{padding:5px 10px;font-size:.8rem}
+.cbar button#cOp{font-size:1.15rem;line-height:1}
+.cbar.ov{background:var(--slot);color:var(--ink)}
+/* étapes */
+.route{display:flex;flex-direction:column;gap:12px}
+.step{overflow:hidden}
+.step-head{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 16px}
+.step-no{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--slot);font:800 .95rem var(--f-display);color:var(--muted)}
+.step .rslot{--s:44px;width:56px;height:56px;border-radius:12px;background:var(--slot);border:1px solid var(--slot-edge);display:grid;place-items:center}
+.step-title{min-width:0}
+.step-title .lv{font-family:var(--f-num);font-size:.78rem;color:var(--gold);font-weight:600;letter-spacing:.02em}
+.step-title h3{font-size:1.12rem;line-height:1.15;overflow-wrap:anywhere}
+.step-title .sub{color:var(--muted);font-size:.8rem}
+.step-k{text-align:right;display:flex;flex-direction:column;gap:2px;align-items:flex-end}
+.step-k b{font-family:var(--f-display);font-size:1.6rem;line-height:1}
+.step-k span{font-size:.72rem;color:var(--muted);font-weight:700}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:8px;padding:0 16px 14px}
+.slot{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;gap:4px 10px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:8px}
+.slot .frame{grid-row:1 / span 2;width:48px;height:48px;border-radius:10px;background:var(--slot);border:1px solid var(--slot-edge);display:grid;place-items:center;position:relative}
+.slot .frame .q{position:absolute;right:-4px;bottom:-6px;background:var(--ink);color:var(--bg);font:600 .68rem var(--f-num);border-radius:6px;padding:1px 5px}
+.slot .nm{font-size:.8rem;font-weight:700;line-height:1.15;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.slot .pr{display:flex;align-items:center;gap:6px}
+input.price{width:100%;max-width:120px;padding:4px 7px;font:500 .82rem var(--f-num);text-align:right;border-radius:7px}
+input.price.missing{border-color:var(--gold-line);background:var(--gold-soft)}
+input.price.missing::placeholder{color:var(--gold)}
+input.price.ref{font-style:italic;color:var(--muted);border-style:dashed}
+.slot .tot{font:500 .72rem var(--f-num);color:var(--muted);white-space:nowrap}
+.slot.craft{border-style:dashed;border-color:var(--leaf)}
+.step-foot{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:center;padding:10px 16px;border-top:1px solid var(--line);background:color-mix(in srgb,var(--slot) 45%,transparent)}
+.step-foot .cost{font-family:var(--f-num);font-weight:600}
+.step.done{opacity:.6}
+.step.done .slots{display:none}
+.step.done .step-no{background:var(--leaf);color:var(--bg)}
+.toggle{display:inline-flex;gap:8px;align-items:center;font-weight:800;font-size:.85rem;cursor:pointer;user-select:none}
+.toggle input{width:18px;height:18px;accent-color:var(--leaf)}
+
+/* liste de courses / inventaire */
+.inv{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.inv .slot{grid-template-columns:auto minmax(0,1fr) auto}
+.inv .slot .frame{grid-row:1 / span 2}
+.inv .slot .chk{grid-row:1 / span 2;grid-column:3}
+.inv .slot.bought{opacity:.5}
+.inv .slot.bought .nm{text-decoration:line-through}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:5px 12px;font-weight:800;font-size:.8rem;color:var(--muted);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--gold-soft);color:var(--ink);border-color:var(--gold-line)}
+
+/* familier */
+.rank{display:flex;flex-direction:column;gap:8px}
+.food{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto auto;gap:12px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.food.best{border-color:var(--leaf);box-shadow:inset 0 0 0 1px var(--leaf);background:var(--leaf-soft)}
+.food .pos{font:800 1.1rem var(--f-display);color:var(--faint);width:22px;text-align:center}
+.food .frame{width:48px;height:48px;border-radius:10px;background:var(--slot);border:1px solid var(--slot-edge);display:grid;place-items:center}
+.food .meta{font-size:.78rem;color:var(--muted)}
+.food .kx{text-align:right}
+.food .kx b{font-family:var(--f-num);font-size:1.05rem}
+@media (max-width:600px){.food{grid-template-columns:auto minmax(0,1fr) auto}.food .pos,.food .kx{display:none}}
+
+/* prix */
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:860px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:10px;max-height:560px}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:var(--panel);position:sticky;top:0;z-index:1}
+td.n,th.n{text-align:right;font-family:var(--f-num);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td .it{display:flex;gap:10px;align-items:center}
+td .it .ico{--s:28px}
+.empty{color:var(--muted);text-align:center;padding:28px 16px}
+.note{border-radius:10px;background:var(--gold-soft);border:1px solid var(--gold-line);padding:10px 12px;font-size:.88rem}
+.note.leaf{background:var(--leaf-soft);border-color:var(--leaf)}
+@media (max-width:600px){
+  .step-head{grid-template-columns:auto minmax(0,1fr) auto;padding:12px}
+  .step-no{display:none}
+  .slots{grid-template-columns:minmax(0,1fr);padding:0 12px 12px}
+  .big b{font-size:1.2rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="brand"><div class="coin" aria-hidden="true">K</div><h1>Atelier Kamas<small>Monter ses métiers et son familier au meilleur prix · Dofus 3</small></h1></div>
+  <div class="status"><button class="btn sm ghost" id="btnSaveFile" title="Sauvegarder tes prix, ta progression et ton familier dans un fichier">Exporter</button><label class="btn sm ghost" title="Recharger un fichier exporté" style="cursor:pointer">Importer<input type="file" id="fileImport" accept=".json,application/json" hidden></label><button class="btn sm" id="btnCompact" hidden title="Petite fenêtre toujours au-dessus du jeu (Ctrl+Maj+K)">🗗 Mode compact</button><span id="saveState"><span class="dot"></span>Connexion…</span><span id="dataInfo">Chargement des recettes…</span></div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="false" data-tab="encours" hidden>⚒ En cours</button>
+  <button role="tab" aria-selected="true" data-tab="metiers">Plan de métier</button>
+  <button role="tab" aria-selected="false" data-tab="recettes">Toutes les recettes</button>
+  <button role="tab" aria-selected="false" data-tab="courses">Liste de courses <span class="n" id="nCart" hidden>0</span></button>
+  <button role="tab" aria-selected="false" data-tab="familier">Familier</button>
+  <button role="tab" aria-selected="false" data-tab="prix">Prix HDV <span class="n" id="nPrix">0</span></button>
+</nav>
+
+<!-- =========== PLAN =========== -->
+<section class="stack" id="tab-encours" hidden><div class="card" id="encours" style="overflow:hidden"></div></section>
+<section class="stack" id="tab-metiers">
+  <div class="card pad stack">
+    <div class="jobs" id="jobs" role="group" aria-label="Métier"></div>
+    <div class="controls">
+      <div class="f" style="display:flex;flex-direction:column;gap:5px"><span class="lbl">Niveaux</span>
+        <div class="lvlpair"><input type="number" id="lvlFrom" min="1" max="199" value="1" aria-label="Niveau actuel"><span class="arrow">→</span><input type="number" id="lvlTo" min="2" max="200" value="200" aria-label="Niveau visé"></div></div>
+      <label class="f"><span class="lbl">XP déjà gagnée dans le niveau</span><input type="number" id="lvlXp" min="0" value="0" style="width:110px"></label>
+      <div style="display:flex;flex-direction:column;gap:5px"><span class="lbl">Objectif</span>
+        <div class="seg" role="group" aria-label="Objectif"><button id="modeCheap" aria-pressed="true">Le moins cher</button><button id="modeFast" aria-pressed="false">Le moins de crafts</button><button id="modeGuide" aria-pressed="false">Parcours guide</button></div></div>
+      <details class="adv" style="flex:1 1 260px">
+        <summary>Réglages</summary>
+        <div class="row">
+          <label class="f"><span class="lbl">Changer de recette tous les</span><input type="number" id="step" min="1" max="50" value="10"></label>
+          <label class="f"><span class="lbl">Écart max recette</span><input type="number" id="maxGap" min="0" max="199" value="20"></label>
+          <label class="f"><span class="lbl">Correction XP (%)</span><input type="number" id="xpCorr" min="-50" max="50" step="0.5" value="-6" title="Écart entre l'XP réelle en jeu et la formule. Négatif = le jeu donne moins. Se règle tout seul si tu saisis une XP réelle sur une étape."></label>
+          <label class="f"><span class="lbl">Serveur</span><input id="server" value="Dakal" style="width:110px"></label>
+          <label class="f"><span class="lbl">Taxe revente %</span><input type="number" id="tax" min="0" max="50" step="0.5" value="0"></label>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <label class="f"><span class="lbl">Intermédiaires (planches, alliages, potions…)</span><select id="craftMode"><option value="always">Toujours les fabriquer moi-même</option><option value="best">Fabriquer seulement si moins cher</option><option value="never">Toujours les acheter</option></select></label>
+          <label class="f"><span class="lbl">Contourner automatiquement</span><select id="autoAvoid"><option value="0">Non, je choisis moi-même</option><option value="1.5">si mon prix dépasse 1,5× la moyenne HDV</option><option value="2">si mon prix dépasse 2× la moyenne HDV</option><option value="3">si mon prix dépasse 3× la moyenne HDV</option></select></label>
+          <label class="chk"><input type="checkbox" id="optResell">Déduire la revente des crafts</label>
+          <label class="chk" title="Recettes qui ne se craftent que pendant une quête (Pain Phecte, Huile de Pichon, offrandes Pandala…)"><input type="checkbox" id="optNoQuest" checked>Exclure les recettes de quête</label>
+          <label class="chk" title="Paysan, Alchimiste, Pêcheur, Chasseur : seulement les pains, potions, poissons et viandes qui rendent des PV ou de l'énergie"><input type="checkbox" id="optVitOnly" checked>Récolte : seulement les consommables vie / énergie</label>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <div class="card pad stack" id="guidePanel" hidden></div>
+  <div class="layout">
+    <div class="stack" style="min-width:0"><div id="avoidBox"></div><div class="route" id="route"><div class="card empty">Chargement des recettes…</div></div><div class="card pad stack" id="totals" hidden></div></div>
+    <aside class="purse card pad stack" id="purse"></aside>
+  </div>
+</section>
+
+<!-- =========== RECETTES =========== -->
+<section class="stack" id="tab-recettes" hidden>
+  <div class="card pad stack">
+    <div class="row">
+      <label class="f"><span class="lbl">Métier</span><select id="rJob"></select></label>
+      <label class="f"><span class="lbl">Niveau de recette</span><span class="lvlpair"><input type="number" id="rMin" min="1" max="200" value="1" aria-label="Niveau minimum"><span class="arrow">→</span><input type="number" id="rMax" min="1" max="200" value="200" aria-label="Niveau maximum"></span></label>
+      <label class="f"><span class="lbl">Mon niveau de métier</span><input type="number" id="rLvl" min="1" max="200" value="1"></label>
+      <label class="f" style="flex:1 1 180px"><span class="lbl">Rechercher</span><input id="rSearch" type="search" placeholder="Nom d'objet ou d'ingrédient"></label>
+      <label class="f"><span class="lbl">Trier par</span><select id="rSort"><option value="lvl">Niveau</option><option value="kxp">Kamas par XP</option><option value="cost">Coût du craft</option><option value="margin">Marge à la revente</option></select></label>
+    </div>
+    <div id="rCover"></div>
+  </div>
+  <div class="card pad stack"><div class="row spread"><h2>Bilan des 14 métiers · niveau 1 → 200</h2><button class="btn gold" id="btnBilan">Calculer le bilan</button></div>
+    <p class="hint">Pour chaque métier : le plan le moins cher et le plan le moins de crafts, avec tes prix actuels et tes réglages (intermédiaires, écart max, stock).</p><div id="bilan"></div></div>
+  <div class="card" id="rList"></div>
+</section>
+
+<!-- =========== COURSES =========== -->
+<section class="stack" id="tab-courses" hidden>
+  <div class="card pad stack" id="cartPanel"></div>
+</section>
+
+<!-- =========== FAMILIER =========== -->
+<section class="stack" id="tab-familier" hidden>
+  <div class="layout">
+    <div class="card pad stack" id="petRank"></div>
+    <aside class="purse card pad stack" id="petPurse"></aside>
+  </div>
+</section>
+
+<!-- =========== PRIX =========== -->
+<section class="stack" id="tab-prix" hidden>
+  <div class="grid2">
+    <div class="card pad stack">
+      <h2>Importer des prix</h2>
+      <p class="hint">Sur <a href="https://huzounet.fr/market" target="_blank" rel="noopener">huzounet.fr/market</a> (serveur Dakal, type Ressources) ou <a href="https://kamamaster.fr/Dakal/crafts-ressources" target="_blank" rel="noopener">kamamaster.fr/Dakal</a>, sélectionne le tableau à la souris, copie-le, puis colle-le ici. L'outil repère les colonnes Nom et Prix tout seul. Tu peux aussi écrire <code>Nom ; prix</code> ligne par ligne (<code>15k</code>, <code>1,2m</code>, <code>45000/100</code> acceptés).</p>
+      <textarea id="pasteBox" spellcheck="false" placeholder="Colle ici le tableau copié…"></textarea>
+      <div class="row"><label class="f"><span class="lbl">Source</span><select id="srcSel"><option>Huzounet · Dakal</option><option>KamaMaster · Dakal</option><option>HDV Dakal (moi)</option></select></label><button class="btn" id="btnPreview">Analyser</button><button class="btn gold" id="btnImport" disabled>Enregistrer</button></div>
+      <div id="importReport"></div>
+    </div>
+    <div class="card pad stack">
+      <div class="note" id="refNote"></div>
+      <div class="row spread"><h2>Mes prix</h2><input id="priceSearch" type="search" placeholder="Rechercher…" aria-label="Rechercher un prix"></div>
+      <div class="tablewrap"><table><thead><tr><th>Ressource</th><th class="n">Prix u.</th><th>Source</th><th></th></tr></thead><tbody id="priceRows"></tbody></table></div>
+      <details class="adv"><summary>Prix par lot (×1, ×10, ×100, ×1000)</summary>
+        <div class="stack" style="gap:8px"><p class="hint">Pour une ressource que tu achètes en gros, donne les 4 prix de lot vus en HDV : la liste de courses choisira la combinaison de lots la moins chère pour la quantité exacte.</p>
+        <div class="row"><label class="f" style="flex:1 1 200px"><span class="lbl">Ressource</span><input id="lotName" list="resList" placeholder="ex. Pépite"></label>
+        <label class="f"><span class="lbl">×1</span><input id="lot1" inputmode="decimal" style="width:90px"></label><label class="f"><span class="lbl">×10</span><input id="lot10" inputmode="decimal" style="width:90px"></label>
+        <label class="f"><span class="lbl">×100</span><input id="lot100" inputmode="decimal" style="width:100px"></label><label class="f"><span class="lbl">×1000</span><input id="lot1000" inputmode="decimal" style="width:110px"></label>
+        <button class="btn gold" id="btnLot">Enregistrer</button></div><div id="lotList"></div></div></details>
+      <div class="row"><button class="btn sm" id="btnExport">Copier mes prix</button><button class="btn sm ghost" id="btnWipe">Tout effacer…</button><span id="wipeConfirm" hidden><button class="btn sm" id="btnWipeYes" style="color:var(--warn)">Oui, tout effacer</button></span></div>
+    </div>
+  </div>
+</section>
+</div>
+<div class="sheet" id="craftSheet" hidden></div>
+<div class="sheet" id="avoidSheet" hidden></div>
+<div id="compact" hidden></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+"use strict";
+window.addEventListener("error",e=>{try{toast("Erreur : "+(e.message||"inconnue"));}catch(_){}console.error(e);});
+/* ===== utilitaires ===== */
+const $=s=>document.querySelector(s);
+const OVERLAY=new URLSearchParams(location.search).has("overlay");const TABKEY=OVERLAY?"atelier-tab-ov":"atelier-tab";
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm=s=>String(s).toLowerCase().replace(/œ/g,"oe").replace(/æ/g,"ae").normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’'`]/g,"'").replace(/\s+/g," ").trim();
+const fmtK=n=>{if(n==null||!isFinite(n))return "—";const a=Math.abs(n);if(a>=1e6)return (n/1e6).toLocaleString("fr-FR",{maximumFractionDigits:2})+" M";if(a>=1e4)return (n/1e3).toLocaleString("fr-FR",{maximumFractionDigits:1})+" k";return Math.round(n).toLocaleString("fr-FR");};
+const fmtN=(n,d=0)=>n==null||!isFinite(n)?"—":n.toLocaleString("fr-FR",{maximumFractionDigits:d});
+const today=()=>new Date().toISOString().slice(0,10);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function toast(t){const e=$("#toast");e.textContent=t;e.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>e.hidden=true,2000);}
+async function copy(text){try{await navigator.clipboard.writeText(text);toast("Copié");}catch(e){
+  const ta=document.createElement("textarea");ta.value=text;ta.style.cssText="position:fixed;opacity:0";document.body.appendChild(ta);ta.select();
+  try{document.execCommand("copy");toast("Copié");}catch(_){toast("Copie impossible ici");}ta.remove();}}
+function parseNum(s){
+  s=String(s).trim();
+  // « 16 K » (espace + K majuscule) = kamas, format KamaMaster ; « 15k » collé = 15 000
+  if(/^\d[\d\s.,\u00a0\u202f]*\s+K$/.test(s))return parseFloat(s.slice(0,-1).replace(/[^\d]/g,""));
+  s=s.toLowerCase().replace(/(kamas?|₭|k\$)$/,"").trim();
+  // « 249,000 K » ou « 1 250 K » : séparateurs de milliers + K = kamas (format KamaMaster)
+  if(/^\d{1,3}([,.\s  ]\d{3})+\s*k$/.test(s))return parseFloat(s.replace(/[^\d]/g,""));
+  s=s.replace(/[\s  ]/g,"");
+  let mult=1;if(/m$/.test(s)){mult=1e6;s=s.slice(0,-1);}else if(/k$/.test(s)){mult=1e3;s=s.slice(0,-1);}
+  if(/^\d{1,3}([.,]\d{3}){2,}$/.test(s)||/^\d{1,3}(,\d{3})+$/.test(s)&&!/^\d+,\d{1,2}$/.test(s))s=s.replace(/[.,]/g,"");
+  else if(/^\d{1,3}(\.\d{3})+$/.test(s))s=s.replace(/\./g,"");
+  s=s.replace(",",".");if(!/^\d*\.?\d+$/.test(s))return NaN;return parseFloat(s)*mult;}
+function parseValue(v){v=String(v);if(v.includes("/")){const [a,b]=v.split("/");const x=parseNum(a),y=parseNum(b);return y>0?x/y:NaN;}return parseNum(v);}
+
+/* ===== stockage privé ===== */
+const store={mode:"local",db:null,uid:null,timers:{},
+  async init(){try{if(window.claude&&window.claude.use){
+      const [db,user]=await Promise.all([window.claude.use("db"),window.claude.use("user")]);
+      if(db&&user){const uid=await user.id();if(uid){this.db=db;this.uid=uid;this.mode="cloud";}}}}catch(e){}
+    setSave(this.mode==="cloud"?"ok":"loc");},
+  ref(k){return this.db.doc("data/users/"+this.uid+"/"+k);},
+  async load(k){if(this.mode==="cloud"){try{const s=await this.ref(k).get();if(s.exists)return JSON.parse(JSON.stringify(s.data()));}catch(e){}}
+    try{const v=localStorage.getItem("atelier-"+k);return v?JSON.parse(v):null;}catch(e){return null;}},
+  save(k,obj){try{localStorage.setItem("atelier-"+k,JSON.stringify(obj));}catch(e){}
+    if(this.mode!=="cloud")return;clearTimeout(this.timers[k]);setSave("busy");
+    this.timers[k]=setTimeout(async()=>{const body=JSON.parse(JSON.stringify(obj));
+      try{await this.ref(k).set(body);setSave("ok");}catch(e){
+        if(e&&e.code==="unavailable")setTimeout(()=>this.ref(k).set(body).then(()=>setSave("ok")).catch(()=>setSave("err")),900);else setSave("err");}},700);}};
+function setSave(s){$("#saveState").innerHTML={ok:'<span class="dot ok"></span>Sauvegardé dans ton espace privé',loc:'<span class="dot loc"></span>Sauvegardé sur cet appareil',busy:'<span class="dot loc"></span>Enregistrement…',err:'<span class="dot err"></span>Sauvegarde en ligne impossible (copie locale gardée)'}[s];}
+
+/* ===== état ===== */
+let D=null,byName=new Map(),recipesByJob={},recipeByResult=new Map();
+let prices={};
+let userLots={};
+let pet={foods:{},cur:0,lvl:100,target:179591,croq:25000};
+let plan={job:27,levels:{},opts:{mode:"cheap",v13:1,craftMode:"always",resell:false,tax:0,gap:20,step:10,server:"Dakal"},cart:[],done:{},bought:[],stock:{},cartFilter:"all",guides:{},guideInfo:{}};
+const PET_TABLE=[0,1,2,3,5,7,9,11,13,15,18,21,24,28,32,37,42,48,55,62,70,79,89,101,114,128,144,162,182,204,228,255,285,318,355,396,441,491,546,607,675,750,832,923,1023,1134,1256,1391,1539,1702,1882,2080,2298,2537,2800,3089,3407,3756,4140,4561,5023,5530,6087,6698,7368,8102,8907,9789,10755,11814,12974,14244,15634,17156,18822,20645,22640,24822,27208,29818,32672,35792,39202,42929,47002,51452,56314,61625,67426,73761,80678,88230,96475,105475,115298,126018,137715,150478,164402,179591];
+const JOB_ICON={2:"Bois de Frêne",11:"Épée de Boisaille",13:"Arc de Boisaille",15:"Bottes de l'Aventurier",16:"Anneau de l'Aventurier",24:"Fer",26:"Potion de Mini Soin",27:"Coiffe de l'Aventurier",28:"Blé",36:"Goujon",41:"Viande Hachée",60:"Bouclier de l'Aventurier",65:"Clef du Donjon des Bworks",79:"Filet de capture"};
+
+/* ===== icônes ===== */
+function icon(id,size=40){const it=D&&D.items[id];const idx=it?it[3]:-1;
+  if(idx==null||idx<0)return `<span class="ico none" style="--s:${size}px"></span>`;
+  const {cols,per}=D.icon,sh=Math.floor(idx/per),i=idx%per,x=(i%cols)*size,y=Math.floor(i/cols)*size;
+  return `<span class="ico" style="--s:${size}px;background-image:url(ico/s${sh}.webp);background-size:${cols*size}px auto;background-position:-${x}px -${y}px" aria-hidden="true"></span>`;}
+function iconByName(name,size){const ids=byName.get(norm(name));return ids?icon(ids[0],size):`<span class="ico none" style="--s:${size}px"></span>`;}
+
+/* ===== moteur ===== */
+/* correction XP : écart constaté en jeu par rapport à la formule (réglable, calibrable depuis une étape) */
+const XF=()=>1+(plan.opts.xpCorr!=null?+plan.opts.xpCorr:-6)/100;
+/* recettes faisables : pas de recette liée à une quête ; métiers de récolte = consommables vie / énergie */
+const HARVEST=new Set([2,24,26,28,36,41]);let _vit=null,_quest=null;
+const vitSet=()=>_vit||(_vit=new Set(D.vit||[])),questSet=()=>_quest||(_quest=new Set(D.quest||[]));
+const isQuestRec=id=>plan.opts.noQuest!==false&&questSet().has(+id);
+const vitFocus=job=>plan.opts.vitOnly!==false&&HARVEST.has(+job)&&(recipesByJob[job]||[]).some(r=>vitSet().has(r[0]));
+function recipeOk(r,job){if(isQuestRec(r[0]))return false;if(vitFocus(job)&&!vitSet().has(r[0]))return false;return true;}
+function craftXpRaw(rLvl,ratio,job){const g=job-rLvl;if(g<0)return 0;return 20*rLvl*ratio/100/(Math.pow(g,1.1)/10+1);}
+function craftXp(rLvl,ratio,job){return Math.floor(craftXpRaw(rLvl,ratio,job)*XF());}
+const itName=id=>D.items[id]?D.items[id][0]:"#"+id;
+const jobName=id=>D.jobs[id]||"Métier "+id;
+const lotsOf=id=>userLots[id]||(D.lots&&D.lots[id])||null;
+const LOT_SIZES=[1,10,100,1000];
+function lotUnit(l){let best=null;for(const s of LOT_SIZES)if(l[s]>0){const u=l[s]/s;if(best==null||u<best)best=u;}return best;}
+const priceOf=id=>{const it=D.items[id];if(!it)return null;const p=prices[norm(it[0])];if(p)return p.p;const l=lotsOf(id);if(l){const u=lotUnit(l);if(u!=null)return u;}const r=D.ref&&D.ref[id];return r?r[0]:null;};
+const isRef=id=>{const it=D.items[id];return !!(it&&!prices[norm(it[0])]&&!lotsOf(id)&&D.ref&&D.ref[id]);};
+const srcOf=id=>{const it=D.items[id];if(!it)return null;if(prices[norm(it[0])])return "moi";if(lotsOf(id))return "lots";const r=D.ref&&D.ref[id];return r?(r[1]===2?"hdv":"km"):null;};
+/* Coût réel d'une quantité : combinaison de lots la moins chère (×1, ×10, ×100, ×1000) quand les prix de lot sont connus */
+function lotCost(id,q){q=Math.ceil(q);if(q<=0)return {c:0,txt:""};
+  const it=D.items[id],mine=it&&prices[norm(it[0])];const l=!mine&&lotsOf(id);
+  if(!l){const p=priceOf(id);return p==null?null:{c:p*q,txt:""};}
+  const sizes=LOT_SIZES.filter(s=>l[s]>0);if(!sizes.length)return null;
+  const maxS=Math.max(...sizes),N=q+maxS;
+  if(N>400000){const u=lotUnit(l);return {c:u*q,txt:""};}
+  const dp=new Float64Array(N+1).fill(Infinity),from=new Int32Array(N+1);dp[0]=0;
+  for(let n=1;n<=N;n++)for(const s of sizes)if(n>=s&&dp[n-s]+l[s]<dp[n]){dp[n]=dp[n-s]+l[s];from[n]=s;}
+  let bn=q;for(let n=q;n<=N;n++)if(dp[n]<dp[bn])bn=n;
+  const cnt={};for(let n=bn;n>0;n-=from[n])cnt[from[n]]=(cnt[from[n]]||0)+1;
+  return {c:dp[bn],txt:Object.keys(cnt).map(Number).sort((a,b)=>b-a).map(s=>cnt[s]+"×"+s).join(" + ")+(bn>q?` (${bn-q} en trop)`:"")};}
+const haveOf=id=>Math.max(0,+((plan.stock||{})[id])||0);
+let costMemo=new Map();
+/* ===== contournement : ressources indisponibles ou trop chères ===== */
+let capAllow=null;
+const capOf=id=>{const a=(plan.avoid||{})[id];return a&&a.m==="out"?Math.max(0,a.cap!=null?+a.cap:haveOf(id)):0;};
+function avoidWhy(id){if(capAllow&&capAllow.has(String(id)))return null;const a=(plan.avoid||{})[id],p=priceOf(id);
+  if(a){if(a.m==="ok")return null;if(a.m==="out")return "out";if(a.m==="max"&&(p==null||p>a.p))return "max";}
+  const k=+plan.opts.autoAvoid||0;if(k&&srcOf(id)==="moi"){const r=D.ref&&D.ref[id];if(r&&p>r[0]*k)return "auto";}
+  return null;}
+const AV_TXT={out:"indisponible",max:"au-dessus de ton prix max",auto:"bien plus cher que la moyenne"};
+function blockedDeep(id,d=0){const key="B"+id;if(costMemo.has(key))return costMemo.get(key);let b=false;
+  if(avoidWhy(id)){const r=recipeByResult.get(+id);b=!r||d>=3||Array.from({length:r[4].length/2},(_,i)=>r[4][2*i]).some(x=>blockedDeep(x,d+1));}
+  costMemo.set(key,b);return b;}
+function recipeBlocked(r){for(let i=0;i<r[4].length;i+=2)if(blockedDeep(r[4][i]))return true;return false;}
+function itemCost(id,depth=0,stack=new Set()){
+  if(costMemo.has(id))return costMemo.get(id);
+  const blk=avoidWhy(id);const buy=blk?null:priceOf(id);let best=buy!=null?{c:buy,how:"buy"}:null;
+  const cm=blk?"always":(plan.opts.craftMode||"always");
+  if(cm!=="never"&&depth<3&&!stack.has(id)&&!isQuestRec(id)){const r=recipeByResult.get(+id);
+    if(r){stack.add(id);let sum=0,ok=true;
+      for(let i=0;i<r[4].length;i+=2){const sub=itemCost(r[4][i],depth+1,stack);if(!sub){ok=false;break;}sum+=sub.c*r[4][i+1];}
+      stack.delete(id);if(ok&&(!best||cm==="always"||sum<best.c))best={c:sum,how:"craft"};}}
+  if(depth===0||best)costMemo.set(id,best);return best;}
+function recipeCost(r){let sum=0;for(let i=0;i<r[4].length;i+=2){const c=itemCost(r[4][i]);if(!c)return null;sum+=c.c*r[4][i+1];}
+  if(plan.opts.resell){const sp=priceOf(r[0]);if(sp!=null)sum-=sp*(1-plan.opts.tax/100);}return sum;}
+function less(a,b){for(let i=0;i<Math.max(a.length,b.length);i++){const x=a[i]??0,y=b[i]??0;if(x<y-1e-12)return true;if(x>y+1e-12)return false;}return false;}
+const GAPF=Array.from({length:201},(_,g)=>1/(Math.pow(g,1.1)/10+1));
+const xpFast=(L,ratio,lvl)=>lvl<L?0:Math.floor(20*L*ratio/100*GAPF[lvl-L]*XF());
+/* Plan le moins cher : on cherche, sur toute la montée, l'enchaînement de recettes qui coûte le moins de kamas au total
+   (à coût égal, le moins de crafts). Chaque étape = une recette crafté d'un niveau à un autre. */
+function optimiseCheap(job,from,to,startXp){
+  const gap=plan.opts.gap>=0?plan.opts.gap:199,SEG=40;
+  const BAN=new Set(plan.banRec||[]);const cands=(recipesByJob[job]||[]).filter(r=>r[2]<=to&&!BAN.has(r[0])&&recipeOk(r,job)&&!recipeBlocked(r)).map(r=>({r,c:recipeCost(r)})).filter(k=>k.c!=null&&k.c>=0);
+  const best=new Float64Array(to+1).fill(Infinity),back=new Array(to+1);best[from]=0;
+  for(let L=from;L<to;L++){if(!isFinite(best[L]))continue;
+    for(const k of cands){const R=k.r[2],ratio=k.r[3];if(R>L||L-R>gap)continue;
+      let lvl=L,carry=L===from?startXp:0,n=0,xs=0,lo=Infinity,hi=0;
+      while(lvl<to&&lvl-L<SEG){const x=xpFast(R,ratio,lvl);if(x<=0||lvl-R>gap)break;
+        const need=20*lvl-carry,c=Math.ceil(need/x);n+=c;xs+=c*x;carry=c*x-need;lo=Math.min(lo,x);hi=Math.max(hi,x);lvl++;
+        while(lvl<to&&carry>=20*lvl){carry-=20*lvl;lvl++;}
+        const tot=best[L]+n*k.c+n*1e-3;
+        if(tot<best[lvl]){best[lvl]=tot;back[lvl]={L,k,n,xp:xs,lo,hi};}}}}
+  let end=to;if(!isFinite(best[to])){end=from;for(let l=to;l>from;l--)if(isFinite(best[l])){end=l;break;}}
+  const segs=[];for(let l=end;l>from;){const b=back[l];if(!b)break;segs.unshift({k:b.k,off:false,from:b.L,start:b.L,to:l,n:b.n,xp:b.xp,xpLo:b.lo,xpHi:b.hi});l=b.L;}
+  const merged=[];for(const sg of segs){const last=merged[merged.length-1];if(last&&last.k.r===sg.k.r){last.to=sg.to;last.n+=sg.n;last.xp+=sg.xp;last.xpLo=Math.min(last.xpLo,sg.xpLo);last.xpHi=Math.max(last.xpHi,sg.xpHi);}else merged.push(sg);}
+  return {segs:merged,stuck:end<to?end:null,crafts:merged.reduce((a,x)=>a+x.n,0),xp:merged.reduce((a,x)=>a+x.xp,0),guided:false,optimal:true};}
+/* Ressource indisponible mais en partie en stock : on utilise d'abord ce qu'on a, puis on remplace la suite pour finir l'XP */
+function runCrafts(R,ratio,lvl,carry,n,to){let xs=0,lo=Infinity,hi=0;
+  for(let i=0;i<n&&lvl<to;i++){const x=xpFast(R,ratio,lvl);if(x<=0)break;xs+=x;lo=Math.min(lo,x);hi=Math.max(hi,x);carry+=x;while(lvl<to&&carry>=20*lvl){carry-=20*lvl;lvl++;}}
+  return {lvl,carry,xs,lo,hi};}
+function optimise(job,from,to,startXp=0,modeOverride){
+  const capped=Object.keys(plan.avoid||{}).filter(id=>capOf(id)>0);
+  if(!capped.length)return optimiseRaw(job,from,to,startXp,modeOverride);
+  const left={};capped.forEach(id=>left[id]=capOf(id));
+  const out=[];let lvl=from,carry=+startXp||0,stuck=null,guard=0;
+  while(lvl<to&&guard++<capped.length+2){
+    capAllow=new Set(capped.filter(id=>left[id]>0));costMemo=new Map();
+    const res=optimiseRaw(job,lvl,to,carry,modeOverride);let broke=false;
+    for(const sg of res.segs){const one={acc:{},cr:{}};const r=sg.k.r;for(let j=0;j<r[4].length;j+=2)addNeeds(r[4][j],r[4][j+1],one.acc,one.cr);
+      let k=sg.n;for(const id of capAllow){const u=one.acc[id]||0;if(u>0)k=Math.min(k,Math.floor(left[id]/u));}
+      if(k>=sg.n){for(const id of capAllow)left[id]-=(one.acc[id]||0)*sg.n;out.push(sg);lvl=sg.to;carry=0;continue;}
+      for(const id of capAllow)left[id]-=(one.acc[id]||0)*k;
+      const used=[...capAllow].filter(id=>(one.acc[id]||0)>0);
+      if(k>0){const st=runCrafts(r[2],r[3],sg.from,sg===res.segs[0]?carry:0,k,to);
+        out.push({...sg,n:k,to:st.lvl,xp:st.xs,xpLo:st.lo,xpHi:st.hi,partial:used.map(id=>itName(id)).join(", ")});lvl=st.lvl;carry=st.carry;}
+      else{lvl=sg.from;carry=sg===res.segs[0]?carry:0;}
+      used.forEach(id=>{const one1=one.acc[id]||0;if(left[id]<one1)left[id]=0;});broke=true;break;}
+    if(!broke){stuck=res.stuck;break;}}
+  capAllow=null;costMemo=new Map();
+  if(lvl<to&&!stuck&&guard>capped.length+1)stuck=lvl;
+  return {segs:out,stuck,crafts:out.reduce((a,x)=>a+x.n,0),xp:out.reduce((a,x)=>a+x.xp,0),guided:false,optimal:true};}
+function optimiseRaw(job,from,to,startXp=0,modeOverride){
+  costMemo=new Map();
+  const mode=modeOverride||plan.opts.mode;
+  if(mode==="cheap")return optimiseCheap(job,from,to,clamp(+startXp||0,0,20*from-1));
+  const cheap=false,gap=plan.opts.gap>=0?plan.opts.gap:199,step=Math.max(1,+plan.opts.step||1);
+  const gl=mode==="guide"?(plan.guides[job]||[]):[];const guide=gl.length?new Set(gl):null;
+  const BAN=new Set(plan.banRec||[]);const all=(recipesByJob[job]||[]).filter(r=>r[2]<=to&&!BAN.has(r[0])&&recipeOk(r,job)&&!recipeBlocked(r)).map(r=>{let q=0;for(let i=1;i<r[4].length;i+=2)q+=r[4][i];return {r,c:recipeCost(r),q,d:r[4].length/2,g:guide?guide.has(r[0]):false};});
+  const mx={};const maxX=l=>mx[l]??(mx[l]=Math.max(1,...all.filter(k=>k.r[2]<=l&&l-k.r[2]<=gap).map(k=>craftXp(k.r[2],k.r[3],l))));
+  function pick(lvl,onlyGuide){let best=null,bx=0,bs=null;
+    for(const k of all){const L=k.r[2];if(L>lvl)continue;if(onlyGuide&&!k.g)continue;if(!onlyGuide&&lvl-L>gap)continue;
+      const x=craftXp(L,k.r[3],lvl);if(x<=0)continue;let score;
+      if(onlyGuide)score=[-x];
+      else if(cheap&&k.c!=null)score=[0,k.c/x];
+      else if(cheap)score=[1,-x,k.q];
+      else score=[0,-Math.round(x/(maxX(lvl)*0.05+1e-9)),k.c==null?1:0,k.c==null?k.d*1000+k.q:k.c];
+      if(!bs||less(score,bs)){best=k;bx=x;bs=score;}}
+    return best?{best,bx}:null;}
+  const segs=[];let lvl=from,carry=clamp(+startXp||0,0,20*from-1),stuck=null;
+  while(lvl<to){
+    // en mode guide : recette du guide si l'une est faisable et rapporte assez, sinon choix automatique (signalé « hors guide »)
+    let p=guide?pick(lvl,true):null,off=false;
+    if(guide){const auto=pick(lvl,false);if(!p||(auto&&p.bx<auto.bx*0.25)){p=auto;off=true;}}
+    if(!p)p=pick(lvl,false);
+    if(!p){stuck=lvl;break;}
+    let {best,bx}=p;
+    const prev=segs.length?segs[segs.length-1]:null;
+    if((!guide||(off&&prev&&prev.off))&&prev&&prev.k!==best&&lvl<prev.start+step&&lvl-prev.k.r[2]<=gap){const px=craftXp(prev.k.r[2],prev.k.r[3],lvl);if(px>0){best=prev.k;bx=px;}}
+    const need=20*lvl-carry,n=Math.max(1,Math.ceil(need/bx));carry=n*bx-need;let gained=1;lvl++;
+    while(lvl<to&&carry>=20*lvl){carry-=20*lvl;lvl++;gained++;}
+    const last=segs[segs.length-1];
+    if(last&&last.k===best){last.n+=n;last.to=lvl;last.xp+=n*bx;last.xpLo=Math.min(last.xpLo,bx);last.xpHi=Math.max(last.xpHi,bx);}
+    else segs.push({k:best,off,from:lvl-gained,start:lvl-gained,to:lvl,n,xp:n*bx,xpLo:bx,xpHi:bx});}
+  return {segs,stuck,crafts:segs.reduce((s,x)=>s+x.n,0),xp:segs.reduce((s,x)=>s+x.xp,0),guided:!!guide};}
+function addNeeds(id,qty,acc,crafts,depth=0){
+  const c=itemCost(id);
+  if(c&&c.how==="craft"&&depth<3){const r=recipeByResult.get(+id);crafts[id]=(crafts[id]||0)+qty;
+    for(let i=0;i<r[4].length;i+=2)addNeeds(r[4][i],qty*r[4][i+1],acc,crafts,depth+1);}
+  else acc[id]=(acc[id]||0)+qty;}
+function needsOfSegs(segs){const acc={},crafts={};for(const s of segs){const r=s.k.r;for(let j=0;j<r[4].length;j+=2)addNeeds(r[4][j],r[4][j+1]*s.n,acc,crafts);}return {acc,crafts};}
+function costOf(acc){let t=0,miss=0;for(const [id,q] of Object.entries(acc)){const need=Math.max(0,q-haveOf(id));if(!need)continue;const lc=lotCost(id,need);if(!lc)miss++;else t+=lc.c;}return {t,miss,count:Object.keys(acc).length};}
+
+/* ===== saisie des prix (partagée) ===== */
+const SRC_TXT={hdv:"Prix moyen HDV Dakal (ton relevé du 10/10/2026)",km:"Prix KamaMaster Dakal",lots:"Meilleur prix unitaire par lot",moi:"Ton prix"};
+function priceInput(id,ctx){const p=priceOf(id),src=srcOf(id),ref=src==="hdv"||src==="km"||src==="lots";
+  return `<input class="price${p==null?" missing":""}${ref?" ref":""}" id="${ctx}-${id}" data-item="${id}" inputmode="decimal" placeholder="prix ?" value="${p==null?"":Math.round(p*100)/100}" ${ref?`title="${SRC_TXT[src]}. Tape ton prix pour le remplacer."`:""} aria-label="Prix unitaire de ${esc(itName(id))}">`;}
+const copiedSet=new Set();
+function nameBtn(id){const n=itName(id).trim();return `<button class="nm-copy${copiedSet.has(String(id))?" copied":""}" data-copy="${id}" title="Copier « ${esc(n)} »">${esc(n)}</button>`;}
+async function copyExact(text){try{await navigator.clipboard.writeText(text);return true;}catch(e){const ta=document.createElement("textarea");ta.value=text;ta.style.cssText="position:fixed;opacity:0";document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand("copy");}catch(_){}ta.remove();return ok;}}
+const craftStack=[];
+function openCraft(id,q){craftStack.push({id:+id,q:+q});renderCraft();}
+function renderCraft(){const P=$("#craftSheet");if(!craftStack.length){P.hidden=true;return;}P.hidden=false;
+  const {id,q}=craftStack[craftStack.length-1],r=recipeByResult.get(id);costMemo=new Map();
+  let h=`<div class="sheet-card card pad stack" role="dialog" aria-modal="true" aria-label="Recette de ${esc(itName(id))}">
+    <div class="row spread"><div class="row" style="gap:6px">${craftStack.length>1?'<button class="btn sm" id="craftBack">← Retour</button>':""}<span class="hint">${craftStack.map(c=>esc(itName(c.id))).join(" › ")}</span></div><button class="btn sm ghost" id="craftClose" aria-label="Fermer">✕ Fermer</button></div>
+    <div class="row" style="gap:12px;align-items:center"><div class="rslot">${icon(id,44)}</div><div><div class="lbl">Fabriquer ×${fmtN(q)}</div><h2>${nameBtn(id)}</h2>${r?`<div class="hint">${esc(jobName(r[1]))} · recette niv. ${r[2]}</div>`:""}</div></div>`;
+  if(!r)h+=`<p class="hint">Pas de recette connue pour cet objet.</p>`;
+  else{let tot=0,miss=0;
+    h+=`<p class="hint">Clique sur un nom pour le copier, puis colle-le dans la recherche de l'HDV. Les noms copiés sont cochés.</p><div class="inv">`+
+    Array.from({length:r[4].length/2},(_,i)=>({id:r[4][2*i],q:r[4][2*i+1]*q})).map(g=>{const c=itemCost(g.id),lc=lotCost(g.id,g.q),sub=c&&c.how==="craft"&&recipeByResult.get(+g.id);
+      if(sub){const cc=c.c*g.q;tot+=cc;}else if(lc)tot+=lc.c;else miss++;
+      return `<div class="slot inv-slot"><div class="frame">${icon(g.id,40)}<span class="q">${fmtN(g.q)}</span></div><div class="nm">${nameBtn(g.id)}${tags(g.id)}</div>
+        <div class="pr">${sub?`<span class="tot">${fmtK(c.c*g.q)} en fabriquant</span>`:priceInput(g.id,"k")+`<span class="tot">${lc?fmtK(lc.c):""}</span>`}</div>
+        <div class="sub2">${sub?`<button class="pill leaf craftbtn" data-craft="${g.id}" data-q="${g.q}">à fabriquer · ${esc(jobName(sub[1]))} niv. ${sub[2]} · recette</button>`:(lc&&lc.txt?`<span class="pill">${esc(lc.txt)}</span>`:"")+avBtn(g.id)}</div></div>`;}).join("")+`</div>
+    <div class="row spread"><b>Coût total pour ×${fmtN(q)}</b><b class="num" style="color:var(--gold)">${miss?"≥ ":""}${fmtK(tot)}</b></div>
+    <button class="btn" id="craftCopyAll">Copier la liste des ingrédients</button>`;}
+  h+=`</div>`;P.innerHTML=h;
+  $("#craftClose").onclick=()=>{craftStack.length=0;renderCraft();};
+  const bk=$("#craftBack");if(bk)bk.onclick=()=>{craftStack.pop();renderCraft();};
+  const ca=$("#craftCopyAll");if(ca)ca.onclick=()=>copy(Array.from({length:r[4].length/2},(_,i)=>`${itName(r[4][2*i])} ; ${r[4][2*i+1]*q}`).join("\n"));
+  wirePrices(P,()=>{renderCraft();renderPlan();});}
+document.addEventListener("click",async e=>{
+  const c=e.target.closest("[data-copy]");if(c){e.preventDefault();const n=itName(c.dataset.copy).trim();const ok=await copyExact(n);
+    copiedSet.add(String(c.dataset.copy));document.querySelectorAll(`[data-copy="${c.dataset.copy}"]`).forEach(x=>x.classList.add("copied"));toast(ok?`« ${n} » copié`:"Copie impossible ici");return;}
+  const k=e.target.closest("[data-craft]");if(k){e.preventDefault();openCraft(k.dataset.craft,k.dataset.q);return;}
+  const go=e.target.closest("[data-goto]");if(go){e.preventDefault();const t=go.dataset.goto;
+    if(!document.getElementById(t)&&t.startsWith("cc-")){plan.cartView="craft";savePlan();renderCart();}
+    const el=document.getElementById(t);if(el){el.scrollIntoView({behavior:"smooth",block:"center"});el.classList.remove("flash");void el.offsetWidth;el.classList.add("flash");}else toast("Déjà terminé");return;}
+  const av=e.target.closest("[data-avoid]");if(av){e.preventDefault();openSwap({res:[av.dataset.avoid]});return;}
+  const sr=e.target.closest("[data-swaprec]");if(sr){e.preventDefault();openSwap({rec:[sr.dataset.swaprec]});return;}
+  if(e.target.closest("#btnSwap")){e.preventDefault();openSwap({});return;}
+  const ub=e.target.closest("[data-unban]");if(ub){e.preventDefault();plan.banRec=(plan.banRec||[]).filter(x=>x!==+ub.dataset.unban);savePlan();renderAll();toast(`${itName(ub.dataset.unban)} rétabli`);return;}
+  const ua=e.target.closest("[data-unavoid]");if(ua){e.preventDefault();const id=ua.dataset.unavoid;plan.avoid={...(plan.avoid||{})};if(avoidWhy(id)==="auto")plan.avoid[id]={m:"ok"};else delete plan.avoid[id];savePlan();renderAll();toast(`${itName(id)} rétablie`);return;}
+  if(e.target.id==="avoidSheet"){closeSwap();return;}
+  if(e.target.id==="craftSheet"){craftStack.length=0;renderCraft();}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&swap){closeSwap();return;}if(e.key==="Escape"&&craftStack.length){craftStack.length=0;renderCraft();}});
+function tags(id){const c=D.cat&&D.cat[id];return c==="Nowel"?' <span class="pill warn">Nowel</span>':(c==="Songes"?' <span class="pill gold">Songes</span>':"");}
+function stockInput(id,ctx){const h=haveOf(id);return `<label class="have" title="Quantité que tu possèdes déjà (inventaire + banque)">j'ai <input class="stock" id="${ctx}-h${id}" data-stock="${id}" inputmode="numeric" value="${h||""}" placeholder="0" aria-label="Quantité possédée de ${esc(itName(id))}"></label>`;}
+function gaugeHtml(kind,key,val,total,ctx,o){const pct=total?Math.min(100,Math.round(100*val/total)):0,left=Math.max(0,total-val);
+  const col=pct>=100?"var(--leaf)":pct>=34?"var(--gold)":"var(--warn)";
+  return `<div class="gauge" data-kind="${kind}" data-key="${key}" data-total="${total}" style="--p:${pct}%;--c:${col}">
+    <div class="gtop"><label class="gl">${o.label} <input class="gval" id="${ctx}-g${kind}${key}" inputmode="text" value="${val||""}" placeholder="0" title="Tape un nombre, ou +5 / -3 pour ajouter ou retirer" aria-label="${esc(o.aria)}"></label><span class="gm ${left?"":"ok"}">${left?o.miss(left):o.done}</span></div>
+    <div class="gbar"><input type="range" class="grange" min="0" max="${total}" step="1" value="${Math.min(val,total)}" aria-label="${esc(o.aria)}"><span class="gtxt"><b>${fmtN(val)}</b> / ${fmtN(total)} · ${pct} %</span></div></div>`;}
+function entryVal(raw,cur){raw=String(raw||"").trim().replace(/\s/g,"");const m=raw.match(/^([+-])(.+)$/);if(m){const d=parseValue(m[2])||0;return Math.max(0,cur+(m[1]==="+"?d:-d));}return parseValue(raw||"0")||0;}
+function haveGauge(r,ctx){const h=haveOf(r.id);
+  return gaugeHtml("stock",r.id,h,r.q,ctx,{label:"J'ai déjà",miss:n=>`Il manque <b>${fmtN(n)}</b>`,done:"✓ Complet",aria:"Quantité possédée de "+itName(r.id)});}
+function commitGauge(kind,key,v){v=Math.max(0,Math.floor(v||0));const m=kind==="stock"?(plan.stock=plan.stock||{}):(plan.made=plan.made||{});if(v)m[key]=v;else delete m[key];savePlan();}
+function liveGauge(g,v){const t=+g.dataset.total,pct=t?Math.min(100,Math.round(100*v/t)):0;g.style.setProperty("--p",pct+"%");g.style.setProperty("--c",pct>=100?"var(--leaf)":pct>=34?"var(--gold)":"var(--warn)");
+  const tx=g.querySelector(".gtxt");if(tx)tx.innerHTML=`<b>${fmtN(v)}</b> / ${fmtN(t)} · ${pct} %`;const n=g.querySelector(".gval");if(n&&document.activeElement!==n)n.value=v||"";}
+function wireStock(root,rerender){
+  root.querySelectorAll(".gauge").forEach(g=>{const kind=g.dataset.kind,key=g.dataset.key,t=+g.dataset.total;
+    const rg=g.querySelector(".grange"),iv=g.querySelector(".gval");
+    rg.addEventListener("input",()=>liveGauge(g,+rg.value));
+    rg.addEventListener("change",()=>{commitGauge(kind,key,+rg.value);rerender();});
+    const cur=()=>kind==="stock"?haveOf(key):(+((plan.made||{})[key])||0);
+    iv.addEventListener("change",()=>{commitGauge(kind,key,entryVal(iv.value,cur()));rerender();});
+    iv.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();iv.blur();}});
+});
+  root.querySelectorAll("input.ingstock").forEach(el=>el.addEventListener("change",()=>{commitGauge("stock",el.dataset.ingstock,entryVal(el.value,haveOf(el.dataset.ingstock)));rerender();}));}
+function setPrice(id,raw,src){const k=norm(itName(id));raw=String(raw).trim();
+  if(raw===""){if(prices[k]){delete prices[k];return true;}return false;}
+  const v=parseValue(raw);if(!isFinite(v)||v<0)return null;if(prices[k]&&prices[k].p===v)return false;if(!prices[k]&&priceOf(id)!=null&&Math.abs(priceOf(id)-v)<0.01)return false;
+  prices[k]={n:itName(id),p:v,d:today(),s:src||"Moi"};return true;}
+function wirePrices(root,rerender){
+  root.querySelectorAll("input.price").forEach(el=>{
+    el.addEventListener("change",()=>{const r=setPrice(el.dataset.item,el.value);
+      if(r===null){el.setCustomValidity("Prix non reconnu : écris par exemple 1200, 15k ou 45000/100");el.reportValidity();return;}
+      el.setCustomValidity("");
+      if(r){const nx=nextMissing(el);savePrices();rerender();renderPricesTab();if(nx)document.getElementById(nx)?.focus();}});
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();const nx=nextMissing(el);el.blur();if(nx)setTimeout(()=>document.getElementById(nx)?.focus(),0);}});});}
+function nextMissing(el){const all=[...document.querySelectorAll("section:not([hidden]) input.price")];const i=all.indexOf(el);
+  for(let j=i+1;j<all.length;j++)if(all[j].classList.contains("missing")&&all[j].dataset.item!==el.dataset.item)return all[j].id;return null;}
+
+/* ===== PLAN ===== */
+function range(){const L=plan.levels[plan.job]||{};const from=clamp(+L.from||1,1,199);return {from,to:clamp(+L.to||200,from+1,200),xp:clamp(+L.xp||0,0,20*from-1)};}
+function doneKey(job,s){return s.k.r[0]+"@"+s.from;}
+function jobIcon(id){if(JOB_ICON[id]&&byName.has(norm(JOB_ICON[id])))return iconByName(JOB_ICON[id],30);
+  const r=[...recipesByJob[id]].sort((a,b)=>a[2]-b[2]).find(r=>D.items[r[0]]&&D.items[r[0]][3]>=0);return r?icon(r[0],30):`<span class="ico none" style="--s:30px"></span>`;}
+const coverMemo={};
+function jobCover(job){if(coverMemo[job])return coverMemo[job];const ing=new Set();for(const r of recipesByJob[job]||[])for(let i=0;i<r[4].length;i+=2)ing.add(r[4][i]);
+  let ok=0;for(const id of ing)if(priceOf(id)!=null||recipeByResult.has(+id))ok++;return coverMemo[job]={ok,n:ing.size,pct:ing.size?Math.round(100*ok/ing.size):0};}
+function renderJobs(){for(const k in coverMemo)delete coverMemo[k];
+  $("#jobs").innerHTML=Object.entries(D.jobs).sort((a,b)=>a[1].localeCompare(b[1],"fr")).map(([id,n])=>
+    `<button class="job" aria-pressed="${+id===plan.job}" data-job="${id}">${jobIcon(id)}<div><b>${esc(n)}</b><span>${recipesByJob[id].length} recettes · ${jobCover(id).pct} % prix</span></div></button>`).join("");}
+function renderGuide(){
+  const G=$("#guidePanel"),job=plan.job,list=plan.guides[job]||[],info=plan.guideInfo[job];
+  if(plan.opts.mode!=="guide"){G.hidden=true;return;}
+  G.hidden=false;
+  G.innerHTML=`<div class="row spread"><h3>Parcours guide · ${esc(jobName(job))}</h3>${info?`<span class="pill gold">${esc(info.src)} · importé le ${esc(info.d)} · ${list.length} recettes</span>`:""}</div>
+   ${list.length?`<div class="chips">${list.map(id=>{const r=recipeByResult.get(id);return `<span class="chip">${icon(id,24)}${esc(itName(id))}${r?` <span class="hint">niv. ${r[2]}</span>`:""}<button class="btn ghost sm" style="padding:0 2px" data-gdel="${id}" aria-label="Retirer ${esc(itName(id))}">✕</button></span>`;}).join("")}</div>`
+     :`<p class="hint">Aucun parcours pour ce métier. Ouvre <a href="https://www.dofus-evolution.fr/guide/artisanatguide/${esc(norm(jobName(job)).replace(/[^a-z]/g,""))}" target="_blank" rel="noopener">dofus-evolution.fr/guide/artisanatguide/${esc(norm(jobName(job)).replace(/[^a-z]/g,""))}</a>, règle ton niveau et ta cible sur leur page, fais défiler la liste « Recettes à fabriquer » jusqu'en bas, puis Ctrl+A, Ctrl+C et colle ci-dessous. L'outil y repère les recettes de ${esc(jobName(job))} dans l'ordre, puis calcule les crafts niveau par niveau avec elles.</p>`}
+   <details ${list.length?"":"open"}><summary class="lbl" style="cursor:pointer">${list.length?"Remplacer le parcours":"Coller le guide"}</summary>
+     <div class="stack" style="margin-top:8px"><textarea id="guideBox" spellcheck="false" placeholder="Colle ici le contenu de la page du guide…"></textarea>
+     <div class="row"><label class="f"><span class="lbl">Source</span><select id="gSrc"><option>Dofus Evolution</option><option>Huzounet</option><option>Autre guide</option></select></label><button class="btn gold" id="btnGuide">Utiliser ce parcours</button></div><div id="guideReport"></div></div></details>`;
+  G.querySelectorAll("[data-gdel]").forEach(b=>b.onclick=()=>{plan.guides[job]=list.filter(x=>x!==+b.dataset.gdel);savePlan();renderPlan();});
+  $("#btnGuide").onclick=()=>{const ids=parseGuide($("#guideBox").value,job);
+    if(!ids.length){$("#guideReport").innerHTML=`<div class="note">Aucune recette de ${esc(jobName(job))} trouvée dans ce texte. Vérifie que tu as copié la page du bon métier.</div>`;return;}
+    plan.guides[job]=ids;plan.guideInfo[job]={src:$("#gSrc").value,d:today()};savePlan();renderPlan();renderCart();toast(ids.length+" recettes reprises du guide");};}
+function parseGuide(text,job){
+  const exact=new Map();for(const r of recipesByJob[job]||[])exact.set(norm(itName(r[0])),r[0]);
+  const lines=text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+  const found=[],seen=new Set();const add=id=>{if(!seen.has(id)){seen.add(id);found.push(id);}};
+  // format Dofus Evolution : « Niveau 106 » puis le nom de la recette (les arbres de fabrication sont ignorés)
+  for(let i=0;i<lines.length;i++){const m=lines[i].match(/^niveau\s*(\d{1,3})\b\s*[:\-–]?\s*(.*)$/i);if(!m)continue;
+    const tries=[m[2],...lines.slice(i+1,i+4)];
+    for(const t of tries){if(!t)continue;const id=exact.get(norm(t.replace(/\s*[x×]\s*\d+$/i,"")));if(id){add(id);break;}}}
+  if(found.length)return found;
+  // autre format : on cherche les noms de recettes ligne par ligne
+  const names=[...exact.entries()].filter(([k])=>k.length>2).sort((a,b)=>b[0].length-a[0].length);
+  for(const raw of lines){let line=" "+norm(raw).replace(/[^a-z0-9' ]/g," ").replace(/\s+/g," ")+" ";const hits=[];
+    for(const [k,id] of names){const key=" "+k.replace(/[^a-z0-9' ]/g," ").replace(/\s+/g," ")+" ";let i=line.indexOf(key);
+      while(i>=0){hits.push({i,id});line=line.slice(0,i)+" ".repeat(key.length)+line.slice(i+key.length);i=line.indexOf(key);}}
+    hits.sort((a,b)=>a.i-b.i).forEach(h=>add(h.id));}
+  return found;}
+function renderPlan(){
+  if(OVERLAY&&D)setTimeout(renderCompact,0);
+  renderGuide();const ab=$("#avoidBox");if(ab)ab.innerHTML=avoidBoxHtml();
+  const job=plan.job,{from,to,xp}=range();$("#lvlFrom").value=from;$("#lvlTo").value=to;$("#lvlXp").value=xp;$("#lvlXp").max=20*from-1;
+  const res=optimise(job,from,to,xp);const done=new Set(plan.done[job]||[]);
+  const R=$("#route");const vf=vitFocus(job);
+  if(!res.segs.length){R.innerHTML=`<div class="card empty">Aucune recette accessible à ce niveau. Augmente « Écart max recette » dans les réglages.</div>`;renderPurse(res,{t:0,miss:0,count:0},0);return;}
+  let h="";let stepsLeft=[];
+  res.segs.forEach((s,i)=>{const r=s.k.r,isDone=done.has(doneKey(job,s));if(!isDone)stepsLeft.push(s);
+    const {acc,crafts}=needsOfSegs([s]);const cc=costOf(acc);
+    h+=`<article class="card step${isDone?" done":""}">
+      <div class="step-head"><div class="step-no">${i+1}</div><div class="rslot">${icon(r[0],44)}</div>
+        <div class="step-title"><div class="lv">NIV. ${s.from} → ${s.to}</div><h3>${esc(itName(r[0]))}</h3><div class="sub">recette niv. ${r[2]}${s.partial?` · <span class="pill warn">limité à ton stock de ${esc(s.partial)}</span>`:""}${res.guided?(s.off?' · <span class="pill">hors guide</span>':' · <span class="pill leaf">guide</span>'):""}</div>
+          <div class="row" style="gap:6px;margin-top:6px"><span class="pill gold">${s.xpLo===s.xpHi?fmtN(s.xpLo):fmtN(s.xpLo)+"–"+fmtN(s.xpHi)} XP / craft</span><span class="pill">${fmtN(s.xp)} XP gagnée</span>${s.k.c!=null?`<span class="pill">${fmtN(s.k.c/s.xpHi,1)}–${fmtN(s.k.c/s.xpLo,1)} kamas / XP</span>`:""}</div>
+          <label class="calib" title="Crafte une fois au niveau ${s.from} et tape l'XP gagnée : toute l'XP de l'outil se recale dessus">XP réelle du 1ᵉʳ craft (niv. ${s.from}) <input data-calib="${i}" inputmode="numeric" placeholder="${fmtN(s.xpHi)}"></label></div>
+        <div class="step-k"><b>×${fmtN(s.n)}</b><span>crafts</span></div></div>
+      <div class="slots">${Object.entries(crafts).map(([id,q])=>{const rr=recipeByResult.get(+id);return `<div class="slot craft"><div class="frame">${icon(id,40)}<span class="q">${fmtN(q)}</span></div><div class="nm">${nameBtn(id)}</div><button class="pill leaf craftbtn" data-craft="${id}" data-q="${q}">à fabriquer · ${esc(jobName(rr[1]))} · voir la recette</button></div>`;}).join("")}
+        ${Object.entries(acc).map(([id,q])=>{const lc=lotCost(id,q);return `<div class="slot"><div class="frame">${icon(id,40)}<span class="q">${fmtN(q)}</span></div><div class="nm">${nameBtn(id)}${tags(id)}</div><div class="pr">${priceInput(id,"s"+i)}<span class="tot">${lc?fmtK(lc.c):""}</span></div><div class="sub2">${priceAlert(id)}${avBtn(id)}</div></div>`;}).join("")}</div>
+      <div class="step-foot"><span class="row" style="gap:8px"><label class="toggle"><input type="checkbox" data-done="${esc(doneKey(job,s))}" ${isDone?"checked":""}>Étape terminée</label><button type="button" class="btn ghost sm swbtn" data-swaprec="${r[0]}">⇄ Remplacer cet objet</button></span>
+        <span class="cost">${cc.miss&&!cc.t?`<span class="pill gold">${cc.miss} prix à saisir</span>`:`${cc.miss?"≥ ":""}${fmtK(cc.t)} kamas${cc.miss?` <span class="pill gold">${cc.miss} prix manquants</span>`:""}`}</span></div>
+    </article>`;});
+  if(res.stuck)h+=`<div class="note">Plan arrêté au niveau ${res.stuck} : aucune recette dans l'écart max choisi.</div>`;
+  if(vf)h=`<div class="note leaf">🍞 <b>Métier de récolte :</b> le plan n'utilise que les consommables qui rendent des PV ou de l'énergie (pains, potions, poissons, viandes). Les recettes de quête sont exclues. Réglable dans les réglages.</div>`+h;
+  R.innerHTML=h;
+  R.querySelectorAll("input[data-calib]").forEach(el=>el.addEventListener("change",()=>{const v=parseValue(el.value||"");if(!(v>0))return;
+    const s=res.segs[+el.dataset.calib],raw=craftXpRaw(s.k.r[2],s.k.r[3],s.from);if(!raw)return;
+    const c=Math.round((v/raw-1)*1000)/10;plan.opts.xpCorr=clamp(c,-50,50);$("#xpCorr").value=plan.opts.xpCorr;savePlan();renderPlan();renderCart();
+    toast(`Correction XP réglée à ${c>0?"+":""}${fmtN(c,1)} % · plan recalculé`);}));
+  R.querySelectorAll("input[data-done]").forEach(cb=>cb.onchange=()=>{const set=new Set(plan.done[job]||[]);cb.checked?set.add(cb.dataset.done):set.delete(cb.dataset.done);plan.done[job]=[...set];savePlan();renderPlan();});
+  wirePrices(R,renderPlan);
+  const all=needsOfSegs(res.segs),left=needsOfSegs(stepsLeft);
+  renderPurse(res,costOf(all.acc),res.segs.length-stepsLeft.length,costOf(left.acc),left.acc,all.acc);
+  renderTotals(all.acc,all.crafts);if(typeof renderCart==="function"&&D)renderCart();}
+function srvLink(id){return "";}
+function renderTotals(acc,crafts){
+  const T=$("#totals");const ids=Object.keys(acc);if(!ids.length){T.hidden=true;return;}T.hidden=false;
+  const units=ids.reduce((s,id)=>s+acc[id],0),cc=costOf(acc);
+  const rows=ids.map(id=>{const need=Math.max(0,acc[id]-haveOf(id));return {id,q:acc[id],need,p:priceOf(id),lc:lotCost(id,need)};}).sort((a,b)=>(a.p==null)-(b.p==null)||(b.lc?b.lc.c:0)-(a.lc?a.lc.c:0)||b.q-a.q);
+  T.innerHTML=`<div class="row spread"><h2>Ressources totales</h2><button class="btn sm" id="btnCopyTotals">Copier la liste</button></div>
+   <div class="big" style="grid-template-columns:repeat(auto-fit,minmax(120px,1fr))"><div><b>${ids.length}</b><span class="lbl">ressources différentes</span></div><div><b>${fmtN(units)}</b><span class="lbl">unités au total</span></div><div><b class="gold">${cc.miss&&!cc.t?"?":(cc.miss?"≥":"")+fmtK(cc.t)}</b><span class="lbl">kamas</span></div><div><b>${cc.miss}</b><span class="lbl">prix manquants</span></div></div>
+   ${Object.keys(crafts).length?`<div class="chips">${Object.entries(crafts).map(([id,q])=>`<button class="chip craftbtn" data-craft="${id}" data-q="${q}">${icon(id,24)}${fmtN(q)}× ${esc(itName(id))} <span class="hint">à fabriquer · recette</span></button>`).join("")}</div>`:""}
+   <div class="inv">${rows.map(r=>slotHtml(r,"t",false)).join("")}</div>`;
+  $("#btnCopyTotals").onclick=()=>copy(rows.filter(r=>r.need>0).map(r=>`${itName(r.id)} ; ${Math.ceil(r.need)}`).join("\n"));
+  wirePrices(T,renderPlan);wireStock(T,renderPlan);}
+function setMade(key,v){plan.made=plan.made||{};if(v>0)plan.made[key]=v;else delete plan.made[key];savePlan();renderCart();}
+function craftCard(c,avail){const r=c.r;
+  const ings=r?Array.from({length:r[4].length/2},(_,i)=>({id:r[4][2*i],per:r[4][2*i+1]})):[];
+  let can=c.left;for(const g of ings)can=Math.min(can,Math.floor(Math.max(0,avail[g.id]||0)/g.per));if(!ings.length)can=0;
+  const pct=c.q?Math.min(100,Math.round(100*c.made/c.q)):0,col=p=>p>=100?"var(--leaf)":p>=34?"var(--gold)":"var(--warn)";
+  const ready=c.left>0&&ings.length?Math.round(ings.reduce((s,g)=>s+Math.min(100,100*Math.max(0,avail[g.id]||0)/(g.per*c.left)),0)/ings.length):100;
+  return `<article class="bcard${c.left<=0?" full":""}" id="cc-${c.key}" style="--p:${pct}%;--c:${col(pct)}">
+    <header class="bhead"><div style="min-width:0"><div class="bname">${nameBtn(c.id)} <span class="bx">× ${fmtN(c.q)}</span></div>
+      <div class="hint">${r?esc(jobName(r[1]))+" · niveau "+r[2]:""} · <span class="pill ${c.inter?"leaf":"gold"}">${c.inter?"intermédiaire":"objet du plan"}</span></div>
+      <div class="bprog"><span class="bbar"><i></i></span><b>${pct} %</b><span class="bcost${c.left<=0?" ok":""}">${c.left>0?`reste ${fmtN(c.left)} à crafter`:"✓ terminé"}</span></div>
+      ${c.left>0?`<div class="bprog bready" style="--p:${ready}%;--c:${col(ready)}"><span class="lbl">Ressources prêtes</span><span class="bbar"><i></i></span><b>${ready} %</b></div>`:""}
+      ${c.inter&&c.parents.length?`<div class="bsert"><span class="lbl">Sert à</span>${c.parents.map(p=>`<button type="button" class="linkb" data-goto="cc-${p.key}">${esc(itName(p.id))} →</button>`).join("")}</div>`:""}</div>
+      <div class="bicon">${icon(c.id,56)}</div></header>
+    <div class="bctl">
+      <label>Crafté <input class="bin bmade" data-bmade="${c.key}" data-cur="${c.made}" inputmode="text" value="${c.made}" title="Nombre crafté, ou +5 / -3" aria-label="Quantité craftée de ${esc(itName(c.id))}"> / ${fmtN(c.q)}</label>
+      <label>Objectif <input class="bin" data-ctarget="${c.key}" inputmode="numeric" value="${c.q}" aria-label="Quantité à crafter">${c.q!==c.q0?` <button type="button" class="btn ghost sm" data-ctreset="${c.key}">plan : ${fmtN(c.q0)}</button>`:""}</label></div>
+    ${c.left>0?`<div class="cannow ${can>0?"ok":""}">${can>0?`Avec ce que tu as : <b>${fmtN(can)}</b> craft${can>1?"s":""} possible${can>1?"s":""} <button type="button" class="btn sm gold" data-craftnow="${c.key}" data-n="${can}">Valider ${fmtN(can)}</button>`:`Il te manque des ressources (en rouge).`}</div>`:""}
+    ${c.left>0&&ings.length?`<div class="brows">${ings.map(g=>{const need=g.per*c.left,isI=!!c.interSet[g.id];
+      const av=Math.max(0,avail[g.id]||0),p=need?Math.min(100,Math.round(100*av/need)):100;
+      return `<div class="brow${av>=need?" ok":" ko"}"><span class="ic">${icon(g.id,28)}</span>
+        <span class="bn">${nameBtn(g.id)}${isI?`<span class="bsub">intermédiaire <button type="button" class="linkb" data-goto="cc-i${g.id}">voir son craft →</button></span>`:""}</span>
+        ${isI?`<span class="bdispo" title="Crafts déjà faits et disponibles">${fmtN(Math.min(av,need))} faits</span>`:`<input class="bin ingstock" data-ingstock="${g.id}" inputmode="text" title="Ce que tu as (nombre, ou +5 / -3)" value="${haveOf(g.id)||0}" aria-label="Quantité possédée de ${esc(itName(g.id))}">`}
+        <span class="bneed">/ ${fmtN(need)}</span><span></span>
+        <span class="mini" style="--p:${p}%;--c:${col(p)}"><i></i></span></div>`;}).join("")}</div>`:""}
+    <footer class="bfoot"><button type="button" class="btn sm ghost" data-bmset="${c.key}" data-v="0">↓ 0</button><button type="button" class="btn sm" data-bmset="${c.key}" data-v="${c.q}">✓ Tout crafté</button></footer></article>`;}
+
+/* ===== À acheter, vue « par objet » (façon DofusBook) ===== */
+function buyCardsHtml(cl,interSet,bought){
+  const rem={};const remOf=id=>{if(rem[id]==null)rem[id]=bought.has(String(id))?Infinity:(interSet[id]?(+((plan.made||{})["i"+id])||0):haveOf(id));return rem[id];};
+  const col=p=>p>=100?"var(--leaf)":p>=34?"var(--gold)":"var(--warn)";
+  // arbre : un intermédiaire = une ligne avec sa jauge (crafts déjà faits + ressources réunies), puis ses ressources en dessous
+  const build=(id,q,d,acc)=>{q=Math.ceil(q);
+    if(interSet[id]&&d<4){const use=Math.min(remOf(id),q);rem[id]-=use;const left=q-use,r=recipeByResult.get(+id);
+      const kids=left>0?Array.from({length:r[4].length/2},(_,i)=>build(r[4][2*i],r[4][2*i+1]*left,d+1,acc)):[];
+      const kp=kids.length?kids.reduce((s,k)=>s+k.pct,0)/kids.length:100;
+      return {id,isI:true,need:q,made:use,left,kids,d,pct:q?Math.round((100*use+left*kp)/q):100};}
+    const have=Math.min(remOf(id),q);rem[id]-=have;const lc=q>have?lotCost(id,q-have):null;if(lc)acc.miss+=lc.c;
+    const x={id,need:q,have,d,pct:q?Math.min(100,Math.round(100*have/q)):100,bought:bought.has(String(id))};acc.leaves.push(x);return x;};
+  const cards=cl.filter(c=>c.r&&!c.inter&&c.left>0).map(c=>{const r=c.r,acc={miss:0,leaves:[]};
+    const rows=Array.from({length:r[4].length/2},(_,i)=>build(r[4][2*i],r[4][2*i+1]*c.left,0,acc));
+    return {c,rows,acc,pct:rows.length?Math.round(rows.reduce((s,x)=>s+x.pct,0)/rows.length):100};});
+  cards.sort((a,b)=>(a.pct>=100)-(b.pct>=100));
+  if(!cards.length)return `<div class="empty">🎉 Tout est acquis pour ce plan.</div>`;
+  const rowHtml=(x,c)=>x.isI?`<div class="brow inter" style="--d:${x.d}"><span class="ic">${icon(x.id,28)}</span>
+      <span class="bn">${nameBtn(x.id)}<span class="bsub">à crafter${x.made?` · ${fmtN(x.made)} déjà faits`:""} <button type="button" class="linkb" data-goto="cc-i${x.id}" title="Voir sa carte dans « À crafter »">voir le craft →</button></span></span>
+      <span class="bpct" style="color:${col(x.pct)}">${x.pct} %</span><span class="bneed">× ${fmtN(x.need)}</span><span></span>
+      <span class="mini" style="--p:${x.pct}%;--c:${col(x.pct)}"><i></i></span></div>${x.kids.map(k=>rowHtml(k,c)).join("")}`
+    :`<div class="brow${x.have>=x.need?" ok":""}${x.d?" sub":""}" style="--d:${x.d}"><span class="ic">${icon(x.id,28)}</span>
+      <span class="bn">${nameBtn(x.id)}</span>
+      ${x.bought?`<span class="bdispo">acheté</span>`:`<input class="bin" data-bcid="${x.id}" data-alloc="${x.have}" data-need="${x.need}" inputmode="text" value="${x.have||0}" title="Ce que tu as pour cet objet (nombre, ou +5 / -3)" aria-label="Quantité possédée de ${esc(itName(x.id))} pour ${esc(itName(c.id))}">`}
+      <span class="bneed">/ ${fmtN(x.need)}</span>
+      ${x.bought?"<span></span>":`<button type="button" class="bmax" data-bcmax="${x.id}" data-alloc="${x.have}" data-need="${x.need}" title="J'ai tout pour cet objet">max</button>`}
+      <span class="mini" style="--p:${x.pct}%;--c:${col(x.pct)}"><i></i></span></div>`;
+  return `<div class="bgrid">${cards.map(({c,rows,acc,pct})=>{const r=c.r,L=acc.leaves.filter(x=>!x.bought);return `<article class="bcard${pct>=100?" full":""}" id="bc-p${c.id}" style="--p:${pct}%;--c:${col(pct)}">
+    <header class="bhead"><div style="min-width:0"><div class="bname">${nameBtn(c.id)} <span class="bx">× ${fmtN(c.left)}</span></div>
+      <div class="hint">${esc(jobName(r[1]))} · niveau ${r[2]}</div>
+      <div class="bprog"><span class="bbar"><i></i></span><b>${pct} %</b>${acc.miss?`<span class="bcost">reste ${fmtK(acc.miss)}</span>`:`<span class="bcost ok">✓ tout est là</span>`}</div></div>
+      <div class="bicon">${icon(c.id,56)}</div></header>
+    <div class="brows">${rows.map(x=>rowHtml(x,c)).join("")}</div>
+    <footer class="bfoot"><button type="button" class="btn sm ghost" data-bczero='${JSON.stringify(L.filter(x=>x.have>0).map(x=>[x.id,x.have]))}'>↓ 0</button>
+      <button type="button" class="btn sm" data-bcfill='${JSON.stringify(L.filter(x=>x.have<x.need).map(x=>[x.id,x.need-x.have]))}'>↑ max</button></footer></article>`;}).join("")}</div>`;}
+function wireBuyCards(P,rr){
+  P.querySelectorAll("input.bin[data-bcid]").forEach(el=>{const id=el.dataset.bcid,al=+el.dataset.alloc;
+    el.addEventListener("change",()=>{const v=entryVal(el.value,al);commitGauge("stock",id,haveOf(id)-al+v);rr();});
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();el.blur();}});});
+  P.querySelectorAll("[data-bcmax]").forEach(b=>b.onclick=()=>{const id=b.dataset.bcmax;commitGauge("stock",id,haveOf(id)+(+b.dataset.need)-(+b.dataset.alloc));rr();});
+  P.querySelectorAll("[data-bcfill]").forEach(b=>b.onclick=()=>{for(const [id,n] of JSON.parse(b.dataset.bcfill))commitGauge("stock",id,haveOf(id)+n);rr();});
+  P.querySelectorAll("[data-bczero]").forEach(b=>b.onclick=()=>{for(const [id,n] of JSON.parse(b.dataset.bczero))commitGauge("stock",id,haveOf(id)-n);rr();});}
+function craftViewHtml(todo,done,avail){
+  if(!todo.length&&!done.length)return `<div class="empty">Rien à crafter pour ce plan.</div>`;
+  return `<p class="hint">Dans l'ordre de fabrication : d'abord les intermédiaires de base, puis ceux qui les utilisent, puis les recettes du plan par niveau. Saisis le nombre crafté (ou +5 / -3), clique « Valider » quand tu as les ressources, ou « Tout crafté » quand c'est fini. Les ressources affichées suivent ce qu'il reste à crafter.</p>
+  <div class="bgrid">${todo.map(c=>craftCard(c,avail)).join("")||`<div class="empty">🎉 Tout est crafté.</div>`}</div>
+  ${done.length?`<div class="lbl" style="margin-top:6px">Terminés · ${done.length}</div><div class="acqlist">${done.map(c=>`<label class="acqrow"><input type="checkbox" checked data-madeall="${c.key}" data-q="${c.q}" aria-label="${esc(itName(c.id))} crafté"><span class="ic">${icon(c.id,28)}</span><span class="an">${esc(itName(c.id))}</span><span class="aq num">×${fmtN(c.q)}</span><span class="ap"></span><span class="pill leaf">✓ crafté</span></label>`).join("")}</div>`:""}`;}
+function undoToast(id){const e=$("#toast");e.innerHTML=`« ${esc(itName(id))} » acquis <button class="btn sm" id="undoAcq" style="margin-left:8px">Annuler</button>`;e.hidden=false;clearTimeout(toast.h);
+  $("#undoAcq").onclick=()=>{plan.bought=(plan.bought||[]).filter(x=>x!==String(id));savePlan();renderCart();e.hidden=true;};toast.h=setTimeout(()=>e.hidden=true,4500);}
+function priceAlert(id){const r=D.ref&&D.ref[id],p=priceOf(id);if(!r||srcOf(id)!=="moi"||p==null||p<r[0]*1.5)return "";
+  return `<button type="button" class="pill warn" data-avoid="${id}" title="Ton prix ${fmtK(p)} contre ${fmtK(r[0])} de moyenne HDV. Clique pour la remplacer.">×${fmtN(p/r[0],1)} vs moyenne</button>`;}
+function avBtn(id){return "";}
+function planParts(){return plan.cart&&plan.cart.length?plan.cart:[{job:plan.job,...range()}];}
+const sameRange=(a,b)=>a.job===b.job&&a.from===b.from&&a.to===b.to;
+function simulate(avoid,ban,stock){const sa=plan.avoid,sb=plan.banRec,ss=plan.stock;plan.avoid=avoid;plan.banRec=ban;if(stock)plan.stock=stock;costMemo=new Map();
+  const acc={},cr={},recs=new Map(),stuck=[];let crafts=0;
+  for(const c of planParts()){const res=optimise(c.job,c.from,c.to,c.xp||0);crafts+=res.crafts;if(res.stuck)stuck.push(`${jobName(c.job)} niv. ${res.stuck}`);
+    for(const sg of res.segs)recs.set(sg.k.r[0],(recs.get(sg.k.r[0])||0)+sg.n);
+    const n=needsOfSegs(res.segs);for(const [k,v] of Object.entries(n.acc))acc[k]=(acc[k]||0)+v;for(const [k,v] of Object.entries(n.crafts))cr[k]=(cr[k]||0)+v;}
+  const cc=costOf(acc);plan.avoid=sa;plan.banRec=sb;plan.stock=ss;costMemo=new Map();return {t:cc.t,miss:cc.miss,crafts,recs,stuck,acc,cr};}
+/* une recette utilise-t-elle cette ressource (directement ou via un intermédiaire fabriqué) ? */
+function usesRes(rid,target,cr,d=0){const r=recipeByResult.get(+rid);if(!r||d>3)return false;
+  for(let i=0;i<r[4].length;i+=2){const x=r[4][i];if(String(x)===String(target))return true;if(cr[x]&&usesRes(x,target,cr,d+1))return true;}return false;}
+let swap=null;
+function openSwap(o){
+  swap={cap:{},res:new Set((o.res||[]).map(String)),rec:new Set((o.rec||[]).map(Number)),q:"",fromRec:!!(o.rec&&o.rec.length)};
+  swap.base=simulate({...(plan.avoid||{})},[...(plan.banRec||[])]);renderSwap();}
+function closeSwap(){swap=null;$("#avoidSheet").hidden=true;}
+function swapResList(){const A=swap.base,q=norm(swap.q||"");
+  return Object.entries(A.acc).map(([id,n])=>({id,n,lc:lotCost(id,n)})).filter(x=>!q||norm(itName(x.id)).includes(q))
+    .sort((a,b)=>swap.res.has(b.id)-swap.res.has(a.id)||(b.lc?b.lc.c:0)-(a.lc?a.lc.c:0));}
+function renderSwap(){const P=$("#avoidSheet");if(!swap){P.hidden=true;return;}P.hidden=false;
+  const recName=[...swap.rec].map(id=>itName(id)).join(", ");
+  P.innerHTML=`<div class="sheet-card card pad stack" role="dialog" aria-modal="true" aria-label="Remplacer">
+    <div class="row spread"><b>${swap.fromRec?"⇄ Remplacer un objet du plan":"⛔ Ressource chère ou indisponible"}</b><button class="btn sm ghost" id="swClose">✕ Fermer</button></div>
+    ${swap.fromRec?`<p class="hint">Tu ne veux plus crafter <b>${esc(recName)}</b>. Voici par quoi le plan le remplace. Tu peux aussi cocher une ressource à éviter en dessous.</p>`
+      :`<p class="hint">1. Coche la ou les ressources trop chères ou introuvables. 2. Regarde les objets impactés et leur remplacement. 3. Valide.</p>`}
+    <details class="swpick" ${swap.fromRec?"":"open"}><summary><span class="lbl">Ressources de ta liste</span> <span class="pill" id="swCount">${swap.res.size} cochée${swap.res.size>1?"s":""}</span></summary>
+      <input type="search" id="swQ" placeholder="Rechercher une ressource…" value="${esc(swap.q)}" aria-label="Rechercher une ressource">
+      <div class="swlist" id="swList"></div></details>
+    <div id="swImpact" class="stack"></div></div>`;
+  $("#swClose").onclick=closeSwap;
+  $("#swQ").oninput=e=>{swap.q=e.target.value;renderSwapList();};
+  renderSwapList();renderSwapImpact();}
+function renderSwapList(){const L=$("#swList");if(!L)return;
+  L.innerHTML=swapResList().slice(0,120).map(x=>`<label class="swrow${swap.res.has(x.id)?" sel":""}"><input type="checkbox" data-swres="${x.id}" ${swap.res.has(x.id)?"checked":""}>${icon(x.id,28)}<span class="an">${esc(itName(x.id))}${swap.res.has(x.id)?`<span class="swcap">j'en ai encore <input data-swcap="${x.id}" inputmode="numeric" value="${swap.cap[x.id]??haveOf(x.id)}" aria-label="Quantité encore disponible de ${esc(itName(x.id))}"> à utiliser d'abord</span>`:""}</span><span class="hint num">×${fmtN(Math.ceil(x.n))}</span><b class="num">${x.lc?fmtK(x.lc.c):"—"}</b></label>`).join("")||`<div class="empty">Aucune ressource.</div>`;
+  L.querySelectorAll("[data-swres]").forEach(cb=>cb.onchange=()=>{cb.checked?swap.res.add(cb.dataset.swres):swap.res.delete(cb.dataset.swres);
+    $("#swCount").textContent=`${swap.res.size} cochée${swap.res.size>1?"s":""}`;renderSwapList();renderSwapImpact();});
+  L.querySelectorAll("[data-swcap]").forEach(el=>{el.onclick=e=>e.preventDefault();el.onchange=()=>{swap.cap[el.dataset.swcap]=Math.max(0,Math.floor(parseValue(el.value||"0")||0));renderSwapImpact();};
+    el.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();el.blur();}};});}
+function capOfTrial(av,id){const s=plan.avoid;plan.avoid=av;const c=capOf(id);plan.avoid=s;return c;}
+function renderSwapImpact(){const I=$("#swImpact");if(!I)return;
+  if(!swap.res.size&&!swap.rec.size){I.innerHTML=`<div class="empty">Coche une ressource pour voir les objets impactés.</div>`;return;}
+  const A0=swap.base,av={...(plan.avoid||{})};const stk={...(plan.stock||{})};for(const id of swap.res){av[id]={m:"out"};if(swap.cap[id]!=null){if(swap.cap[id]>0)stk[id]=swap.cap[id];else delete stk[id];}}
+  const ban=[...new Set([...(plan.banRec||[]),...swap.rec])];const B=simulate(av,ban,stk);const A=Object.keys(swap.cap).length?simulate({...(plan.avoid||{})},[...(plan.banRec||[])],stk):A0;
+  const hit=[...A.recs.keys()].filter(k=>(swap.rec.has(k)||[...swap.res].some(id=>usesRes(k,id,A.cr)))&&(B.recs.get(k)||0)<A.recs.get(k));
+  const kept=hit.filter(k=>B.recs.get(k)>0);const usedStock=[...swap.res].map(id=>({id,c:Math.min(stk[id]||0,A.acc[id]||0)})).filter(x=>x.c>0);
+  const added=[...B.recs.keys()].filter(k=>!A.recs.has(k));const self=[...swap.res].filter(id=>B.cr[id]);
+  const d=B.t-A.t;
+  const li=(k,m,cls)=>`<li class="${cls}">${icon(k,28)}<span class="an">${esc(itName(k))}</span><span class="hint">niv. ${(recipeByResult.get(k)||[])[2]??"?"}</span><span class="num">${fmtN(m.get(k))} crafts</span></li>`;
+  I.innerHTML=`<div class="swcols"><div><span class="lbl">Objets impactés · ${hit.length}</span>${usedStock.length?`<div class="note leaf" style="margin:4px 0">Ton stock est utilisé d'abord : ${usedStock.map(x=>`<b>${fmtN(x.c)}</b> ${esc(itName(x.id))}`).join(", ")} (comptés dans ton « j'ai »). Le reste de l'XP est complété avec d'autres objets.</div>`:""}<ul class="avl out">${hit.map(k=>kept.includes(k)?`<li class="part">${icon(k,28)}<span class="an">${esc(itName(k))}</span><span class="hint">niv. ${(recipeByResult.get(k)||[])[2]}</span><span class="num">${fmtN(A.recs.get(k))} → ${fmtN(B.recs.get(k))}</span></li>`:li(k,A.recs,"")).join("")||`<li class="hint">Aucun objet du plan n'utilise directement cette ressource${self.length?" (seulement un intermédiaire)":""}.</li>`}</ul></div>
+    <div><span class="lbl">Remplacés par · ${added.length}</span><ul class="avl in">${added.map(k=>li(k,B.recs,"")).join("")}${self.map(id=>`<li>${icon(id,28)}<span class="an">${esc(itName(id))}</span><span class="pill leaf">fabriquée toi-même</span></li>`).join("")}<li class="hint">+ les autres recettes du plan, en plus grand nombre si besoin</li></ul></div></div>
+    <div class="avgrid"><div><span class="lbl">Avant</span><b class="num">${fmtK(A.t)}</b><span class="hint">${fmtN(A.crafts)} crafts</span></div><div class="arrow">→</div>
+      <div><span class="lbl">Après</span><b class="num">${B.miss?"≥ ":""}${fmtK(B.t)}</b><span class="hint">${fmtN(B.crafts)} crafts</span></div>
+      <div><span class="lbl">Différence</span><b class="num" style="color:${d>0?"var(--warn)":"var(--leaf)"}">${d>0?"+":""}${fmtK(d)}</b><span class="hint">${B.crafts-A.crafts>=0?"+":""}${fmtN(B.crafts-A.crafts)} crafts</span></div></div>
+    ${B.stuck.length?`<div class="note"><b>Pas d'alternative complète</b> : plan bloqué à ${esc(B.stuck.join(", "))}. Augmente « Écart max recette » dans les réglages, ou décoche une ressource.</div>`:""}
+    <div class="row"><button class="btn gold" id="swApply">Valider le remplacement</button><button class="btn ghost" id="swCancel">Annuler</button></div>`;
+  $("#swCancel").onclick=closeSwap;
+  $("#swApply").onclick=()=>{plan.avoid=av;plan.banRec=ban;plan.stock=stk;savePlan();closeSwap();renderAll();toast(`Plan remplacé${d?` · ${d>0?"+":""}${fmtK(d)}`:""}`);};}
+function avoidedList(){const out=new Map();for(const [id,a] of Object.entries(plan.avoid||{}))if(a.m!=="ok")out.set(id,a);
+  if(+plan.opts.autoAvoid)for(const id of Object.keys(D.ref||{}))if(!out.has(id)&&avoidWhy(id)==="auto")out.set(id,{m:"auto"});return out;}
+function avoidBoxHtml(){const L=avoidedList(),R=plan.banRec||[];if(!L.size&&!R.length)return "";
+  return `<div class="avbox"><div class="row spread"><b>⛔ Remplacements actifs · ${L.size+R.length}</b><span class="hint">Le plan et la liste de courses font sans eux.</span></div>
+    <div class="chips">${[...L.entries()].map(([id,a])=>`<span class="chip">${icon(id,24)}${esc(itName(id))} <span class="pill warn">${a.m==="max"?`max ${fmtK(a.p)}`:AV_TXT[a.m]}</span>${a.m==="out"&&capOf(id)>0?`<span class="pill leaf">${fmtN(capOf(id))} en stock utilisés d'abord</span>`:""}<button class="btn ghost sm" data-unavoid="${id}" aria-label="Rétablir ${esc(itName(id))}">rétablir</button></span>`).join("")}${R.map(id=>`<span class="chip">${icon(id,24)}${esc(itName(id))} <span class="pill warn">objet retiré</span><button class="btn ghost sm" data-unban="${id}" aria-label="Rétablir ${esc(itName(id))}">rétablir</button></span>`).join("")}</div></div>`;}
+function slotHtml(r,ctx,withBought,bought){return `<div class="slot inv-slot${withBought&&bought?" bought":""}"><div class="frame">${icon(r.id,40)}<span class="q">${fmtN(r.need)}</span></div>
+   <div class="nm">${nameBtn(r.id)}${tags(r.id)}</div>
+   <div class="pr">${priceInput(r.id,ctx)}<span class="tot">${r.lc?fmtK(r.lc.c):""}</span></div>
+   ${haveGauge(r,ctx)}<div class="sub2">${r.lc&&r.lc.txt?`<span class="pill">${esc(r.lc.txt)}</span>`:""}${priceAlert(r.id)}${avBtn(r.id)}</div>
+   ${withBought?`<label class="acq" title="Cocher quand c'est acheté : la ressource passe dans « Acquis »"><input type="checkbox" data-acq="${r.id}" aria-label="${esc(itName(r.id))} acquis">Acquis</label>`:""}</div>`;}
+function planCost(res){return costOf(needsOfSegs(res.segs).acc).t;}
+function cmpHtml(res,all){const {from,to,xp}=range();
+  if(plan.opts.mode==="cheap"){const f=optimise(plan.job,from,to,xp,"fast"),fc=planCost(f);costMemo=new Map();
+    const gain=fc-all.t;return `<div class="note leaf"><b>Plan optimisé au kamas près.</b> ${gain>0?`Économie de <b>${fmtK(gain)}</b> par rapport au plan « le moins de crafts » (${fmtK(fc)}), ${res.crafts>f.crafts?`pour ${fmtN(res.crafts-f.crafts)} crafts de plus`:`et même avec ${fmtN(f.crafts-res.crafts)} crafts de moins`}.`:"C'est aussi le plan avec le moins de crafts."}</div>`;}
+  if(plan.opts.mode==="fast"){const c=optimise(plan.job,from,to,xp,"cheap"),cc=planCost(c);costMemo=new Map();
+    return cc<all.t-1?`<div class="note">Le plan « le moins cher » coûte <b>${fmtK(cc)}</b>, soit ${fmtK(all.t-cc)} d'économie, pour ${fmtN(c.crafts-res.crafts)} crafts de plus. <button class="btn sm gold" id="goCheap">Passer en « le moins cher »</button></div>`:"";}
+  return "";}
+function srcCount(acc){const c={hdv:0,km:0,lots:0,moi:0};for(const id of Object.keys(acc||{})){const s=srcOf(id);if(s)c[s]++;}
+  return [c.hdv&&`${c.hdv} prix moyens HDV Dakal`,c.lots&&`${c.lots} au prix par lot`,c.km&&`${c.km} KamaMaster`,c.moi&&`${c.moi} saisis par toi`].filter(Boolean).join(" · ")+(c.hdv+c.km+c.lots?" (en italique, remplaçables)":"");}
+function refCount(acc){return Object.keys(acc||{}).filter(id=>isRef(id)).length;}
+function renderPurse(res,all,doneCount,left,leftAcc,allAcc){
+  const units=Object.values(allAcc||{}).reduce((s,q)=>s+q,0);
+  const P=$("#purse"),job=plan.job,{from,to}=range();
+  const priced=all.count?Math.round(100*(all.count-all.miss)/all.count):0;
+  const steps=res.segs.length;
+  P.innerHTML=`<div><div class="lbl">${esc(jobName(job))}</div><h2>Niveau ${from} → ${to}</h2></div>
+   <div class="big"><div><b>${fmtN(res.crafts)}</b><span class="lbl">crafts</span></div><div><b class="gold">${all.miss&&!all.t?"?":(all.miss?"≥":"")+fmtK(all.t)}</b><span class="lbl">kamas</span></div>
+     <div><b>${fmtN(res.xp)}</b><span class="lbl">XP à gagner</span></div><div><b>${all.count}</b><span class="lbl">ressources · ${fmtN(units)} unités</span></div>
+     <div><b>${!all.miss&&res.xp?fmtN(all.t/res.xp,1):"—"}</b><span class="lbl">kamas / XP moyen</span></div><div><b>${steps}</b><span class="lbl">recettes</span></div></div>
+   <div class="stack" style="gap:6px"><div class="row spread"><span class="lbl">Prix connus</span><span class="num">${all.count-all.miss} / ${all.count}</span></div><div class="meter"><i style="width:${priced}%"></i></div>
+     <p class="hint">${srcCount(allAcc)}</p>
+     ${all.miss?`<p class="hint">Les cases dorées n'ont aucun prix connu : tape le prix vu en HDV.</p>`:""}</div>
+   <div class="stack" style="gap:6px"><div class="row spread"><span class="lbl">Progression</span><span class="num">${doneCount} / ${steps} étapes</span></div><div class="meter leaf"><i style="width:${steps?Math.round(100*doneCount/steps):0}%"></i></div>
+     ${left&&doneCount?`<p class="hint">Reste à acheter : ${left.miss&&!left.t?"?":fmtK(left.t)} kamas</p>`:""}</div>
+   ${cmpHtml(res,all)}
+   <hr>
+   ${(plan.cart||[]).some(c=>sameRange(c,{job,from,to}))?`<button class="btn" id="btnGoCart">✓ Dans la liste de courses · voir</button>`:`<button class="btn gold" id="btnAddCart">Mettre dans la liste de courses</button>`}
+   <button class="btn" id="btnCopyPlan">Copier les ressources restantes</button>`;
+  const gc=$("#goCheap");if(gc)gc.onclick=()=>{setMode("cheap");savePlan();renderPlan();renderCart();};
+  const gtc=$("#btnGoCart");if(gtc)gtc.onclick=()=>document.querySelector('nav.tabs button[data-tab="courses"]').click();
+  const adc=$("#btnAddCart");if(adc)adc.onclick=()=>{
+    // reprise en cours de route : l'ancien plan du même métier a été consommé, on remet sa progression à zéro
+    const old=(plan.cart||[]).find(c=>c.job===job);let reset=false;
+    if(old){const r0=optimise(old.job,old.from,old.to,old.xp||0),n=needsOfSegs(r0.segs);const ids=new Set([...Object.keys(n.acc),...Object.keys(n.crafts)].map(String));
+      for(const sg of r0.segs)ids.add(String(sg.k.r[0]));
+      plan.stock=plan.stock||{};plan.made=plan.made||{};plan.ctarget=plan.ctarget||{};
+      for(const id of ids){delete plan.stock[id];delete plan.made["i"+id];delete plan.made["p"+id];delete plan.ctarget["i"+id];delete plan.ctarget["p"+id];}
+      plan.bought=(plan.bought||[]).filter(x=>!ids.has(String(x)));plan.done[job]=[];reset=true;}
+    plan.cart=(plan.cart||[]).filter(c=>c.job!==job);plan.cart.push({job,from,to,xp:range().xp});savePlan();renderPlan();renderCart();
+    toast(`${jobName(job)} ${from} → ${to} mis dans la liste de courses${reset?" · ancienne liste remise à zéro":""}`);};
+  $("#btnCopyPlan").onclick=()=>copy(Object.entries(leftAcc||{}).map(([id,q])=>`${itName(id)} ; ${Math.ceil(q)}`).join("\n"));}
+
+/* ===== RECETTES ===== */
+let rShown=150;
+function renderRecipes(){
+  const job=+$("#rJob").value||plan.job,mn=clamp(+$("#rMin").value||1,1,200),mx=clamp(+$("#rMax").value||200,mn,200),lv=clamp(+$("#rLvl").value||200,1,200);
+  const q=norm($("#rSearch").value||""),sort=$("#rSort").value;
+  costMemo=new Map();
+  let rows=(recipesByJob[job]||[]).filter(r=>r[2]>=mn&&r[2]<=mx).map(r=>{
+    const ings=[];let miss=0;for(let i=0;i<r[4].length;i+=2){const c=itemCost(r[4][i]);if(!c)miss++;ings.push({id:r[4][i],q:r[4][i+1],c});}
+    const cost=recipeCost(r),sale=priceOf(r[0]),xp=r[2]>lv?null:craftXp(r[2],r[3],lv);
+    return {r,ings,miss,cost,sale,xp,kxp:cost!=null&&xp>0?cost/xp:null,margin:cost!=null&&sale!=null?sale*(1-(plan.opts.tax||0)/100)-cost:null};});
+  if(q)rows=rows.filter(x=>norm(itName(x.r[0])).includes(q)||x.ings.some(g=>norm(itName(g.id)).includes(q)));
+  const key={lvl:x=>x.r[2],kxp:x=>x.kxp??Infinity,cost:x=>x.cost??Infinity,margin:x=>-(x.margin??-Infinity)}[sort];
+  rows.sort((a,b)=>key(a)-key(b)||a.r[2]-b.r[2]);
+  const cv=jobCover(job);
+  $("#rCover").innerHTML=`<div class="row spread"><span><b>${esc(jobName(job))}</b> · ${(recipesByJob[job]||[]).length} recettes du niveau 1 au ${Math.max(...(recipesByJob[job]||[{2:0}]).map(r=>r[2]))}</span><span class="pill ${cv.pct>=95?"leaf":"gold"}">Ingrédients avec un prix : ${cv.ok} / ${cv.n} (${cv.pct} %)</span></div>
+    <div class="meter${cv.pct>=95?" leaf":""}"><i style="width:${cv.pct}%"></i></div>`;
+  const shown=rows.slice(0,rShown);
+  $("#rList").innerHTML=rows.length?`<div class="tablewrap" style="max-height:none;border:0"><table class="rtable"><thead><tr><th>Recette</th><th class="n">Niv.</th><th class="n">Coût du craft</th><th class="n">Prix HDV</th><th class="n">Marge</th><th class="n">XP / craft</th><th class="n">Kamas / XP</th></tr></thead><tbody>
+    ${shown.map(x=>`<tr><td><div class="it">${icon(x.r[0],32)}<div style="min-width:0"><b>${esc(itName(x.r[0]))}</b>${x.r[3]!==100?` <span class="pill">coef ${x.r[3]}</span>`:""}${questSet().has(x.r[0])?` <span class="pill warn">quête</span>`:""}${vitSet().has(x.r[0])?` <span class="pill leaf">vie / énergie</span>`:""}<div class="ings">${x.ings.map(g=>`<span class="${g.c?"":"miss"}">${g.q}× ${esc(itName(g.id))}${g.c&&g.c.how==="craft"?" ⚒":""}${avoidWhy(g.id)?" ⛔":""}</span>`).join(", ")}</div></div></div></td>
+      <td class="n">${x.r[2]}</td><td class="n">${x.cost==null?`<span class="pill gold">${x.miss} prix ?</span>`:fmtK(x.cost)}</td><td class="n">${x.sale==null?"—":fmtK(x.sale)}</td>
+      <td class="n" style="color:${x.margin==null?"inherit":x.margin>=0?"var(--leaf)":"var(--warn)"}">${x.margin==null?"—":(x.margin>=0?"+":"")+fmtK(x.margin)}</td><td class="n">${x.xp==null?'<span class="hint">niv. trop bas</span>':fmtN(x.xp)}</td><td class="n">${x.kxp==null?"—":fmtN(x.kxp,1)}</td></tr>`).join("")}</tbody></table></div>
+    ${rows.length>rShown?`<div class="pad"><button class="btn" id="rMore">Afficher ${Math.min(150,rows.length-rShown)} recettes de plus (${rows.length-rShown} restantes)</button></div>`:""}`
+    :`<div class="empty">Aucune recette pour ce filtre.</div>`;
+  const m=$("#rMore");if(m)m.onclick=()=>{rShown+=150;renderRecipes();};
+  $("#rList").insertAdjacentHTML("beforeend",`<p class="hint pad" style="padding-top:0">⚒ = intermédiaire fabriqué (réglage « Intermédiaires » dans Plan de métier). XP calculée à ton niveau de métier ; marge = prix HDV de l'objet − taxe − coût du craft.</p>`);}
+
+function renderBilan(){const B=$("#bilan");B.innerHTML='<p class="hint">Calcul en cours…</p>';
+  setTimeout(()=>{const rows=Object.entries(D.jobs).map(([id,n])=>{const c=optimise(+id,1,200,0,"cheap"),cc=costOf(needsOfSegs(c.segs).acc);const f=optimise(+id,1,200,0,"fast"),fc=costOf(needsOfSegs(f.segs).acc);return {id,n,c,cc,f,fc};}).sort((a,b)=>a.cc.t-b.cc.t);
+    const tot=rows.reduce((s,r)=>s+r.cc.t,0);
+    B.innerHTML=`<div class="tablewrap"><table><thead><tr><th>Métier</th><th class="n">Le moins cher</th><th class="n">Crafts</th><th class="n">Le moins de crafts</th><th class="n">Crafts</th><th class="n">Économie</th><th></th></tr></thead><tbody>
+      ${rows.map(r=>`<tr><td><div class="it">${jobIcon(r.id)}<b>${esc(r.n)}</b>${r.c.stuck?` <span class="pill warn">bloqué niv. ${r.c.stuck}</span>`:""}</div></td><td class="n"><b>${r.cc.miss?"≥":""}${fmtK(r.cc.t)}</b></td><td class="n">${fmtN(r.c.crafts)}</td><td class="n">${fmtK(r.fc.t)}</td><td class="n">${fmtN(r.f.crafts)}</td><td class="n" style="color:var(--leaf)">${fmtK(r.fc.t-r.cc.t)}</td><td><button class="btn sm" data-openjob="${r.id}">Voir le plan</button></td></tr>`).join("")}
+      <tr><td><b>Total 14 métiers</b></td><td class="n"><b>${fmtK(tot)}</b></td><td></td><td class="n">${fmtK(rows.reduce((s,r)=>s+r.fc.t,0))}</td><td></td><td class="n" style="color:var(--leaf)">${fmtK(rows.reduce((s,r)=>s+r.fc.t-r.cc.t,0))}</td><td></td></tr></tbody></table></div>`;
+    B.querySelectorAll("[data-openjob]").forEach(b=>b.onclick=()=>{plan.job=+b.dataset.openjob;plan.levels[plan.job]={from:1,to:200,xp:0};setMode("cheap");savePlan();renderJobs();renderPlan();document.querySelector('nav.tabs button[data-tab="metiers"]').click();});},30);}
+
+/* ===== COURSES ===== */
+function renderCart(){
+  const P=$("#cartPanel");plan.cart=Array.isArray(plan.cart)?plan.cart:[];
+  const nc=$("#nCart");nc.textContent=plan.cart.length;nc.hidden=!plan.cart.length;
+  if(!plan.cart.length){P.innerHTML=`<div class="row spread"><h2>Liste de courses</h2></div>
+    <div class="empty stack" style="align-items:center;gap:10px"><b>Ta liste de courses est vide.</b><span class="hint">Prépare un plan dans « Plan de métier », puis clique « Mettre dans la liste de courses ».</span><button class="btn gold" id="goPlan">Aller au plan de métier</button></div>`;
+    $("#goPlan").onclick=()=>document.querySelector('nav.tabs button[data-tab="metiers"]').click();return;}
+  const list=plan.cart;
+  const acc={},crafts={};let crafted=0;const parts=[];
+  for(const [i,c] of list.entries()){const res=optimise(c.job,c.from,c.to,c.xp||0);crafted+=res.crafts;parts.push({i,c,res});
+    const n=needsOfSegs(res.segs);for(const [k,v] of Object.entries(n.acc))acc[k]=(acc[k]||0)+v;for(const [k,v] of Object.entries(n.crafts))crafts[k]=(crafts[k]||0)+v;}
+  const bought=new Set(Array.isArray(plan.bought)?plan.bought:[]);const cc=costOf(acc);
+  let rows=Object.entries(acc).map(([id,q])=>{const need=Math.max(0,q-haveOf(id));return {id,q,need,p:priceOf(id),lc:lotCost(id,need)};});
+  // acquis = coché, ou couvert entièrement par le stock : on les sort de la liste
+  const done=rows.filter(r=>bought.has(r.id)||r.need<=0);rows=rows.filter(r=>!bought.has(r.id)&&r.need>0);
+  const view=["done","craft"].includes(plan.cartView)?plan.cartView:"todo";const by=plan.cartBy==="res"?"res":"item";
+  // ===== à crafter : intermédiaires d'abord, puis les recettes du plan =====
+  plan.made=plan.made&&typeof plan.made==="object"?plan.made:{};
+  const cl=[];for(const [id,q] of Object.entries(crafts))cl.push({key:"i"+id,id:+id,q:Math.ceil(q),inter:true});
+  const pm={};for(const p of parts)for(const sg of p.res.segs){const id=sg.k.r[0];pm[id]=(pm[id]||0)+sg.n;}
+  for(const [id,q] of Object.entries(pm))cl.push({key:"p"+id,id:+id,q,inter:false});
+  plan.ctarget=plan.ctarget&&typeof plan.ctarget==="object"?plan.ctarget:{};
+  const interSet={};for(const id of Object.keys(crafts))interSet[id]=1;
+  cl.forEach(c=>{c.r=recipeByResult.get(c.id);c.q0=c.q;if(plan.ctarget[c.key]>0)c.q=+plan.ctarget[c.key];c.made=Math.min(c.q,+plan.made[c.key]||0);c.left=c.q-c.made;c.interSet=interSet;});
+  {const par={};cl.forEach(c=>{if(!c.r)return;for(let i=0;i<c.r[4].length;i+=2){const x=c.r[4][i];if(interSet[x])(par[x]=par[x]||[]).push(c);}});cl.forEach(c=>c.parents=c.inter?(par[c.id]||[]):[]);}
+  // ressources encore disponibles = ce que j'ai (+ intermédiaires craftés) − ce que les crafts validés ont déjà consommé
+  const craftAvail={};const used={};
+  for(const c of cl){if(!c.r)continue;for(let i=0;i<c.r[4].length;i+=2){const id=c.r[4][i];used[id]=(used[id]||0)+c.r[4][i+1]*c.made;}}
+  for(const c of cl){if(!c.r)continue;for(let i=0;i<c.r[4].length;i+=2){const id=c.r[4][i];if(craftAvail[id]!=null)continue;
+    craftAvail[id]=haveOf(id)+(+plan.made["i"+id]||0)-(used[id]||0);}}
+  // ordre de fabrication : un intermédiaire passe après ceux qui le composent
+  const dep={};const depth=(id,seen=new Set())=>{if(dep[id]!=null)return dep[id];if(seen.has(id))return 0;seen.add(id);const r=recipeByResult.get(+id);let d=0;
+    if(r)for(let i=0;i<r[4].length;i+=2)if(crafts[r[4][i]])d=Math.max(d,1+depth(r[4][i],seen));return dep[id]=d;};
+  cl.forEach(c=>c.depth=c.inter?depth(c.id):99);
+  cl.sort((a,b)=>a.depth-b.depth||((a.r?a.r[2]:0)-(b.r?b.r[2]:0)));
+  const craftTodo=cl.filter(c=>c.left>0),craftDone=cl.filter(c=>c.left<=0);
+  rows.sort((a,b)=>(a.p==null)-(b.p==null)||(b.lc?b.lc.c:0)-(a.lc?a.lc.c:0));
+  const leftCost=Object.entries(acc).reduce((s,[id,q])=>{if(bought.has(id))return s;const lc=lotCost(id,Math.max(0,q-haveOf(id)));return s+(lc?lc.c:0);},0);
+  P.innerHTML=`<div class="row spread"><h2>Liste de courses</h2><div class="row"><button class="btn sm warnb" id="btnSwap">⛔ Ressource chère / indisponible</button><button class="btn sm" id="btnCopyCart">Copier la liste</button><button class="btn sm ghost" id="btnResetBought">Tout remettre à acheter</button><button class="btn sm ghost warnb" id="btnResetCart" title="Vide la liste : plans, stock, achats cochés, crafts validés et étapes cochées">Nettoyer la liste</button></div></div>
+  <p class="hint">Plans mis dans la liste depuis « Plan de métier ». Remettre un plan du même métier remplace l'ancien.</p>
+  ${avoidBoxHtml()}
+  <div class="row">${parts.map(p=>`<span class="pill leaf">${esc(jobName(p.c.job))} ${p.c.from}→${p.c.to} · ${fmtN(p.res.crafts)} crafts <button class="btn ghost sm" style="padding:0 4px" data-cartdel="${p.i}" aria-label="Retirer ce plan" title="Retirer ce plan">✕</button></span>`).join("")}</div>
+  <div class="big" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr))"><div><b>${fmtN(crafted)}</b><span class="lbl">crafts</span></div><div><b class="gold">${cc.miss&&!cc.t?"?":(cc.miss?"≥":"")+fmtK(cc.t)}</b><span class="lbl">kamas au total</span></div><div><b>${fmtK(leftCost)}</b><span class="lbl">reste à dépenser</span></div><div><b>${done.length} / ${cc.count}</b><span class="lbl">ressources acquises</span></div></div>
+  <div class="meter leaf"><i style="width:${cc.count?Math.round(100*done.length/cc.count):0}%"></i></div>
+  <div class="seg cartseg" role="tablist" aria-label="Liste">
+    <button role="tab" data-view="todo" aria-pressed="${view==="todo"}">À acheter · ${rows.length}</button>
+    <button role="tab" data-view="craft" aria-pressed="${view==="craft"}">À crafter · ${craftTodo.length}</button>
+    <button role="tab" data-view="done" aria-pressed="${view==="done"}">Acquis · ${done.length}</button></div>
+  ${view==="craft"?craftViewHtml(craftTodo,craftDone,craftAvail):view==="todo"?`<div class="seg bysel" role="tablist" aria-label="Affichage"><button role="tab" data-by="item" aria-pressed="${by==="item"}">Par objet</button><button role="tab" data-by="res" aria-pressed="${by==="res"}">Par ressource</button></div>
+    ${by==="item"?buyCardsHtml(cl,interSet,bought):`<div class="inv">${rows.map(r=>slotHtml(r,"c",true,false)).join("")||`<div class="empty">🎉 Tout est acquis pour ce plan.</div>`}</div>`}`
+  :(done.length?`<div class="row spread"><p class="hint">Décoche une ressource pour la remettre dans « À acheter ».</p><b class="num">${fmtK(done.reduce((s,r)=>s+(lotCost(r.id,r.q)||{c:0}).c,0))}</b></div>
+    <div class="acqlist">${done.map(r=>{const inStock=!bought.has(r.id);const lc=lotCost(r.id,r.q);return `<label class="acqrow${inStock?" stock":""}">
+      <input type="checkbox" ${inStock?"checked disabled":`checked data-unacq="${r.id}"`} aria-label="${esc(itName(r.id))} acquis">
+      <span class="ic">${icon(r.id,28)}</span><span class="an">${esc(itName(r.id))}</span>
+      <span class="aq num">×${fmtN(r.q)}</span><span class="ap num">${lc?fmtK(lc.c):"—"}</span>
+      <span class="pill ${inStock?"":"leaf"}">${inStock?"en stock":"✓ acheté"}</span></label>`;}).join("")}</div>`
+   :`<div class="empty">Rien d'acquis pour l'instant. Coche « Acquis » sur une ressource dans « À acheter ».</div>`)}`;
+  $("#btnCopyCart").onclick=()=>copy(rows.map(r=>`${itName(r.id)} ; ${Math.ceil(r.need)}`).join("\n"));
+
+  $("#btnResetBought").onclick=()=>{plan.bought=[];savePlan();renderCart();};
+  const rc=$("#btnResetCart");rc.onclick=()=>{
+    if(!rc.dataset.arm){rc.dataset.arm=1;rc.textContent="Confirmer : tout effacer ?";clearTimeout(rc._t);rc._t=setTimeout(()=>{delete rc.dataset.arm;rc.textContent="Nettoyer la liste";},4000);return;}
+    const snap=JSON.stringify({cart:plan.cart,bought:plan.bought,stock:plan.stock,made:plan.made,ctarget:plan.ctarget,done:plan.done});
+    plan.cart=[];plan.bought=[];plan.stock={};plan.made={};plan.ctarget={};plan.done={};savePlan();renderPlan();renderCart();
+    const e=$("#toast");e.innerHTML=`Liste nettoyée <button class="btn sm" id="undoReset" style="margin-left:8px">Annuler</button>`;e.hidden=false;clearTimeout(toast.h);
+    $("#undoReset").onclick=()=>{const o=JSON.parse(snap);plan.cart=o.cart||[];plan.bought=o.bought||[];plan.stock=o.stock||{};plan.made=o.made||{};plan.ctarget=o.ctarget||{};plan.done=o.done||{};savePlan();renderPlan();renderCart();e.hidden=true;};
+    toast.h=setTimeout(()=>e.hidden=true,6000);};
+  P.querySelectorAll("[data-craftnow]").forEach(b=>b.onclick=()=>{const k=b.dataset.craftnow;setMade(k,(+((plan.made||{})[k])||0)+(+b.dataset.n));toast(`${b.dataset.n} crafts validés`);});
+  P.querySelectorAll("[data-ctarget]").forEach(el=>el.addEventListener("change",()=>{const v=Math.max(0,Math.floor(parseValue(el.value||"0")||0));plan.ctarget=plan.ctarget||{};if(v)plan.ctarget[el.dataset.ctarget]=v;else delete plan.ctarget[el.dataset.ctarget];savePlan();renderCart();}));
+  P.querySelectorAll("[data-ctreset]").forEach(b=>b.onclick=()=>{delete plan.ctarget[b.dataset.ctreset];savePlan();renderCart();});
+  P.querySelectorAll("[data-madeall]").forEach(cb=>cb.onchange=()=>setMade(cb.dataset.madeall,cb.checked?+cb.dataset.q:0));
+  P.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>{plan.cartView=b.dataset.view;savePlan();renderCart();});
+  P.querySelectorAll("[data-cartdel]").forEach(b=>b.onclick=()=>{plan.cart.splice(+b.dataset.cartdel,1);savePlan();renderCart();renderPlan();});
+  P.querySelectorAll("[data-by]").forEach(b=>b.onclick=()=>{plan.cartBy=b.dataset.by;savePlan();renderCart();});
+  wireBuyCards(P,()=>{renderCart();renderPlan();});
+  P.querySelectorAll("input.bmade").forEach(el=>{el.addEventListener("change",()=>{const q=+el.closest(".bcard").querySelector("[data-bmset]:last-child").dataset.v;setMade(el.dataset.bmade,Math.min(q,entryVal(el.value,+el.dataset.cur)));});
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();el.blur();}});});
+  P.querySelectorAll("[data-bmset]").forEach(b=>b.onclick=()=>setMade(b.dataset.bmset,+b.dataset.v));
+  P.querySelectorAll("[data-acq]").forEach(b=>b.onchange=()=>{const id=b.dataset.acq;const s=new Set(plan.bought||[]);s.add(id);plan.bought=[...s];savePlan();
+    const slot=b.closest(".slot");if(slot){slot.classList.add("leaving");setTimeout(renderCart,220);}else renderCart();undoToast(id);});
+  P.querySelectorAll("[data-unacq]").forEach(b=>b.onchange=()=>{plan.bought=(plan.bought||[]).filter(x=>x!==b.dataset.unacq);savePlan();renderCart();});
+
+  wirePrices(P,()=>{renderCart();renderPlan();});wireStock(P,()=>{renderCart();renderPlan();});}
+
+/* ===== FAMILIER ===== */
+let petQ="",petShow=40;
+function renderPet(){
+  const need=Math.max(0,(+pet.target||0)-(+pet.cur||0));
+  const map=new Map();
+  for(const [id,x] of Object.entries(D.petxp||{})){const k=norm(itName(id));map.set(k,{k,id,n:itName(id),xp:x,src:(D.petsrc&&D.petsrc[id])?"tableur":"DofusTool"});}
+  for(const [k,f] of Object.entries(pet.foods)){const ids=byName.get(k);map.set(k,{k,id:ids?ids[0]:null,n:f.n,xp:f.xp,src:"moi",mine:true});}
+  let rows=[...map.values()].map(r=>{const p=prices[r.k]?prices[r.k].p:(r.id!=null?priceOf(r.id):null);return {...r,p,cpx:p!=null&&r.xp>0?p/r.xp:null};});
+  rows.push({k:null,n:"Croquette enrichie",xp:500,p:+pet.croq||null,cpx:pet.croq?pet.croq/500:null,src:"jeu"});
+  const nKnown=rows.filter(r=>r.cpx!=null).length;
+  if(petQ)rows=rows.filter(r=>norm(r.n).includes(petQ));
+  rows.forEach(r=>r.av=r.id!=null&&!!avoidWhy(r.id));
+  rows.sort((a,b)=>(a.cpx==null)-(b.cpx==null)||a.av-b.av||a.cpx-b.cpx);
+  const best=rows.find(r=>r.cpx!=null&&!r.av),croqRank=rows.findIndex(r=>r.k===null)+1;
+  $("#petRank").innerHTML=`<div class="row spread"><h2>Meilleure nourriture</h2><input id="petSearch" type="search" placeholder="Rechercher une ressource…" value="${esc(petQ)}" aria-label="Rechercher une ressource"></div>
+  <p class="hint">${fmtN(nKnown)} ressources classées par kamas par XP avec tes prix Dakal. XP par ressource : ton tableur (${fmtN(Object.keys(D.petsrc||{}).length)} ressources mesurées par lot de 1 000), complété par DofusTool, et tes propres saisies en priorité. ${croqRank>0&&!petQ?`La croquette enrichie arrive ${croqRank===1?"1ʳᵉ":croqRank+"ᵉ"}.`:""} Avant d'acheter en masse, vérifie l'XP de ton choix dans la fenêtre « Nourrir ».</p>
+  <div class="rank">${rows.slice(0,petShow).map((r,i)=>{const q=r.xp>0?Math.ceil(need/r.xp):null;return `<div class="food${r===best?" best":""}"><span class="pos">${r.cpx==null?"·":i+1}</span><div class="frame">${r.id!=null?icon(r.id,40):iconByName(r.n,40)}</div>
+    <div style="min-width:0"><b>${esc(r.n)}</b><div class="meta">${r.av?'<span class="pill warn">⛔ contournée</span> ':""}${fmtN(r.xp,4)} XP / unité${q!=null?` · ${fmtN(q)} à acheter`:""}${r.mine?' · <span class="pill">ma valeur</span>':r.src==="DofusTool"?' · <span class="pill">DofusTool</span>':""}</div></div>
+    <div class="pr">${r.k?`<input class="price${r.p==null?" missing":""}${!prices[r.k]&&r.p!=null?" ref":""}" data-petprice="${esc(r.k)}" inputmode="decimal" placeholder="prix ?" value="${r.p==null?"":Math.round(r.p)}" aria-label="Prix de ${esc(r.n)}">`:`<span class="num">${fmtN(r.p)}</span>`}</div>
+    <div class="kx"><b>${r.cpx==null?"—":fmtN(r.cpx,2)}</b><div class="meta">${r.cpx==null?"":fmtK(q*r.p)+" au total"}</div></div>
+    ${r.mine?`<button class="btn ghost sm" data-petdel="${esc(r.k)}" aria-label="Retirer ${esc(r.n)}" style="grid-column:auto">✕</button>`:"<span></span>"}</div>`;}).join("")}</div>
+  ${rows.length>petShow?`<button class="btn" id="petMore">Afficher 40 de plus (${rows.length-petShow} restantes)</button>`:""}
+  <details class="adv"><summary>Importer un tableau d'XP (Huzounet, DofusTool, forum…)</summary>
+    <div class="stack" style="gap:8px"><p class="hint">Copie un tableau qui donne l'XP familier par ressource et colle-le ici. L'outil repère les colonnes Nom, XP et Quantité, ou lit des lignes <code>Nom ; XP ; quantité</code>. Les ressources sans XP sont ignorées.</p>
+    <textarea id="petImport" spellcheck="false" placeholder="Peau de Don Dorgan ; 0,93 ; 1&#10;Rose des Sables ; 125 ; 100"></textarea>
+    <div class="row"><button class="btn gold" id="btnPetImport">Importer</button><span id="petImportMsg" class="hint"></span></div></div></details>
+  <h3>Ajouter un aliment</h3>
+  <div class="row">
+    <label class="f" style="flex:1 1 220px"><span class="lbl">Ressource</span><input id="petName" list="resList" placeholder="ex. Rose des Sables"></label>
+    <label class="f"><span class="lbl">XP obtenue</span><input type="number" id="petXp" min="0" step="any" placeholder="125"></label>
+    <label class="f"><span class="lbl">Pour (unités)</span><input type="number" id="petQty" min="1" value="1"></label>
+    <label class="f"><span class="lbl">Prix unitaire</span><input id="petP" inputmode="decimal" placeholder="facultatif" style="width:110px"></label>
+    <button class="btn gold" id="btnPetAdd">Ajouter</button></div>
+  <p class="hint">En jeu, ouvre « Nourrir », mets une quantité et lis l'XP annoncée : 100 Roses des Sables → 125 XP, donc 125 pour 100 unités. Nourris par gros paquets, l'XP est arrondie vers le bas à chaque repas.</p>`;
+  $("#petPurse").innerHTML=`<div><div class="lbl">Familier</div><h2>Objectif niveau ${pet.lvl}</h2></div>
+   <label class="f"><span class="lbl">XP actuelle</span><input type="number" id="petCur" min="0" value="${pet.cur}" style="width:100%"></label>
+   <div class="row"><label class="f"><span class="lbl">Niveau visé</span><input type="number" id="petLvl" min="2" max="100" value="${pet.lvl}"></label><label class="f" style="flex:1"><span class="lbl">XP à atteindre</span><input type="number" id="petTarget" min="1" value="${pet.target}" style="width:100%"></label></div>
+   <label class="f"><span class="lbl">Prix d'une croquette enrichie</span><input type="number" id="croqPrice" min="0" value="${pet.croq}" style="width:100%"></label>
+   <div class="meter leaf"><i style="width:${pet.target?Math.min(100,Math.round(100*pet.cur/pet.target)):0}%"></i></div>
+   <div class="big"><div><b>${fmtN(need)}</b><span class="lbl">XP restante</span></div><div><b class="gold">${best?fmtK(Math.ceil(need/best.xp)*best.p):"?"}</b><span class="lbl">kamas au mieux</span></div></div>
+   ${best?`<p class="hint">Avec ${esc(best.n)} : ${fmtN(Math.ceil(need/best.xp))} unités. Compare avec le prix d'un familier déjà niveau 100 à l'HDV.</p>`:""}`;
+  $("#petSearch").oninput=e=>{petQ=norm(e.target.value);petShow=40;const pos=e.target.selectionStart;renderPet();const el=$("#petSearch");el.focus();try{el.setSelectionRange(pos,pos);}catch(_){}};
+  const pm=$("#petMore");if(pm)pm.onclick=()=>{petShow+=40;renderPet();};
+  $("#btnPetImport").onclick=()=>{const rows=analysePet($("#petImport").value);
+    for(const r of rows)pet.foods[r.k]={n:r.n,xp:r.xp};savePet();renderPet();toast(rows.length+" aliments importés");};
+  $("#btnPetAdd").onclick=()=>{const name=$("#petName").value.trim(),xp=+$("#petXp").value,q=+$("#petQty").value||1;
+    if(!name||!(xp>0)){toast("Indique la ressource et l'XP");return;}
+    const k=norm(name),disp=byName.has(k)?itName(byName.get(k)[0]):name;pet.foods[k]={n:disp,xp:xp/q};
+    const raw=$("#petP").value.trim();if(raw){const v=parseValue(raw);if(isFinite(v)){prices[k]={n:disp,p:v,d:today(),s:"Moi"};savePrices();renderPricesTab();}}
+    savePet();renderPet();toast(disp+" ajouté");};
+  $("#petRank").querySelectorAll("input[data-petprice]").forEach(el=>el.addEventListener("change",()=>{const k=el.dataset.petprice,raw=el.value.trim();
+    if(!raw)delete prices[k];else{const v=parseValue(raw);if(!isFinite(v))return;prices[k]={n:(pet.foods[k]&&pet.foods[k].n)||(byName.get(k)?itName(byName.get(k)[0]):k),p:v,d:today(),s:"Moi"};}savePrices();renderPricesTab();renderPet();}));
+  $("#petRank").querySelectorAll("[data-petdel]").forEach(b=>b.onclick=()=>{delete pet.foods[b.dataset.petdel];savePet();renderPet();});
+  $("#petLvl").onchange=e=>{const l=clamp(+e.target.value||100,2,100);pet.lvl=l;pet.target=PET_TABLE[l-1];savePet();renderPet();};
+  [["petCur","cur"],["petTarget","target"],["croqPrice","croq"]].forEach(([id,k])=>$("#"+id).onchange=e=>{pet[k]=Math.max(0,+e.target.value||0);savePet();renderPet();});}
+
+/* ===== FAMILIER : import de tableaux d'XP ===== */
+function analysePet(text){
+  const lines=text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);let hx=-1,hq=-1,hn=-1;const out=new Map();
+  for(const l of lines.slice(0,5)){const c=l.split(/\t|;|\|/).map(x=>norm(x));const ix=c.findIndex(x=>/^xp\b|experience/.test(x));if(ix>=0){hx=ix;hq=c.findIndex(x=>/quant|qte|nombre|pour/.test(x));hn=c.findIndex(x=>/nom|ressource|objet|item/.test(x));break;}}
+  for(const l of lines){const c=l.split(/\t|;|\|/).map(x=>x.trim());if(c.length<2)continue;
+    let ni=hn>=0?hn:c.findIndex(x=>x&&!isFinite(parseNum(x)));if(ni<0)continue;const k=matchName(c[ni])||norm(c[ni]);
+    let xp,q=1;
+    if(hx>=0){xp=parseNum(c[hx]);if(hq>=0&&c[hq])q=parseNum(c[hq])||1;}
+    else{const nums=c.filter((x,i)=>i!==ni).map(parseNum).filter(isFinite);xp=nums[0];if(nums.length>1&&nums[1]>0)q=nums[1];}
+    if(!(xp>0)||!(q>0))continue;const id=byName.get(k);out.set(k,{k,n:id?itName(id[0]):c[ni],xp:xp/q});}
+  return [...out.values()];}
+
+/* ===== PRIX : import intelligent des tableaux copiés ===== */
+let pending=[];
+function matchName(cell){
+  let c=String(cell).trim();if(!c)return null;let k=norm(c);if(byName.has(k))return k;
+  c=c.replace(/^\s*\d+\s*[x×]\s*/i,"").replace(/\s*[x×]\s*\d+\s*$/i,"").replace(/\(.*?\)/g,"").replace(/\s+niv\.?\s*\d+$/i,"")
+     .replace(/\s*[:;=|-]?\s*\d[\d\s.,  ]*\s*(k|kamas?|₭|m)?\s*$/i,"").trim();
+  k=norm(c);return byName.has(k)?k:null;}
+const PRICE_RE=/(\d{1,3}(?:[\s  .,]\d{3})+|\d+(?:[.,]\d+)?)\s*(k|kamas?|₭|m)?\b(?!\s*[x×])/gi;
+function pricesIn(t,afterName){
+  // nombres du texte, en ignorant les quantités « 4x » et les pourcentages
+  const out=[];let m;PRICE_RE.lastIndex=0;
+  while((m=PRICE_RE.exec(t))){const before=t.slice(Math.max(0,m.index-2),m.index);if(/[x×]\s*$/i.test(before))continue;
+    const after=t.slice(m.index+m[0].length,m.index+m[0].length+2);if(/^\s*%/.test(after)||/^\s*[x×]/i.test(after))continue;
+    const v=parseValue(m[0].trim());if(isFinite(v))out.push({v,raw:m[0],unit:!!m[2]});}
+  return out;}
+function analyse(text){
+  const lines=text.split(/\r?\n/).map(l=>l.replace(/\s+$/,"")).filter(l=>l.trim());
+  let priceCol=-1;
+  for(const l of lines.slice(0,6)){const cols=l.split("\t").map(c=>norm(c));const i=cols.findIndex(c=>/^prix\b/.test(c));if(i>=0&&cols.length>2){priceCol=i;break;}}
+  const map=new Map();let skipped=0;
+  for(let li=0;li<lines.length;li++){const l=lines[li];
+    // 1) tableau (tabulations, ; ou |)
+    let cols=l.includes("\t")?l.split("\t"):(/[;|]/.test(l)?l.split(/\s*[;|]\s*/):null);
+    if(cols&&cols.length>1){cols=cols.map(c=>c.trim());const ni=cols.findIndex(c=>matchName(c));
+      if(ni>=0){const k=matchName(cols[ni]);let v=null;
+        if(priceCol>=0&&cols[priceCol]!=null)v=parseValue(cols[priceCol]);
+        if(v==null||!isFinite(v)){const nums=[];for(let i=ni+1;i<cols.length;i++){const n=parseValue(cols[i]);if(isFinite(n))nums.push({n,raw:cols[i]});}
+          if(nums.length>1&&Number.isInteger(nums[0].n)&&nums[0].n<=200&&!/k|m/i.test(nums[0].raw))nums.shift();v=nums.length?nums[0].n:null;}
+        if(v!=null&&isFinite(v)){map.set(k,v);continue;}}}
+    // 2) texte libre : un nom connu, le prix sur la même ligne ou juste après (format pages copiées)
+    const k=matchName(l);
+    if(!k){skipped++;continue;}
+    const nameNorm=norm(itName(byName.get(k)[0]));
+    const rest=l.slice(l.toLowerCase().lastIndexOf(itName(byName.get(k)[0]).toLowerCase())+itName(byName.get(k)[0]).length);
+    let cand=pricesIn(rest);
+    if(!cand.length){for(let j=li+1;j<Math.min(lines.length,li+4);j++){if(matchName(lines[j]))break;cand=pricesIn(lines[j]);if(cand.length)break;}}
+    // on préfère un nombre suivi de « K »/« kamas », sinon le dernier de la ligne
+    const pick=cand.find(c=>c.unit)||cand[cand.length-1];
+    if(pick&&!(Number.isInteger(pick.v)&&pick.v<=200&&!pick.unit&&cand.length>1))map.set(k,pick.v);
+    else if(pick&&cand.length===1)map.set(k,pick.v);else skipped++;}
+  return {rows:[...map.entries()].map(([k,v])=>({k,v})),skipped:Array(skipped)};}
+function renderPricesTab(){
+  if(D){const nH=Object.values(D.ref).filter(v=>v[1]===2).length,nK=Object.values(D.ref).filter(v=>v[1]===1).length;
+    $("#refNote").innerHTML=`<b>${fmtN(nH)} prix moyens HDV Dakal</b> (tes relevés du 10/10/2026, 52 catégories) et ${nK} prix KamaMaster en complément. Ils sont déjà appliqués partout, en italique. Tes propres prix passent devant. Tape un nom ci-dessous pour retrouver un prix de référence.`;}
+  $("#nPrix").textContent=Object.keys(prices).length;
+  const q=norm($("#priceSearch").value||"");
+  let rows=Object.entries(prices).filter(([k])=>!q||k.includes(q)).sort((a,b)=>a[1].n.localeCompare(b[1].n,"fr")).slice(0,500);
+  if(q&&q.length>=2&&D){const mine=new Set(rows.map(r=>r[0]));const extra=[];
+    for(const [id,v] of Object.entries(D.ref)){const n=itName(id),k=norm(n);if(!mine.has(k)&&k.includes(q))extra.push([k,{n,p:v[0],s:v[1]===2?"HDV moyen · "+(D.cat[id]||""):"KamaMaster",d:"10/10",ref:true}]);if(extra.length>=200)break;}
+    rows=rows.concat(extra);}
+  $("#priceRows").innerHTML=rows.length?rows.map(([k,v])=>`<tr><td><div class="it">${iconByName(v.n,28)}<span>${esc(v.n)}</span></div></td><td class="n">${fmtN(v.p,v.p<10?2:0)}</td><td><span class="pill${v.ref?" leaf":v.s&&v.s!=="Moi"&&v.s!=="HDV (moi)"?" gold":""}">${esc(v.s||"Moi")}</span> <span class="hint">${esc(v.d||"")}</span></td><td>${v.ref?"":`<button class="btn ghost sm" data-del="${esc(k)}" aria-label="Supprimer ${esc(v.n)}">✕</button>`}</td></tr>`).join("")
+    :`<tr><td colspan="4" class="empty">Aucun prix pour l'instant.<br>Importe le tableau du Market Huzounet à gauche, ou tape les prix directement dans ton plan.</td></tr>`;}
+
+const savePrices=()=>store.save("prices",{items:prices,lots:userLots});
+function renderLots(){const all={...(D.lots||{}),...userLots};
+  $("#lotList").innerHTML=Object.keys(all).length?`<div class="chips">${Object.entries(all).map(([id,l])=>`<span class="chip">${icon(id,24)}${esc(itName(id))} · ${LOT_SIZES.filter(s=>l[s]).map(s=>`×${s} ${fmtK(l[s])}`).join(" · ")} · <b>${fmtN(lotUnit(l),1)}/u</b>${userLots[id]?` <button class="btn ghost sm" style="padding:0 2px" data-lotdel="${id}" aria-label="Retirer">✕</button>`:""}</span>`).join("")}</div>`:"";
+  $("#lotList").querySelectorAll("[data-lotdel]").forEach(b=>b.onclick=()=>{delete userLots[b.dataset.lotdel];savePrices();renderAll();});}
+const savePet=()=>store.save("pet",pet);
+const savePlan=()=>store.save("plan",plan);
+const COMPACT=new URLSearchParams(location.search).has("compact");let cIdx=null;
+if(COMPACT)document.body.classList.add("compact");
+function renderCompact(){const C=OVERLAY?$("#encours"):$("#compact");if(!C)return;C.hidden=false;costMemo=new Map();
+  const job=plan.job,{from,to,xp}=range(),res=optimise(job,from,to,xp),done=new Set(plan.done[job]||[]);
+  const segs=res.segs,first=segs.findIndex(s=>!done.has(doneKey(job,s)));
+  if(cIdx==null||cIdx>=segs.length)cIdx=first<0?Math.max(0,segs.length-1):first;
+  const bar=OVERLAY?`<div class="cbar ov"><b>⚒ ${esc(jobName(job))} ${from} → ${to}</b></div>`:`<div class="cbar"><b>⚒ ${esc(jobName(job))} ${from} → ${to}</b>${window.atelier?`<button id="cOp" title="Transparence">◐</button>`:""}<button id="cMain" title="Ouvrir la fenêtre complète">⤢</button><button id="cHide" title="Masquer (Ctrl+Maj+K)">✕</button></div>`;
+  if(!segs.length){C.innerHTML=bar+`<div class="empty">Aucun plan. Ouvre la fenêtre complète pour choisir un métier.</div>`;wireCompactBar();return;}
+  const s=segs[cIdx],r=s.k.r,isDone=done.has(doneKey(job,s)),{acc,crafts}=needsOfSegs([s]);
+  const nDone=segs.filter(x=>done.has(doneKey(job,x))).length;
+  const left=segs.filter(x=>!done.has(doneKey(job,x))),lc=costOf(needsOfSegs(left).acc);
+  const col=p=>p>=100?"var(--leaf)":p>=34?"var(--gold)":"var(--warn)";
+  const rows=[...Object.entries(crafts).map(([id,q])=>({id,q,inter:true})),...Object.entries(acc).map(([id,q])=>({id,q,inter:false}))];
+  C.innerHTML=bar+`<div class="cstep">
+    <div class="chd"><div class="frame">${icon(r[0],44)}</div><div style="min-width:0"><div class="lv">ÉTAPE ${cIdx+1}/${segs.length} · NIV. ${s.from} → ${s.to}</div><div class="nm">${nameBtn(r[0])}</div>
+      <div class="hint">${s.xpLo===s.xpHi?fmtN(s.xpLo):fmtN(s.xpLo)+"–"+fmtN(s.xpHi)} XP / craft${s.partial?` · <span class="pill warn">stock limité</span>`:""}</div></div>
+      <div class="n">×${fmtN(s.n)}<small>crafts</small></div></div>
+    <div class="cnav"><button class="btn sm" id="cPrev" ${cIdx?"":"disabled"} aria-label="Étape précédente">◀</button>
+      <button class="btn sm ${isDone?"":"gold"} grow" id="cDone">${isDone?"↺ Étape refaite":"✓ Étape terminée"}</button>
+      <button class="btn sm" id="cNext" ${cIdx<segs.length-1?"":"disabled"} aria-label="Étape suivante">▶</button></div></div>
+  <div class="clist">${rows.map(x=>{const q=Math.ceil(x.q),h=x.inter?0:Math.min(haveOf(x.id),q),p=x.inter?0:(q?Math.min(100,Math.round(100*h/q)):100);
+    return `<div class="crow${!x.inter&&h>=q?" ok":""}"><span class="ic">${icon(x.id,24)}</span><span style="min-width:0">${nameBtn(x.id)}${x.inter?` <span class="pill leaf" style="font-size:.62rem">à crafter</span>`:""}</span>
+      ${x.inter?"<span></span>":`<input data-cstock="${x.id}" inputmode="text" value="${haveOf(x.id)||0}" title="Ce que tu as (nombre, ou +5 / -3)" aria-label="Quantité possédée de ${esc(itName(x.id))}">`}
+      <span class="need">/ ${fmtN(q)}</span><span class="mini" style="--p:${p}%;--c:${col(p)}"><i></i></span></div>`;}).join("")}</div>
+  <div class="cfoot"><span>${nDone} / ${segs.length} étapes</span><span>reste à acheter <b>${fmtK(lc.t)}</b></span></div>`;
+  wireCompactBar();
+  $("#cPrev").onclick=()=>{cIdx--;renderCompact();};$("#cNext").onclick=()=>{cIdx++;renderCompact();};
+  $("#cDone").onclick=()=>{const set=new Set(plan.done[job]||[]),k=doneKey(job,s);set.has(k)?set.delete(k):set.add(k);plan.done[job]=[...set];savePlan();
+    if(!isDone&&cIdx<segs.length-1)cIdx++;OVERLAY?renderAll():renderCompact();};
+  C.querySelectorAll("[data-cstock]").forEach(el=>{el.addEventListener("change",()=>{commitGauge("stock",el.dataset.cstock,entryVal(el.value,haveOf(el.dataset.cstock)));OVERLAY?renderAll():renderCompact();});
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();el.blur();}});});}
+let cOp=1;try{cOp=+localStorage.getItem("atelier-op")||1;}catch(_){}
+function wireCompactBar(){const m=$("#cMain"),h=$("#cHide"),o=$("#cOp");
+  if(o){window.atelier.setOpacity(cOp);o.onclick=()=>{cOp=cOp>0.9?0.85:cOp>0.75?0.7:1;try{localStorage.setItem("atelier-op",cOp);}catch(_){}window.atelier.setOpacity(cOp);};}if(m)m.onclick=()=>window.atelier&&window.atelier.showMain();if(h)h.onclick=()=>window.atelier?window.atelier.toggleCompact():window.close();}
+/* synchro entre la fenêtre complète et la fenêtre compacte (même stockage local) */
+window.addEventListener("storage",e=>{if(!D||!e.key||!e.newValue)return;try{const v=JSON.parse(e.newValue);
+  if(e.key==="atelier-plan"){plan=Object.assign(plan,v,{opts:Object.assign(plan.opts,v.opts||{})});}
+  else if(e.key==="atelier-prices"){prices=v.items||prices;if(v.lots)userLots=v.lots;}
+  else if(e.key==="atelier-pet"){pet=Object.assign(pet,v);}else return;
+  costMemo=new Map();if(COMPACT)renderCompact();else renderAll();}catch(_){}});
+$("#btnSaveFile").onclick=async()=>{const data=JSON.stringify({app:"atelier-kamas",v:1,date:today(),prices:{items:prices,lots:userLots},pet,plan},null,1);
+  const fname=`atelier-kamas-${new Date().toISOString().slice(0,10)}.json`;
+  if(window.claude&&window.claude.use){let dl=null;try{dl=await window.claude.use("downloads");}catch(_){}
+    if(dl){try{await dl.save({filename:fname,data});toast("Fichier exporté");}catch(e){if(e&&e.code==="declined")return;const ok=await copyExact(data);toast(ok?"Données copiées dans le presse-papier":"Export impossible ici");}return;}
+    const ok=await copyExact(data);toast(ok?"Données copiées dans le presse-papier":"Export impossible ici");return;}
+  try{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([data],{type:"application/json"}));a.download=fname;document.body.appendChild(a);a.click();a.remove();toast("Fichier exporté");}
+  catch(e){const ok=await copyExact(data);toast(ok?"Données copiées dans le presse-papier":"Export impossible ici");}};
+$("#fileImport").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const o=JSON.parse(await f.text());if(o.app!=="atelier-kamas")throw 0;
+  if(o.prices){prices=o.prices.items||{};userLots=o.prices.lots||{};savePrices();}if(o.pet){pet=Object.assign(pet,o.pet);savePet();}
+  if(o.plan){plan=Object.assign(plan,o.plan,{opts:Object.assign(plan.opts,o.plan.opts||{})});savePlan();}
+  costMemo=new Map();renderAll();toast("Données importées");}catch(_){toast("Fichier non reconnu");}e.target.value="";};
+if(window.atelier&&!OVERLAY){const b=$("#btnCompact");b.hidden=false;b.onclick=()=>window.atelier.toggleCompact();}
+if(OVERLAY){document.body.classList.add("overlay");document.querySelector('nav.tabs button[data-tab="encours"]').hidden=false;
+  const ob=document.createElement("div");ob.id="obar";ob.className="cbar";
+  ob.innerHTML=`<b>Atelier Kamas</b>${window.atelier?`<button id="cOp" title="Transparence">◐</button><button id="cMain" title="Ouvrir la grande fenêtre">⤢</button><button id="cHide" title="Masquer (Ctrl+Maj+K)">✕</button>`:""}`;
+  document.body.prepend(ob);wireCompactBar();}
+function renderAll(){if(COMPACT){renderCompact();return;}if(OVERLAY)renderCompact();renderJobs();renderPlan();renderCart();renderPet();renderPricesTab();renderLots();if(!$("#tab-recettes").hidden)renderRecipes();}
+
+/* ===== événements ===== */
+document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>{if(b.dataset.tab==="recettes"&&D){$("#rJob").value=plan.job;$("#rLvl").value=range().from;rShown=150;renderRecipes();}}));
+document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  document.querySelectorAll("section.stack[id^=tab-]").forEach(s=>s.hidden=s.id!=="tab-"+b.dataset.tab);
+  try{localStorage.setItem(TABKEY,b.dataset.tab);}catch(e){}});
+$("#jobs").addEventListener("click",e=>{const b=e.target.closest("[data-job]");if(!b)return;plan.job=+b.dataset.job;savePlan();renderJobs();renderPlan();});
+["lvlFrom","lvlTo","lvlXp"].forEach(id=>$("#"+id).addEventListener("change",()=>{const from=clamp(+$("#lvlFrom").value||1,1,199),to=clamp(+$("#lvlTo").value||200,from+1,200),xp=clamp(+$("#lvlXp").value||0,0,20*from-1);plan.levels[plan.job]={from,to,xp};savePlan();renderPlan();}));
+function setMode(m){plan.opts.mode=m;$("#modeFast").setAttribute("aria-pressed",m==="fast");$("#modeCheap").setAttribute("aria-pressed",m==="cheap");$("#modeGuide").setAttribute("aria-pressed",m==="guide");}
+$("#modeGuide").onclick=()=>{setMode("guide");savePlan();renderPlan();renderCart();};
+$("#modeFast").onclick=()=>{setMode("fast");savePlan();renderPlan();renderCart();};
+$("#modeCheap").onclick=()=>{setMode("cheap");savePlan();renderPlan();renderCart();};
+[["step","step",1,50],["maxGap","gap",0,199],["tax","tax",0,50],["xpCorr","xpCorr",-50,50]].forEach(([id,k,a,b])=>$("#"+id).onchange=e=>{plan.opts[k]=clamp(+e.target.value||0,a,b);e.target.value=plan.opts[k];savePlan();renderPlan();renderCart();});
+$("#server").onchange=e=>{plan.opts.server=e.target.value.trim()||"Dakal";savePlan();renderPlan();};
+$("#btnBilan").onclick=renderBilan;
+$("#craftMode").onchange=e=>{plan.opts.craftMode=e.target.value;savePlan();renderAll();};
+$("#autoAvoid").onchange=e=>{plan.opts.autoAvoid=+e.target.value;savePlan();renderAll();};
+["rJob","rMin","rMax","rLvl","rSort"].forEach(id=>$("#"+id).addEventListener("change",()=>{rShown=150;renderRecipes();}));
+$("#rSearch").addEventListener("input",()=>{rShown=150;clearTimeout(renderRecipes.t);renderRecipes.t=setTimeout(renderRecipes,200);});
+$("#btnLot").onclick=()=>{const k=norm($("#lotName").value),ids=byName.get(k);if(!ids){toast("Ressource inconnue");return;}
+  const l={};for(const s of LOT_SIZES){const v=parseValue($("#lot"+s).value||"");if(isFinite(v)&&v>0)l[s]=v;}
+  if(!Object.keys(l).length){toast("Indique au moins un prix de lot");return;}userLots[ids[0]]=l;savePrices();renderAll();toast("Prix par lot enregistrés");};
+$("#optResell").onchange=e=>{plan.opts.resell=e.target.checked;savePlan();renderPlan();renderCart();};
+$("#optNoQuest").onchange=e=>{plan.opts.noQuest=e.target.checked;savePlan();renderAll();};
+$("#optVitOnly").onchange=e=>{plan.opts.vitOnly=e.target.checked;savePlan();renderAll();};
+$("#btnPreview").onclick=()=>{const {rows,skipped}=analyse($("#pasteBox").value);pending=rows;$("#btnImport").disabled=!rows.length;
+  $("#importReport").innerHTML=rows.length?`<div class="note leaf"><b>${rows.length} prix reconnus.</b> Vérifie quelques lignes puis « Enregistrer ».${skipped.length?` ${skipped.length} lignes ignorées (en-têtes ou noms inconnus).`:""}</div>
+  <div class="tablewrap" style="max-height:260px"><table><thead><tr><th>Ressource</th><th class="n">Prix u.</th><th class="n">Actuel</th></tr></thead><tbody>${rows.slice(0,200).map(r=>{const id=byName.get(r.k)[0];return `<tr><td><div class="it">${icon(id,28)}<span>${esc(itName(id))}</span></div></td><td class="n">${fmtN(r.v,r.v<10?2:0)}</td><td class="n">${prices[r.k]?fmtN(prices[r.k].p):"—"}</td></tr>`;}).join("")}</tbody></table></div>`
+  :`<div class="note">Aucun prix reconnu. Copie le tableau entier avec ses colonnes (nom et prix), ou écris <code>Nom ; prix</code> par ligne.</div>`;};
+$("#btnImport").onclick=()=>{const src=$("#srcSel").value,d=today();for(const r of pending){const id=byName.get(r.k)[0];prices[r.k]={n:itName(id),p:r.v,d,s:src};}
+  const n=pending.length;pending=[];$("#btnImport").disabled=true;$("#pasteBox").value="";$("#importReport").innerHTML=`<div class="note leaf">${n} prix enregistrés (${esc(src)}).</div>`;savePrices();renderAll();};
+$("#pasteBox").addEventListener("paste",()=>setTimeout(()=>$("#btnPreview").click(),0));
+$("#priceSearch").oninput=renderPricesTab;
+$("#priceRows").onclick=e=>{const k=e.target.dataset.del;if(k!=null){delete prices[k];savePrices();renderAll();}};
+$("#btnExport").onclick=()=>copy(Object.values(prices).map(v=>`${v.n} ; ${v.p}`).join("\n"));
+$("#btnWipe").onclick=()=>{$("#wipeConfirm").hidden=false;};
+$("#btnWipeYes").onclick=()=>{prices={};savePrices();$("#wipeConfirm").hidden=true;renderAll();toast("Prix effacés");};
+
+/* ===== démarrage ===== */
+(async function start(){
+  try{const t=localStorage.getItem(TABKEY)||(OVERLAY?"encours":null);if(t)document.querySelector(`nav.tabs button[data-tab="${t}"]`)?.click();}catch(e){}
+  const [data]=await Promise.all([fetch("data.json").then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}),store.init()]);
+  D=data;
+  for(const [id,it] of Object.entries(D.items)){const k=norm(it[0]);if(!byName.has(k))byName.set(k,[]);byName.get(k).push(+id);}
+  for(const r of D.recipes){(recipesByJob[r[1]]=recipesByJob[r[1]]||[]).push(r);if(!recipeByResult.has(r[0]))recipeByResult.set(r[0],r);}
+  const dl=document.createElement("datalist");dl.id="resList";dl.innerHTML=[...new Set(Object.values(D.items).map(i=>i[0]))].sort((a,b)=>a.localeCompare(b,"fr")).map(n=>`<option value="${esc(n)}">`).join("");document.body.appendChild(dl);
+  $("#dataInfo").textContent=`Jeu ${D.v} · ${D.recipes.length.toLocaleString("fr-FR")} recettes`;
+  const [p,pt,pl]=await Promise.all([store.load("prices"),store.load("pet"),store.load("plan")]);
+  if(p&&p.items)prices=p.items;if(pt)pet=Object.assign(pet,pt);
+  if(pl)plan=Object.assign(plan,pl,{opts:Object.assign(plan.opts,pl.opts||{})});
+  if(!plan.opts.v13){plan.opts.v13=1;plan.opts.mode="cheap";}
+  plan.stock=(plan.stock&&typeof plan.stock==="object"&&!Array.isArray(plan.stock))?plan.stock:{};
+  if(!plan.opts.craftMode)plan.opts.craftMode=plan.opts.craft===false?"never":"always";if(p&&p.lots)userLots=p.lots;
+  $("#rJob").innerHTML=Object.entries(D.jobs).sort((a,b)=>a[1].localeCompare(b[1],"fr")).map(([id,n])=>`<option value="${id}">${esc(n)}</option>`).join("");
+  plan.done=plan.done||{};plan.guides=plan.guides||{};plan.guideInfo=plan.guideInfo||{};plan.bought=Array.isArray(plan.bought)?plan.bought:[];if(!D.jobs[plan.job])plan.job=27;
+  setMode(plan.opts.mode||"fast");$("#craftMode").value=plan.opts.craftMode||"always";$("#autoAvoid").value=String(plan.opts.autoAvoid||0);$("#optResell").checked=plan.opts.resell;$("#optNoQuest").checked=plan.opts.noQuest!==false;$("#optVitOnly").checked=plan.opts.vitOnly!==false;$("#tax").value=plan.opts.tax;$("#maxGap").value=plan.opts.gap;$("#xpCorr").value=plan.opts.xpCorr!=null?plan.opts.xpCorr:-6;$("#step").value=plan.opts.step||10;$("#server").value=plan.opts.server||"Dakal";
+  renderAll();
+})().catch(e=>{console.error(e);$("#dataInfo").textContent="Recettes non chargées";$("#route").innerHTML='<div class="card empty">Les recettes n\'ont pas pu se charger. Recharge la page.</div>';});
+</script>

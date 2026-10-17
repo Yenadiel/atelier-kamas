@@ -1,0 +1,282 @@
+Essence de Solar ; 42222007702
+Cervelle de Solar ; 153031
+Essence de Bethel Akarna ; 4044110055
+Queue de Bethel Akarna ; 177648
+Essence du Kolosso ; 2974045040
+Griffe de Kolosso ; 4586
+Essence du Toxoliath ; 2909946695
+Sang du Toxoliath ; 35593
+Substrat de Sylve ; 930075007
+Potion des Ancêtres ; 8356
+Potion de Glandage ; 17156
+Planche de Salut ; 28931
+Essence d'Ilyzaelle ; 44749985
+Plume d'Ilyzaelle ; 120162
+Essence de Meno ; 15999995
+Poil de Meno ; 169320
+Extrémité du Grattoir ; 8377062
+Kobalite ; 12602
+Dents de Wabbit Vampire ; 549
+Plume de fesse du Kido ; 113
+Jus de poisson méphitique ; 8999996
+Jus de poisson abominable ; 209248
+Jus de poisson asphyxiant ; 1426975
+Jus de poisson pestilentiel ; 4500000
+Essence de Guerre ; 1954754
+Bonnet de Guerre ; 994
+Essence du Glourséleste ; 1024042
+Queue de Glourséleste ; 5644
+Essence du Protozorreur ; 1424998
+Noyau de Protozorreur ; 151945
+Essence de Belladone ; 1747882
+Rouge à lèvres de Belladone ; 252172
+Essence du Chalœil ; 1944137
+Dé du Chalœil ; 311737
+Sceau des fondateurs ; 1354067
+Bave de Mol Usk ; 4090
+Pince de Crabe Yoloniste ; 5592
+Écaille de Gambaf ; 2942
+Écume de mer ; 2885
+Patelle ; 3783
+Quisnoa ; 77
+Marque des grands fonds ; 23217
+Ambre de muldo ; 21424
+Essence de Tal Kasha ; 1193108
+Cheveux de Tal Kasha ; 158755
+Lest anti-tourbillon ; 1014134
+Plombs de plongée ; 23289
+Moustache de Rilur ; 6896
+Peau de Trithon ; 5892
+Bois d'Aquajou ; 77
+Salikrone ; 1116
+Essence de Torkélonia ; 2039276
+Écaille de Torkélonia ; 387882
+Potion de Courant d'Air ; 474994
+Métaria verte ; 5028
+Fiole à élément ; 2441
+Pépite ; 7
+Essence de Dazak Martegel ; 1635751
+Épaulière de Dazak Martegel ; 299664
+Essence de Servitude ; 1399819
+Verrou de Servitude ; 244380
+Essence de Vortex ; 2261356
+Aile de Vortex ; 464298
+Carte de Padgref Demoël ; 410675
+Fragment de carte de Padgref 1/5 ; 70
+Fragment de carte de Padgref 2/5 ; 56532
+Fragment de carte de Padgref 3/5 ; 77
+Fragment de carte de Padgref 4/5 ; 21810
+Fragment de carte de Padgref 5/5 ; 6788
+Essence de la Larve de Koutoulou ; 1479943
+Aile de Larve de Koutoulou ; 289630
+Essence d'Hell Mina ; 213065
+Mèche Rebelle d'Hell Mina ; 1771
+Essence de la Reine Amirukam ; 199999
+Diacritique de la Reine Amirukam ; 777
+Optimakina Muldo de Génération 2 ; 176451
+Manuel du Directeur Grunob ; 537
+Bave de muldo ; 139
+Moustache de muldo doré ; 801
+Essence de la Reine des Voleurs ; 1573190
+Broderie de la Reine des Voleurs ; 351095
+Essence de Dantinéa ; 244380
+Dentier de Dantinéa ; 24893
+Carte d'Aermyne Scalptaras ; 207983
+Fragment de carte d'Aermyne 1/4 ; 11531
+Fragment de carte d'Aermyne 2/4 ; 30068
+Fragment de carte d'Aermyne 3/4 ; 4099
+Fragment de carte d'Aermyne 4/4 ; 31018
+Gigantesque Élixir de Mangeoire ; 229640
+Tanche ; 235
+Pince de Krabouilleur ; 64965
+Cervelle de Verglasseur ; 21669
+Pédoncule de Mérulor ; 11265
+Pic du Nocturlabe ; 757
+Manche de Knout ; 127645
+Planche à Pain ; 55
+Pierre d'Eau ; 160577
+Premier Fragment d'Eau ; 7036
+Deuxième Fragment d'Eau ; 8711
+Troisième Fragment d'Eau ; 11566
+Quatrième Fragment d'Eau ; 13103
+Attrape-peur ; 715331
+Filtre à frousse ; 24708
+Tentacule de Grofond ; 3970
+Tentacule de N'Yalg ; 2344
+Œil de Shokkoth ; 2099
+Carte de Tyranne la Terrible ; 167916
+Fragment de carte de Tyranne 1/4 ; 52899
+Fragment de carte de Tyranne 2/4 ; 777
+Fragment de carte de Tyranne 3/4 ; 9398
+Fragment de carte de Tyranne 4/4 ; 2358
+Orbe régénérant magistral ; 101737
+Carte de Qil Bil ; 225898
+Fragment de carte de Qil Bil 1/4 ; 33728
+Fragment de carte de Qil Bil 2/4 ; 10218
+Fragment de carte de Qil Bil 3/4 ; 48177
+Fragment de carte de Qil Bil 4/4 ; 35781
+Carte d'Ogivol Scalarcin ; 184984
+Fragment de carte d'Ogivol 1/4 ; 16639
+Fragment de carte d'Ogivol 2/4 ; 42896
+Fragment de carte d'Ogivol 3/4 ; 55
+Fragment de carte d'Ogivol 4/4 ; 27979
+Pierre de Feu ; 130167
+Premier Fragment de Feu ; 13962
+Deuxième Fragment de Feu ; 8122
+Troisième Fragment de Feu ; 7519
+Quatrième Fragment de Feu ; 10241
+Kromakina Dragodinde de Génération 2 ; 89999
+Crâne de Kardorim ; 334
+Pic de dragodinde ; 68
+Teinture Magique Ténébreuse ; 150178
+Écorce d'Abrakne Sombre ; 201
+Racine d'Abraknyde Sombre ; 465
+Racine d'Abraknyde Vénérable ; 955
+Teinture Magique Sombre ; 4394
+Os à Moil ; 56875
+Potion d'Incendie ; 151760
+Métaria Mage rouge ; 12312
+Lanières de Knout ; 101304
+Dent de Trezz ; 3703
+Cuir de Maho Givrefoux ; 77
+Carte de Flasho ; 119127
+Fragment de carte de Flasho 1/5 ; 6783
+Fragment de carte de Flasho 2/5 ; 7762
+Fragment de carte de Flasho 3/5 ; 7988
+Fragment de carte de Flasho 4/5 ; 7501
+Fragment de carte de Flasho 5/5 ; 6924
+Gravure d'Ouragan ; 115948
+Métaria Mage verte ; 6371
+Planche à Repasser ; 3349
+Potion de Secousse ; 88944
+Métaria jaune ; 1496
+Optimakina Volkorne de Génération 2 ; 75885
+Plume de Batofu ; 2098
+Griffe de volkorne ; 207
+Aile de volkorne ebène ; 493
+Essence du Comte Harebourg ; 126369
+Scapula du Comte Harebourg ; 15456
+Potion d'Ouragan ; 100547
+Pierre de Terre ; 103784
+Premier Fragment de Terre ; 9421
+Deuxième Fragment de Terre ; 9507
+Troisième Fragment de Terre ; 14341
+Quatrième Fragment de Terre ; 6893
+Gravure de Tsunami ; 94249
+Métaria Mage bleue ; 5177
+Potion de Crachin ; 63708
+Métaria bleue ; 77
+Potion d'Étincelle ; 71192
+Métaria rouge ; 1701
+Essence du Tengu Givrefoux ; 87990
+Laine de Tengu Givrefoux ; 7302
+Implants Rustiques ; 79244
+Schéma d'Implants Rustiques ; 7476
+Pyrute ; 12828
+Viande Noire ; 7676
+Manche du Grattoir ; 62882
+Poils de Pétartifoux ; 382
+Talon d'achille de l'Abrakleur sombre ; 1209
+Planche de Gravure ; 10927
+Orbe régénérant majeur ; 47890
+Gants de protection ; 78156
+Plume du Timansot ; 115
+Aile de Mansobèse ; 1702
+Poil de barbe du Shamansot ; 554
+Poils de Smilomouth ; 77
+Queue d'Écumouth ; 882
+Cuir de Bouftonmouth ; 933
+Pince de Crabe Hijacob ; 150
+Poil de Chachachovage ; 1516
+Clef du Ventre de la Baleine ; 173698
+Patte de Tabacille ; 956
+Œil de Verminocule ; 54784
+Antenne de Bacterrib ; 5086
+Coquille de Virustine ; 986
+Viande Goûtue ; 789
+Poisskaille ; 688
+Perce-Neige ; 491
+Frostiz ; 608
+Carte de Carlita de l'Aguerfelde ; 167812
+Fragment de carte de Carlita 1/5 ; 56620
+Fragment de carte de Carlita 2/5 ; 41847
+Fragment de carte de Carlita 3/5 ; 20606
+Fragment de carte de Carlita 4/5 ; 777
+Fragment de carte de Carlita 5/5 ; 4104
+Kromakina Muldo de Génération 2 ; 44997
+Peau de Mob l'Éponge ; 407
+Moustache de muldo ebène ; 177
+Moustache de muldo orchidée ; 325
+Moustache de muldo pourpre ; 223
+Gravure d'Incendie ; 109059
+Gigantesque Élixir de Dragofesse ; 94772
+Viande Gâtée ; 1802
+Cœur d'Empaillé ; 4499
+Huile de Pikoleur ; 39657
+Griffe de Kanimate ; 4388
+Bec de Dodox ; 4259
+Potion de Séisme ; 60400
+Métaria Mage jaune ; 3171
+Clef de la Bataille de l'Aurore Pourpre ; 237325
+Corne de Typhomet ; 77441
+Mâchoire de Brutasmodan ; 5384
+Langue de Diabélial ; 6276
+Tentacule de Démoloch ; 6788
+Pichon d'encre ; 2808
+Tulipe en papier ; 2741
+Carte du YeCh'Ti ; 67415
+Fragment de carte du YeCh'Ti 1/5 ; 9120
+Fragment de carte du YeCh'Ti 2/5 ; 7558
+Fragment de carte du YeCh'Ti 3/5 ; 6107
+Fragment de carte du YeCh'Ti 4/5 ; 6326
+Fragment de carte du YeCh'Ti 5/5 ; 777
+Clef du Breuil du Vénérable ; 61782
+Langue d'Amphibouc ; 4663
+Lampe de Gyrafor ; 77
+Oreille de Lapilope ; 77
+Groin de Brutapir ; 1427
+Mâchoire de Gropotam ; 3149
+Dent de zarbivore ; 4551
+Breuvage Musculaire ; 46674
+Formule de Breuvage Musculaire ; 4126
+Mandragore ; 509
+Eau Potable ; 52
+Cawotte ; 810
+Clef de la Brasserie du roi Dazak ; 134353
+Jambière de Kasrok ; 25908
+Dent de Vatenbière ; 2745
+Fronde de Boufbos ; 2822
+Poils de barbe de Barbélier ; 15716
+Gravure de Crachin ; 35720
+Planche Contreplaquée ; 67
+Carte de Trukipik ; 161177
+Fragment de carte de Trukipik 1/5 ; 27256
+Fragment de carte de Trukipik 2/5 ; 12383
+Fragment de carte de Trukipik 3/5 ; 68345
+Fragment de carte de Trukipik 4/5 ; 15146
+Fragment de carte de Trukipik 5/5 ; 3605
+Carte de Musha l'Oni ; 49808
+Fragment de carte de Musha 1/4 ; 55
+Fragment de carte de Musha 2/4 ; 6500
+Fragment de carte de Musha 3/4 ; 6382
+Fragment de carte de Musha 4/4 ; 2917
+Essence du Roi Imagami ; 65103
+Diacritique du Roi Imagami ; 8080
+Clef de la Chambre de Tal Kasha ; 87614
+Fragment de Chakanoubis ; 5038
+Dent de Bandleth ; 1589
+Grenat de Momistik ; 10884
+Paupière Dorée de Rykaon ; 6675
+Essence de Misère ; 207089
+Plume de Misère ; 44316
+Clef du Trône de la Cour Sombre ; 72499
+Piège désamorcé de Mâchassin ; 777
+Mèche de bombe de Terristocrate ; 2974
+Chouchou de Doublure ; 14209
+Épaulière de Bourôliste ; 2172
+Étoffe de la Cour Sombre ; 3138
+Clef des Fers de la Tyrannie ; 51816
+Baguette Rythmique ; 4082
+Bois de pagaie usée ; 4669
+Manche de Fouet ; 1935
+Boulet lesté ; 77
