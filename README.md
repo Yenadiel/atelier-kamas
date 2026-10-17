@@ -2,15 +2,50 @@
 
 Outil perso pour **Dofus 3 (serveur Dakal)** : monter ses métiers de 1 à 200 au meilleur prix, gérer sa liste de courses et ses crafts, et choisir la nourriture de familier la plus rentable.
 
-Il existe en deux versions qui partagent le même code :
+Il existe en deux versions qui partagent le même code (`web/`) :
 
-- **le site** : une page HTML unique (`web/`) ;
-- **l'appli Windows** : Electron (`app/`), avec une fenêtre compacte qui reste par-dessus le jeu (Ctrl + Maj + K).
+- **l'appli de bureau** (Windows, macOS, Linux) : une petite fenêtre « compagnon » sans bordure, toujours au premier plan par-dessus le jeu ;
+- **le site** : une page web unique, aussi publiée en privé sur claude.ai.
 
-## Télécharger l'appli Windows
+## Télécharger
 
-- **Installateur (8 Mo)** : [`releases/AtelierKamas-Installation-1.1.0.zip`](releases/AtelierKamas-Installation-1.1.0.zip). Dézippe, puis lance `Installer Atelier Kamas.bat`.
-- **Version portable complète (environ 110 Mo)** : elle est générée par la GitHub Action « Release Windows » et publiée dans l'onglet **Releases**. Pour la lancer : Actions → Release Windows → *Run workflow*, ou pousse un tag `v1.1.0`.
+Toutes les versions sont dans l'onglet **[Releases](../../releases)** :
+
+| Système | Fichier | Remarque |
+|---|---|---|
+| Windows | `AtelierKamas-X-Windows-Installation.exe` | installateur (raccourcis Bureau et menu Démarrer) |
+| Windows | `AtelierKamas-X-Windows-Portable.exe` | sans installation |
+| macOS (Intel et Apple Silicon) | `AtelierKamas-X-macOS.dmg` | appli non signée : la première fois, clic droit sur l'appli → **Ouvrir** |
+| Linux | `AtelierKamas-X-Linux.AppImage` ou `.deb` | AppImage : `chmod +x` puis lancer |
+
+Windows peut afficher « Windows a protégé votre ordinateur » : clique « Informations complémentaires », puis « Exécuter quand même ». L'appli n'est pas signée par un éditeur.
+
+## L'interface compagnon (appli de bureau)
+
+- **Une seule petite fenêtre** (380 × 640 par défaut, redimensionnable), sans bordure et toujours au premier plan. Elle repasse devant Dofus dès que tu cliques dans le jeu.
+- **Barre de titre** :
+  - à gauche, le menu **☰** : En cours, Plan de métier, Liste de courses, Recettes, Familier, Prix HDV, Paramètres ;
+  - au centre, le nom de la page ;
+  - à droite, 📌 premier plan, ⚙ paramètres, réduire et fermer.
+- **Barre de page** sous la barre de titre : nom de la page et contexte (métier, plage de niveaux…).
+- **Page « En cours »** : l'étape du plan à faire maintenant (objet, nombre de crafts, XP par craft, ressources avec leur « j'ai »), avec en bas une barre d'étapes :
+  - **‹** et **›** pour reculer ou avancer d'une étape ;
+  - une barre de progression `8 / 15` sur laquelle on clique ou glisse pour sauter à une étape (la molette marche aussi) ;
+  - **Terminée** pour valider l'étape.
+- **Paramètres** :
+  - 10 thèmes sombres ;
+  - opacité de la fenêtre ;
+  - taille du texte ;
+  - premier plan ;
+  - raccourcis clavier globaux ;
+  - export et import des données.
+- **Raccourcis globaux par défaut** (actifs même quand Dofus a le focus, modifiables dans les Paramètres) :
+
+| Raccourci | Action |
+|---|---|
+| Ctrl + Maj + K | afficher / masquer l'appli |
+| Ctrl + Maj + ← / → | étape précédente / suivante |
+| Ctrl + Maj + Entrée | valider l'étape |
 
 ## Fonctionnalités
 
@@ -31,20 +66,23 @@ Il existe en deux versions qui partagent le même code :
 ## Structure
 
 ```
-web/                    le site (aussi chargé par l'appli)
-  index.html            version autonome (à ouvrir via un petit serveur local)
+web/                    l'outil (chargé tel quel par l'appli)
+  index.html            page complète, version autonome
   index.artifact.html   même page sans en-tête HTML : version publiée sur claude.ai
+  gm.css, gm.js         interface compagnon (actives seulement dans l'appli, ou avec ?app dans un navigateur)
+  fonts/                police Lexend (licence SIL OFL)
   data.json             recettes, objets, prix de référence, XP familier, listes vie/énergie et quête
   ico/                  planches d'icônes (48 px, 32 colonnes, 1024 par planche)
-app/                    appli Electron (Windows)
-  main.js               fenêtres, protocole atelier://, fenêtre compacte toujours au premier plan, Ctrl+Maj+K
-  preload.js            pont window.atelier (toggleCompact, showMain, setOpacity)
-installer/              installateur Windows (télécharge Electron 33.2.1 et vérifie son SHA256)
+app/                    appli Electron
+  main.js               fenêtre unique sans bordure, protocole atelier://, premier plan, raccourcis globaux
+  preload.js            pont window.atelier (fenêtre, opacité, zoom, raccourcis)
+  package.json          configuration electron-builder (Windows NSIS et portable, macOS dmg universel, Linux AppImage et deb)
+  build/                icônes de l'appli
+.github/workflows/release.yml   construit les 3 systèmes et publie la release
 tools/
-  build-installer.sh    construit dist/AtelierKamas-Installation.zip
-  build.py, match.py, km.py   reconstruisent data.json à partir des données du jeu et des relevés HDV
-  flags.py              ajoute les listes « vie / énergie » et « quête » à data.json
-  sim.py                vérification de la formule d'XP
+  build.py, match.py, km.py     reconstruisent data.json à partir des données du jeu et des relevés HDV
+  flags.py                      ajoute les listes « vie / énergie » et « quête » à data.json
+  sim.py                        vérification de la formule d'XP
 data/
   sources/hdv/p1..p5.txt        relevés HDV Dakal (Nom|niveau|prix, sections #Catégorie), 2074 prix moyens
   sources/hdv_matched.json      ces relevés associés aux identifiants d'objets
@@ -57,26 +95,41 @@ data/
 
 Trois fichiers bruts du client Dofus 3 ne sont pas versionnés (`items.json`, `fr.json` et `monsters.json`, environ 140 Mo). On n'en a besoin que pour régénérer `data.json`. Les scripts de `tools/` contiennent encore des chemins absolus de l'environnement d'origine : il faut les adapter avant de les relancer.
 
-## Lancer
+## Développer
 
-**Le site, en local** (il doit être servi en http pour que `fetch("data.json")` fonctionne) :
+**Lancer l'appli** (Node.js 20 ou plus récent) :
+
+```bash
+cd app
+npm install
+npm start          # lit directement ../web : modifie web/ et recharge avec Ctrl+R
+```
+
+**Voir l'interface compagnon dans un navigateur**, sans Electron. La page doit être servie en http :
 
 ```bash
 cd web && python -m http.server 8000
-# puis ouvrir http://localhost:8000/
+# puis ouvrir http://localhost:8000/?app   (sans ?app : la version site)
 ```
 
-**L'appli, en développement :**
+**Construire les paquets à la main** (chaque système se construit sur son propre OS) :
 
 ```bash
-cd app && npm install && npm start
+cd app
+npm run dist:win     # sur Windows
+npm run dist:mac     # sur macOS
+npm run dist:linux   # sur Linux
 ```
 
-**L'installateur Windows** (léger, environ 8 Mo, car Electron est téléchargé chez l'utilisateur) :
+**Publier une version** : mets à jour `version` dans `app/package.json`, puis pousse un tag du même numéro. GitHub Actions construit alors les 3 systèmes et crée la release :
 
 ```bash
-./tools/build-installer.sh
+git tag v2.0.1 && git push origin v2.0.1
 ```
+
+Tu peux aussi passer par l'onglet Actions → Release → *Run workflow*.
+
+Les données de l'appli restent sur l'ordinateur, dans le stockage local de la page sous l'origine `atelier://app`. Elles sont conservées d'une mise à jour à l'autre.
 
 ## Données et calculs
 
@@ -113,7 +166,7 @@ xp = floor(20 × niveauRecette × coef / 100 / (écart^1.1 / 10 + 1) × (1 + cor
 
 ## Pistes / à faire
 
-- Refonte visuelle et animations : transitions des jauges, cartes à 100 %, ambiance Dofus.
+- Peaufiner l'interface compagnon (animations, vue « En cours » plus riche, notes par étape).
 - Onglet « Revente » :
   - coût du craft comparé au premier prix HDV de l'objet non forgemagé, marge après taxe ;
   - prix saisis à la main avec historique daté, médiane et badge de fraîcheur ;

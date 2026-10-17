@@ -1,14 +1,114 @@
 {
   "name": "atelier-kamas",
   "productName": "Atelier Kamas",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Atelier Kamas : métiers et familier au meilleur prix (Dofus 3, serveur Dakal)",
+  "author": "Yenadiel",
+  "homepage": "https://github.com/Yenadiel/atelier-kamas",
   "main": "main.js",
   "private": true,
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "prepare-web": "node -e \"const fs=require('fs');fs.rmSync('web',{recursive:true,force:true});fs.cpSync('../web','web',{recursive:true,filter:s=>!s.endsWith('index.artifact.html')})\"",
+    "dist:win": "npm run prepare-web && electron-builder --win --publish never",
+    "dist:mac": "npm run prepare-web && electron-builder --mac --publish never",
+    "dist:linux": "npm run prepare-web && electron-builder --linux --publish never"
   },
   "devDependencies": {
-    "electron": "33.2.1"
+    "electron": "33.2.1",
+    "electron-builder": "25.1.8"
+  },
+  "build": {
+    "appId": "fr.atelierkamas.app",
+    "productName": "Atelier Kamas",
+    "copyright": "Atelier Kamas",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "package.json",
+      "icon.png",
+      "icon.ico",
+      "web/**/*"
+    ],
+    "electronLanguages": [
+      "fr",
+      "en-US"
+    ],
+    "artifactName": "AtelierKamas-${version}-${os}-${arch}.${ext}",
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Atelier Kamas",
+      "artifactName": "AtelierKamas-${version}-Windows-Installation.${ext}",
+      "language": "1036"
+    },
+    "portable": {
+      "artifactName": "AtelierKamas-${version}-Windows-Portable.${ext}"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
+      "category": "public.app-category.games",
+      "icon": "build/icon.png",
+      "identity": null,
+      "artifactName": "AtelierKamas-${version}-macOS.${ext}"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "category": "Game",
+      "icon": "build/icon.png",
+      "maintainer": "Yenadiel",
+      "artifactName": "AtelierKamas-${version}-Linux.${ext}"
+    },
+    "publish": null
   }
 }

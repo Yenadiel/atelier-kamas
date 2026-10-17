@@ -1,3 +1,5 @@
+// Atelier Kamas — appli de bureau (Windows, macOS, Linux)
+// Une seule petite fenêtre sans bordure, toujours au premier plan, façon compagnon de jeu.
 const { app, BrowserWindow, protocol, globalShortcut, ipcMain, shell, screen } = require('electron');
 const path = require('path');
 const fs = require('fs');
@@ -6,22 +8,25 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'atelier', privileges: { standard: true, secure: true, supportFetchAPI: true, corsEnabled: true } }
 ]);
 
-// web/ est copié dans l'appli à l'installation ; en développement on lit ../web
+// web/ est copié dans l'appli au moment du build ; en développement on lit ../web
 const WEB = fs.existsSync(path.join(__dirname, 'web')) ? path.join(__dirname, 'web') : path.join(__dirname, '..', 'web');
 const ICON = path.join(__dirname, process.platform === 'win32' ? 'icon.ico' : 'icon.png');
 const PRELOAD = path.join(__dirname, 'preload.js');
-let main = null, compact = null, quitting = false;
+const TYPES = {
+  '.html': 'text/html; charset=utf-8', '.json': 'application/json; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
+  '.css': 'text/css; charset=utf-8', '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.txt': 'text/plain; charset=utf-8'
+};
 
-// position et taille des fenêtres, gardées d'une session à l'autre
-const stateFile = () => path.join(app.getPath('userData'), 'fenetres-v2.json');
+let win = null;
+let onTop = true;
+const shortcutMap = {};
+
+// position / taille de la fenêtre, gardées d'une session à l'autre
+const stateFile = () => path.join(app.getPath('userData'), 'fenetre.json');
 function loadState() { try { return JSON.parse(fs.readFileSync(stateFile(), 'utf8')); } catch { return {}; } }
 const state = loadState();
 function saveState() {
-  try {
-    if (main && !main.isDestroyed()) { state.main = main.getNormalBounds(); state.mainMax = main.isMaximized(); }
-    if (compact && !compact.isDestroyed()) state.compact = compact.getBounds();
-    fs.writeFileSync(stateFile(), JSON.stringify(state));
-  } catch {}
+  try { if (win && !win.isDestroyed()) { state.bounds = win.getNormalBounds(); fs.writeFileSync(stateFile(), JSON.stringify(state)); } } catch {}
 }
 function onScreen(b) {
   if (!b) return false;
@@ -31,90 +36,92 @@ function onScreen(b) {
   });
 }
 
-function guard(win) {
+function keepOnTop() {
+  if (!win || win.isDestroyed() || !win.isVisible() || !onTop) return;
+  win.setAlwaysOnTop(true, 'screen-saver', 1);
+  win.moveTop();
+}
+
+function createWindow() {
+  const wa = screen.getPrimaryDisplay().workArea;
+  const def = { width: 380, height: 640, x: wa.x + wa.width - 400, y: wa.y + 40 };
+  const b = onScreen(state.bounds) ? state.bounds : def;
+  win = new BrowserWindow({
+    ...b, minWidth: 280, minHeight: 340,
+    frame: false, alwaysOnTop: true, show: false, title: 'Atelier Kamas', icon: ICON,
+    backgroundColor: '#1d2730', fullscreenable: false, maximizable: false,
+    webPreferences: { preload: PRELOAD, contextIsolation: true, sandbox: true, spellcheck: false }
+  });
+  win.setAlwaysOnTop(true, 'screen-saver', 1);
+  if (process.platform === 'darwin') win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+
   // les liens externes s'ouvrent dans le navigateur
   win.webContents.setWindowOpenHandler(({ url }) => { shell.openExternal(url); return { action: 'deny' }; });
   win.webContents.on('will-navigate', (e, url) => { if (!url.startsWith('atelier://')) { e.preventDefault(); shell.openExternal(url); } });
+
+  win.loadURL('atelier://app/index.html?app');
+  win.once('ready-to-show', () => win.show());
+  // le jeu en plein écran reprend le dessus à chaque clic : on remet la fenêtre devant
+  win.on('blur', () => { keepOnTop(); setTimeout(keepOnTop, 150); setTimeout(keepOnTop, 600); });
+  win.on('moved', saveState);
+  win.on('resized', saveState);
+  win.on('close', saveState);
+  win.on('closed', () => { win = null; });
 }
 
-function createMain() {
-  const b = onScreen(state.main) ? state.main : { width: 1320, height: 900 };
-  main = new BrowserWindow({
-    ...b, minWidth: 420, minHeight: 500, title: 'Atelier Kamas', icon: ICON,
-    autoHideMenuBar: true, backgroundColor: '#eef1ec', show: false,
-    webPreferences: { preload: PRELOAD, contextIsolation: true, sandbox: true, spellcheck: false }
-  });
-  main.setMenuBarVisibility(false);
-  if (state.mainMax) main.maximize();
-  guard(main);
-  main.loadURL('atelier://app/index.html');
-  main.once('ready-to-show', () => main.show());
-  main.on('close', saveState);
-  main.on('closed', () => { main = null; app.quit(); });
+function toggleWindow() {
+  if (!win) return createWindow();
+  if (win.isVisible() && !win.isMinimized()) win.hide();
+  else { if (win.isMinimized()) win.restore(); win.showInactive(); keepOnTop(); }
 }
 
-function createCompact() {
-  const wa = screen.getPrimaryDisplay().workArea;
-  const def = { width: 460, height: 760, x: wa.x + wa.width - 480, y: wa.y + 40 };
-  const b = onScreen(state.compact) ? state.compact : def;
-  compact = new BrowserWindow({
-    ...b, minWidth: 340, minHeight: 360, frame: false, alwaysOnTop: true, skipTaskbar: true,
-    resizable: true, maximizable: false, fullscreenable: false, show: false, title: 'Atelier Kamas · compact',
-    icon: ICON, backgroundColor: '#fbfcfa',
-    webPreferences: { preload: PRELOAD, contextIsolation: true, sandbox: true, spellcheck: false }
-  });
-  compact.setAlwaysOnTop(true, 'screen-saver', 1);
-  compact.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
-  guard(compact);
-  compact.loadURL('atelier://app/index.html?overlay');
-  compact.on('close', e => { if (!quitting) { e.preventDefault(); saveState(); compact.hide(); } });
-  // le jeu en plein écran reprend le dessus à chaque clic : on remet la fenêtre compacte au premier plan
-  const keepOnTop = () => {
-    if (!compact || compact.isDestroyed() || !compact.isVisible()) return;
-    compact.setAlwaysOnTop(true, 'screen-saver', 1);
-    compact.moveTop();
-  };
-  compact.on('blur', () => { keepOnTop(); setTimeout(keepOnTop, 150); setTimeout(keepOnTop, 600); });
-  compact.on('show', keepOnTop);
-  setInterval(keepOnTop, 1000);
-  compact.on('moved', saveState);
-  compact.on('resized', saveState);
-}
-
-function toggleCompact() {
-  if (!compact) createCompact();
-  if (compact.isVisible()) { compact.hide(); }
-  else {
-    const show = () => { compact.showInactive(); compact.setAlwaysOnTop(true, 'screen-saver', 1); compact.moveTop(); };
-    if (compact.webContents.isLoading()) compact.once('ready-to-show', show); else show();
+// ---- liaison avec la page ----
+ipcMain.on('app-info', e => { e.returnValue = { version: app.getVersion(), platform: process.platform }; });
+ipcMain.on('win-minimize', () => win && win.minimize());
+ipcMain.on('win-close', () => win && win.close());
+ipcMain.on('win-opacity', (e, v) => { if (win) win.setOpacity(Math.max(0.4, Math.min(1, +v || 1))); });
+ipcMain.on('win-on-top', (e, v) => {
+  onTop = !!v;
+  if (!win) return;
+  win.setAlwaysOnTop(onTop, 'screen-saver', 1);
+  if (onTop) keepOnTop();
+});
+ipcMain.handle('set-shortcuts', (e, map) => {
+  globalShortcut.unregisterAll();
+  const failed = [];
+  for (const [name, accel] of Object.entries(map || {})) {
+    if (!accel) continue;
+    try {
+      const ok = globalShortcut.register(accel, () => {
+        if (name === 'toggle') return toggleWindow();
+        if (win && !win.isDestroyed()) win.webContents.send('shortcut', name);
+      });
+      if (!ok) failed.push(name);
+    } catch { failed.push(name); }
   }
-  saveState();
-}
-
-ipcMain.on('toggle-compact', toggleCompact);
-ipcMain.on('show-main', () => { if (!main) createMain(); if (main.isMinimized()) main.restore(); main.show(); main.focus(); });
-ipcMain.on('compact-opacity', (e, v) => { if (compact) compact.setOpacity(Math.max(0.4, Math.min(1, +v || 1))); });
+  Object.assign(shortcutMap, map);
+  return failed;
+});
 
 if (!app.requestSingleInstanceLock()) { app.quit(); }
 else {
-  app.on('second-instance', () => { if (main) { if (main.isMinimized()) main.restore(); main.show(); main.focus(); } });
+  app.on('second-instance', () => { if (win) { if (win.isMinimized()) win.restore(); win.show(); win.focus(); } });
   app.whenReady().then(() => {
     protocol.handle('atelier', req => {
       let p = decodeURIComponent(new URL(req.url).pathname);
       if (!p || p === '/') p = '/index.html';
       const f = path.normalize(path.join(WEB, p));
       if (!f.startsWith(WEB)) return new Response('Accès refusé', { status: 403 });
-      const ext = path.extname(f).toLowerCase();
-      const type = { '.html': 'text/html; charset=utf-8', '.json': 'application/json; charset=utf-8', '.webp': 'image/webp', '.png': 'image/png', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8' }[ext] || 'application/octet-stream';
+      const type = TYPES[path.extname(f).toLowerCase()] || 'application/octet-stream';
       try { return new Response(fs.readFileSync(f), { headers: { 'content-type': type } }); }
       catch { return new Response('Introuvable', { status: 404 }); }
     });
-    createMain();
-    createCompact();
-    globalShortcut.register('CommandOrControl+Shift+K', toggleCompact);
-    if (state.compactOpen) toggleCompact();
+    createWindow();
+    // filet de sécurité : la page enregistre ses propres raccourcis au chargement
+    globalShortcut.register('CommandOrControl+Shift+K', toggleWindow);
+    setInterval(keepOnTop, 1000);
   });
-  app.on('before-quit', () => { quitting = true; state.compactOpen = !!(compact && compact.isVisible()); saveState(); });
+  app.on('activate', () => { if (!win) createWindow(); else win.show(); });
   app.on('will-quit', () => globalShortcut.unregisterAll());
   app.on('window-all-closed', () => app.quit());
 }
