@@ -1,6 +1,6 @@
 // Atelier Kamas — appli de bureau (Windows, macOS, Linux)
 // Une seule petite fenêtre sans bordure, toujours au premier plan, façon compagnon de jeu.
-const { app, BrowserWindow, protocol, globalShortcut, ipcMain, shell, screen, Tray, Menu, nativeImage } = require('electron');
+const { app, BrowserWindow, protocol, globalShortcut, ipcMain, shell, screen, Tray, Menu, nativeImage, net } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
@@ -156,6 +156,75 @@ function toggleWindow() {
   else { if (win.isMinimized()) win.restore(); win.showInactive(); keepOnTop(); }
 }
 
+// ---- mises à jour obligatoires ----
+// Chaque nouvelle version publiée sur GitHub doit être installée : la page affiche un écran
+// bloquant. Windows (installateur) et Linux (AppImage) se mettent à jour tout seuls ;
+// portable, macOS (non signé) et .deb : bouton vers la page de téléchargement.
+const REPO = 'Yenadiel/atelier-kamas';
+const RELEASES_URL = `https://github.com/${REPO}/releases/latest`;
+let updateState = { state: 'idle' };
+function sendUpdate(st) { updateState = st; if (win && !win.isDestroyed()) win.webContents.send('update-state', st); }
+const newer = (a, b) => { const x = String(a).replace(/^v/, '').split('.').map(Number), y = String(b).replace(/^v/, '').split('.').map(Number);
+  for (let i = 0; i < 3; i++) { if ((x[i] || 0) > (y[i] || 0)) return true; if ((x[i] || 0) < (y[i] || 0)) return false; } return false; };
+const canAutoUpdate = () => app.isPackaged && !process.env.PORTABLE_EXECUTABLE_DIR &&
+  (process.platform === 'win32' || (process.platform === 'linux' && !!process.env.APPIMAGE));
+let autoUpdater = null;
+async function checkForUpdate() {
+  if (!app.isPackaged || ['progress', 'ready'].includes(updateState.state)) return;
+  let latest = null;
+  try {
+    const r = await net.fetch(`https://api.github.com/repos/${REPO}/releases/latest`, { headers: { 'User-Agent': 'atelier-kamas', Accept: 'application/vnd.github+json' } });
+    if (r.ok) latest = (await r.json()).tag_name;
+  } catch (e) { log('vérification de mise à jour impossible', e); return; }
+  if (!latest || !newer(latest, app.getVersion())) return;
+  log('nouvelle version disponible', latest);
+  const version = latest.replace(/^v/, '');
+  if (!canAutoUpdate()) return sendUpdate({ state: 'manual', version, url: RELEASES_URL });
+  try {
+    if (!autoUpdater) {
+      autoUpdater = require('electron-updater').autoUpdater;
+      autoUpdater.autoDownload = true;
+      autoUpdater.autoInstallOnAppQuit = true;
+      autoUpdater.on('download-progress', p => sendUpdate({ state: 'progress', version, percent: Math.round(p.percent || 0) }));
+      autoUpdater.on('update-downloaded', () => {
+        sendUpdate({ state: 'ready', version });
+        setTimeout(() => { try { autoUpdater.quitAndInstall(true, true); } catch (e) { log('installation impossible', e); } }, 4000);
+      });
+      autoUpdater.on('error', e => { log('mise à jour automatique en échec', e); sendUpdate({ state: 'manual', version, url: RELEASES_URL, error: true }); });
+    }
+    sendUpdate({ state: 'progress', version, percent: 0 });
+    await autoUpdater.checkForUpdates();
+  } catch (e) { log('mise à jour automatique impossible', e); sendUpdate({ state: 'manual', version, url: RELEASES_URL, error: true }); }
+}
+ipcMain.on('update-get', e => { e.returnValue = updateState; });
+ipcMain.on('update-open', () => shell.openExternal(RELEASES_URL));
+ipcMain.on('update-install', () => { try { autoUpdater && autoUpdater.quitAndInstall(true, true); } catch (e) { log(e); } });
+
+// ---- Almanax du jour (API publique DofusDB, appelée ici pour éviter les soucis de CORS) ----
+const almanaxCache = {};
+ipcMain.handle('almanax', async (e, iso) => {
+  const d = new Date(iso || Date.now());
+  const key = d.toISOString().slice(0, 10);
+  if (almanaxCache[key]) return almanaxCache[key];
+  const paris = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Paris', year: 'numeric', month: 'numeric', day: 'numeric' }).format(d); // M/D/YYYY
+  try {
+    const r = await net.fetch(`https://api.dofusdb.fr/almanax?date=${paris}`, { headers: { 'User-Agent': 'atelier-kamas' } });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const a = await r.json();
+    const it = (a.items && a.items[0]) || {};
+    const strip = t => String(t || '').replace(/<[^>]+>/g, '').trim();
+    const res = {
+      date: key,
+      bonus: strip(a.name && a.name.fr), desc: strip(a.desc && a.desc.fr),
+      itemId: it.id || (a.itemIds && a.itemIds[0]) || null, itemName: strip(it.name && it.name.fr),
+      qty: (a.quantities && a.quantities[0]) || 1, img: it.img || '',
+      npc: strip(a.npc && a.npc.name && a.npc.name.fr)
+    };
+    almanaxCache[key] = res;
+    return res;
+  } catch (err) { log('almanax indisponible', err); return null; }
+});
+
 // ---- liaison avec la page ----
 ipcMain.on('app-info', e => { e.returnValue = { version: app.getVersion(), platform: process.platform }; });
 ipcMain.on('win-minimize', () => win && win.minimize());
@@ -215,6 +284,8 @@ else {
     log(`démarrage v${app.getVersion()} · ${process.platform} ${process.getSystemVersion ? process.getSystemVersion() : ''}${NO_GPU ? ' · sans accélération graphique' : ''}`);
     createWindow();
     createTray();
+    setTimeout(checkForUpdate, 5000);
+    setInterval(checkForUpdate, 30 * 60 * 1000);
     // filet de sécurité : la page enregistre ses propres raccourcis au chargement
     globalShortcut.register('CommandOrControl+Shift+K', toggleWindow);
     setInterval(keepOnTop, 1500);

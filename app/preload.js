@@ -14,6 +14,13 @@ contextBridge.exposeInMainWorld('atelier', {
   setShortcuts: (map) => ipcRenderer.invoke('set-shortcuts', map),
   onShortcut: (cb) => ipcRenderer.on('shortcut', (_e, name) => cb(name)),
   onForceOpaque: (cb) => ipcRenderer.on('force-opaque', () => cb()),
+  // mises à jour obligatoires
+  getUpdate: () => ipcRenderer.sendSync('update-get'),
+  onUpdate: (cb) => ipcRenderer.on('update-state', (_e, st) => cb(st)),
+  openDownload: () => ipcRenderer.send('update-open'),
+  installUpdate: () => ipcRenderer.send('update-install'),
+  // Almanax du jour (DofusDB)
+  getAlmanax: (iso) => ipcRenderer.invoke('almanax', iso),
   // compatibilité avec l'ancienne fenêtre compacte (inutilisée dans l'interface compagnon)
   toggleCompact: () => {},
   showMain: () => {}

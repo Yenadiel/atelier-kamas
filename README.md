@@ -31,6 +31,9 @@ Windows peut afficher « Windows a protégé votre ordinateur » : clique « Inf
 
 ## L'interface
 
+- **Accueil** : logo de la guilde (`web/img/guilde.png`), « Atelier Kamas par Yenadiel · Ascent », l'Almanax du jour et des tuiles vers chaque section. Le pseudo, le nom et le logo se règlent dans `web/guilde.json`.
+- **Almanax** : bonus du jour, offrande avec son prix HDV estimé et les 7 jours suivants (source : API publique DofusDB).
+
 - **Une seule petite fenêtre** (380 × 640 par défaut, redimensionnable), sans bordure et toujours au premier plan. Elle repasse devant Dofus dès que tu cliques dans le jeu.
 - **Barre de titre** :
   - à gauche, le menu **☰** : En cours, Plan de métier, Liste de courses, Recettes, Familier, Prix HDV, Paramètres ;
@@ -149,13 +152,12 @@ npm run dist:mac     # sur macOS
 npm run dist:linux   # sur Linux
 ```
 
-**Publier une version** : mets à jour `version` dans `app/package.json`, puis pousse un tag du même numéro. GitHub Actions construit alors les 3 systèmes et crée la release :
+**Publier une version** : il n'y a rien à faire. Chaque commit poussé sur `main` qui touche `app/` ou `web/` lance le workflow *Release* :
+- il construit les 3 systèmes en version `2.2.<numéro de build>` et publie la release ;
+- au lancement suivant, **chaque appli installée affiche un écran « Mise à jour obligatoire »**. L'installateur Windows et l'AppImage se mettent à jour et redémarrent tout seuls. Le portable, le Mac et le .deb proposent un bouton vers la page de téléchargement ;
+- pour changer de série (passer en 2.3, 3.0…), modifie les deux premiers chiffres de `version` dans `app/package.json`.
 
-```bash
-git tag v2.0.1 && git push origin v2.0.1
-```
-
-Tu peux aussi passer par l'onglet Actions → Release → *Run workflow*.
+Les envois de prix (`prices/`) et les modifications de la documentation ne déclenchent pas de nouvelle version.
 
 Les données de l'appli restent sur l'ordinateur, dans le stockage local de la page sous l'origine `atelier://app`. Elles sont conservées d'une mise à jour à l'autre.
 

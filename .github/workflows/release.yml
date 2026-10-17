@@ -1,19 +1,31 @@
-# Construit l'appli pour Windows, macOS et Linux, puis publie une release GitHub.
-# Déclenchement : pousser un tag vX.Y.Z (même numéro que app/package.json),
-# ou Actions → « Release » → Run workflow.
+# Construit l'appli pour Windows, macOS et Linux et publie une release GitHub.
+# Se lance tout seul à chaque modification de l'appli (dossiers app/ ou web/) poussée sur main :
+# la version devient 2.2.<numéro de build> et toutes les applis installées se mettent à jour.
+# Lancement manuel possible : Actions → « Release » → Run workflow.
 name: Release
 on:
   push:
-    tags: ['v*']
+    branches: [main]
+    paths: ['app/**', 'web/**', '.github/workflows/release.yml']
   workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Version à publier (ex. v2.1.0)'
-        required: true
 permissions:
   contents: write
+concurrency:
+  group: release
+  cancel-in-progress: false
 jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      v: ${{ steps.v.outputs.v }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: v
+        run: |
+          BASE=$(node -p "require('./app/package.json').version.split('.').slice(0,2).join('.')")
+          echo "v=$BASE.${{ github.run_number }}" >> "$GITHUB_OUTPUT"
   build:
+    needs: version
     strategy:
       fail-fast: false
       matrix:
@@ -28,6 +40,7 @@ jobs:
     defaults:
       run:
         working-directory: app
+        shell: bash
     env:
       CSC_IDENTITY_AUTO_DISCOVERY: 'false'
     steps:
@@ -35,6 +48,7 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - run: npm install --no-audit --no-fund
+      - run: npm version "${{ needs.version.outputs.v }}" --no-git-tag-version --allow-same-version
       - run: npm run ${{ matrix.cmd }}
       - uses: actions/upload-artifact@v4
         with:
@@ -46,8 +60,10 @@ jobs:
             app/dist/*-macOS.zip
             app/dist/*.AppImage
             app/dist/*.deb
+            app/dist/*.blockmap
+            app/dist/latest*.yml
   release:
-    needs: build
+    needs: [version, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
@@ -57,13 +73,15 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
-          T="${{ github.event.inputs.tag || github.ref_name }}"
+          T="v${{ needs.version.outputs.v }}"
           ls -la out
           printf '%s\n' \
-            "**Windows** : \`AtelierKamas-…-Windows-Installation.exe\` (installateur) ou \`…-Windows-Portable.exe\` (sans installation). Au premier lancement : « Informations complémentaires » → « Exécuter quand même »." \
+            "**Windows** : \`…-Windows-Installation.exe\` (se met à jour tout seul ensuite) ou \`…-Windows-Portable.exe\`. Au premier lancement : « Informations complémentaires » → « Exécuter quand même »." \
             "" \
-            "**macOS** (Intel et Apple Silicon) : \`AtelierKamas-…-macOS.dmg\`. Appli non signée : la première fois, clic droit sur l'appli → Ouvrir (ou Réglages Système → Confidentialité et sécurité → Ouvrir quand même)." \
+            "**macOS** (Intel et Apple Silicon) : \`…-macOS.dmg\`. Appli non signée : la première fois, clic droit sur l'appli → Ouvrir." \
             "" \
-            "**Linux** : \`AtelierKamas-…-Linux.AppImage\` (\`chmod +x\` puis lancer) ou le paquet \`.deb\`." > notes.md
-          gh release view "$T" >/dev/null 2>&1 || gh release create "$T" --target "${{ github.sha }}" --title "Atelier Kamas $T" --notes-file notes.md
+            "**Linux** : \`…-Linux.AppImage\` (\`chmod +x\` puis lancer, se met à jour tout seul) ou le paquet \`.deb\`." \
+            "" \
+            "Commit : ${{ github.sha }}" > notes.md
+          gh release create "$T" --target "${{ github.sha }}" --title "Atelier Kamas $T" --notes-file notes.md
           gh release upload "$T" out/* --clobber

@@ -43,10 +43,15 @@
     paw: '<circle cx="8" cy="7" r="1.8"/><circle cx="16" cy="7" r="1.8"/><circle cx="4.8" cy="12" r="1.7"/><circle cx="19.2" cy="12" r="1.7"/><path d="M12 11c-3 0-5.5 4-5.5 6.2 0 1.6 1.3 2.3 2.7 2.3 1.1 0 1.8-.6 2.8-.6s1.7.6 2.8.6c1.4 0 2.7-.7 2.7-2.3C17.5 15 15 11 12 11z"/>',
     coins: '<ellipse cx="10" cy="7" rx="6" ry="2.6"/><path d="M4 7v4c0 1.4 2.7 2.6 6 2.6s6-1.2 6-2.6V7"/><path d="M8 15.4c.6.1 1.3.2 2 .2 3.3 0 6-1.2 6-2.6"/><ellipse cx="15" cy="16" rx="5" ry="2.2"/><path d="M10 16v2.5c0 1.2 2.2 2.2 5 2.2s5-1 5-2.2V16"/>',
     pin: '<path d="M9 3h6l-1 6 3 3H7l3-3z"/><path d="M12 12v8"/>',
+    home: '<path d="M4 11l8-7 8 7"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-5h4v5"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/>',
+    dl: '<path d="M12 4v11"/><path d="M7 10.5l5 5 5-5"/><path d="M5 20h14"/>',
   };
   const svg = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[k]}</svg>`;
 
   const PAGES = [
+    { id: "accueil", t: "Accueil", ic: "home" },
+    { id: "almanax", t: "Almanax", ic: "sun" },
     { id: "encours", t: "En cours", ic: "play" },
     { id: "metiers", t: "Plan de métier", ic: "hammer" },
     { id: "courses", t: "Liste de courses", ic: "bag" },
@@ -84,15 +89,25 @@
   setSec.className = "stack"; setSec.id = "tab-reglages"; setSec.hidden = true;
   setSec.innerHTML = `<div class="gset" id="gmSettings"></div>`;
   wrap.appendChild(setSec);
+  /* pages Accueil et Almanax */
+  const CUSTOM = ["reglages", "accueil", "almanax"];
+  for (const id of ["accueil", "almanax"]) {
+    const sec = document.createElement("section");
+    sec.className = "stack"; sec.id = "tab-" + id; sec.hidden = true;
+    sec.innerHTML = `<div id="gm-${id}"></div>`;
+    wrap.appendChild(sec);
+  }
 
   /* ---------- navigation ---------- */
   let cur = "encours";
   const pageOf = (id) => PAGES.find((p) => p.id === id) || { t: "Paramètres" };
   function go(id) {
     cur = id;
-    if (id === "reglages") {
-      document.querySelectorAll("section.stack[id^=tab-]").forEach((s) => (s.hidden = s.id !== "tab-reglages"));
-      renderSettings();
+    if (CUSTOM.includes(id)) {
+      document.querySelectorAll("section.stack[id^=tab-]").forEach((s) => (s.hidden = s.id !== "tab-" + id));
+      if (id === "reglages") renderSettings();
+      if (id === "accueil") renderHome();
+      if (id === "almanax") renderAlmanax();
     } else {
       const b = document.querySelector(`nav.tabs button[data-tab="${id}"]`);
       if (b) b.click();
@@ -112,7 +127,8 @@
     try {
       if (D && (cur === "metiers" || cur === "encours")) { const r = range(); x = `${jobName(plan.job)} · ${r.from} → ${r.to}`; }
       else if (cur === "courses") x = plan.cart && plan.cart.length ? plan.cart.map((c) => `${jobName(c.job)} ${c.from}→${c.to}`).join(" · ") : "vide";
-      else if (cur === "reglages") x = A && A.version ? "v" + A.version : "";
+      else if (cur === "reglages" || cur === "accueil") x = A && A.version ? "v" + A.version : "";
+      else if (cur === "almanax") x = almDay.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
     } catch (_) {}
     $("#gmPTx").textContent = x;
     menu.querySelectorAll("[data-go]").forEach((b) => b.classList.toggle("on", b.dataset.go === cur));
@@ -128,7 +144,7 @@
   menu.addEventListener("click", (e) => { const b = e.target.closest("[data-go]"); if (!b) return; openMenu(false); go(b.dataset.go); });
   document.addEventListener("click", (e) => { if (!menu.hidden && !e.target.closest("#gmMenu")) openMenu(false); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !menu.hidden) openMenu(false); });
-  $("#gmSet").onclick = () => go(cur === "reglages" ? "encours" : "reglages");
+  $("#gmSet").onclick = () => go(cur === "reglages" ? "accueil" : "reglages");
   $("#gmPin").onclick = () => { ui.onTop = !ui.onTop; saveUi(); applyWindow(); chrome(); toast(ui.onTop ? "Toujours au premier plan" : "Premier plan désactivé"); };
   if (A) { $("#gmMin").onclick = () => A.minimize(); $("#gmClose").onclick = () => A.close(); }
 
@@ -255,10 +271,119 @@
     markShortcutErrors();
   }
 
+  /* ---------- guilde (logo + nom, fichier web/guilde.json) ---------- */
+  let guild = { nom: "", logo: "img/guilde.png", pseudo: "Yenadiel" };
+  fetch("guilde.json").then((r) => (r.ok ? r.json() : null)).then((g) => { if (g) { guild = { ...guild, ...g }; if (cur === "accueil") renderHome(); } }).catch(() => {});
+  const logoHtml = () => `<img class="gh-logo" src="${esc(guild.logo)}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'gh-logo gh-coin',textContent:'K'}))">`;
+
+  /* ---------- Almanax (API DofusDB, via l'appli) ---------- */
+  let almDay = new Date();
+  const dayKey = (d) => d.toISOString().slice(0, 10);
+  const almCache = {};
+  async function getAlm(d) {
+    const k = dayKey(d);
+    if (almCache[k] !== undefined) return almCache[k];
+    let a = null;
+    try { a = A && A.getAlmanax ? await A.getAlmanax(new Date(k + "T12:00:00").toISOString()) : null; } catch (_) {}
+    almCache[k] = a;
+    return a;
+  }
+  function almCard(a, big) {
+    if (!a) return `<div class="alm-card"><div class="hint">Almanax indisponible (pas de connexion ?).</div></div>`;
+    const id = a.itemId && D.items[a.itemId] ? a.itemId : null;
+    const p = id ? priceOf(id) : null;
+    const ic = id ? icon(id, big ? 48 : 40) : a.img ? `<img src="${esc(a.img)}" alt="" style="width:${big ? 48 : 40}px;height:${big ? 48 : 40}px">` : "";
+    return `<div class="alm-card${big ? " alm-big" : ""}">
+      <div class="alm-bonus"><span class="lbl">Bonus du jour</span><b>${esc(a.bonus || "—")}</b>${a.desc ? `<p>${esc(a.desc)}</p>` : ""}</div>
+      <div class="alm-off"><div class="frame">${ic}</div><div style="min-width:0"><span class="lbl">Offrande${a.npc ? " · " + esc(a.npc) : ""}</span>
+        <div class="alm-it"><b class="num">${fmtN(a.qty)}×</b> ${id ? nameBtn(id) : esc(a.itemName || "?")}</div>
+        <div class="hint">${p != null ? `≈ <b>${fmtK(p * a.qty)}</b> à l'HDV (${fmtK(p)} / u)` : "prix HDV inconnu"}${id && haveOf(id) ? ` · tu en as ${fmtN(haveOf(id))}` : ""}</div></div></div>
+    </div>`;
+  }
+
+  /* ---------- page Accueil ---------- */
+  async function renderHome() {
+    const H = $("#gm-accueil");
+    let step = "";
+    try {
+      const r = range(), res = optimise(plan.job, r.from, r.to, r.xp), done = new Set(plan.done[plan.job] || []);
+      const nd = res.segs.filter((sg) => done.has(doneKey(plan.job, sg))).length;
+      step = `${jobName(plan.job)} ${r.from} → ${r.to} · ${nd}/${res.segs.length} étapes`;
+    } catch (_) {}
+    const tiles = [
+      ["encours", "play", "En cours", step || "l'étape du moment"],
+      ["metiers", "hammer", "Plan de métier", "choisir un métier et ses niveaux"],
+      ["courses", "bag", "Liste de courses", plan.cart && plan.cart.length ? plan.cart.map((c) => jobName(c.job)).join(", ") : "vide pour l'instant"],
+      ["recettes", "book", "Recettes", "coût, XP, marge"],
+      ["familier", "paw", "Familier", "nourriture la plus rentable"],
+      ["prix", "coins", "Prix HDV", "tes prix et ceux partagés"],
+    ];
+    H.innerHTML = `<div class="gh-hero">${logoHtml()}
+        <div class="gh-txt"><h1>Atelier Kamas</h1><div class="gh-by">par <b>${esc(guild.pseudo)}</b>${guild.nom ? ` · ${esc(guild.nom)}` : ""}</div><div class="hint">Dofus 3 · Dakal</div></div></div>
+      <button class="gh-alm" id="ghAlm"><div class="gh-almh">${svg("sun")}<span>Almanax du jour</span><span class="gh-more">voir →</span></div><div id="ghAlmBody"><div class="hint">Chargement…</div></div></button>
+      <div class="gh-tiles">${tiles.map(([id, ic, t, sub]) => `<button class="gh-tile" data-gh="${id}">${svg(ic)}<span class="t">${t}</span><span class="s">${esc(sub)}</span></button>`).join("")}</div>
+      <div class="gh-foot">v${esc((A && A.version) || "")} · ${sharedInfo && sharedInfo.n ? `${sharedInfo.n} prix partagés (${esc(sharedInfo.maj)})` : "prix HDV du 10/10/2026"} · <button class="linkb" data-gh="reglages">paramètres</button></div>`;
+    H.querySelectorAll("[data-gh]").forEach((b) => (b.onclick = () => go(b.dataset.gh)));
+    $("#ghAlm").onclick = (e) => { if (!e.target.closest("[data-copy]")) { almDay = new Date(); go("almanax"); } };
+    const a = await getAlm(new Date());
+    const B = $("#ghAlmBody"); if (B) B.innerHTML = almCard(a, false);
+  }
+
+  /* ---------- page Almanax ---------- */
+  async function renderAlmanax() {
+    const P = $("#gm-almanax");
+    const isToday = dayKey(almDay) === dayKey(new Date());
+    P.innerHTML = `<div class="alm-nav"><button class="nb" id="almPrev" title="Jour précédent">${svg("left")}</button>
+        <div class="alm-date"><b>${almDay.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}</b>${isToday ? "" : ` <button class="linkb" id="almToday">aujourd'hui</button>`}</div>
+        <button class="nb" id="almNext" title="Jour suivant">${svg("right")}</button></div>
+      <div id="almMain"><div class="hint">Chargement…</div></div>
+      <div class="lbl" style="margin-top:6px">Les 7 prochains jours</div><div id="almWeek" class="alm-week"></div>
+      <p class="hint" style="margin:4px 2px">Source : DofusDB. Prix de l'offrande calculé avec tes prix HDV.</p>`;
+    $("#almPrev").onclick = () => { almDay = new Date(almDay.getTime() - 864e5); renderAlmanax(); chrome(); };
+    $("#almNext").onclick = () => { almDay = new Date(almDay.getTime() + 864e5); renderAlmanax(); chrome(); };
+    const t = $("#almToday"); if (t) t.onclick = () => { almDay = new Date(); renderAlmanax(); chrome(); };
+    const shown = dayKey(almDay);
+    const a = await getAlm(almDay);
+    if (dayKey(almDay) !== shown) return;
+    $("#almMain").innerHTML = almCard(a, true);
+    const W = $("#almWeek"), rows = [];
+    for (let i = 1; i <= 7; i++) {
+      const d = new Date(almDay.getTime() + i * 864e5), x = await getAlm(d);
+      if (dayKey(almDay) !== shown || !W.isConnected) return;
+      const id = x && x.itemId && D.items[x.itemId] ? x.itemId : null, p = id ? priceOf(id) : null;
+      rows.push(`<button class="alm-row" data-d="${dayKey(d)}"><span class="d">${d.toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" })}</span>
+        <span class="ic">${id ? icon(id, 24) : ""}</span><span class="n">${x ? `${fmtN(x.qty)}× ${esc(x.itemName)}` : "—"}<small>${x ? esc(x.bonus) : ""}</small></span>
+        <span class="p num">${p != null ? fmtK(p * x.qty) : ""}</span></button>`);
+      W.innerHTML = rows.join("");
+      W.querySelectorAll("[data-d]").forEach((b) => (b.onclick = () => { almDay = new Date(b.dataset.d + "T12:00:00"); renderAlmanax(); chrome(); }));
+    }
+  }
+
+  /* ---------- mise à jour obligatoire ---------- */
+  const upd = document.createElement("div");
+  upd.id = "gmUpd"; upd.hidden = true;
+  document.body.append(upd);
+  function showUpdate(st) {
+    if (!st || !["manual", "progress", "ready"].includes(st.state)) { upd.hidden = true; return; }
+    upd.hidden = false;
+    const cur = (A && A.version) || "";
+    const body = st.state === "manual"
+      ? `<p>Télécharge et installe la nouvelle version pour continuer.${st.error ? "<br><small>(la mise à jour automatique n'a pas pu se faire)</small>" : ""}</p>
+         <button class="btn gold" id="updDl">${svg("dl")} Télécharger la version ${esc(st.version)}</button>
+         <p class="hint">Tes données sont conservées. Une fois la nouvelle version installée, relance l'appli.</p>`
+      : st.state === "progress"
+      ? `<p>Téléchargement de la version ${esc(st.version)}…</p><div class="upd-bar"><i style="width:${st.percent || 0}%"></i></div><p class="hint">${st.percent || 0} % · l'appli redémarrera toute seule.</p>`
+      : `<p>Version ${esc(st.version)} prête.</p><div class="upd-bar"><i style="width:100%"></i></div><p class="hint">Installation et redémarrage…</p><button class="btn" id="updNow">Redémarrer maintenant</button>`;
+    upd.innerHTML = `<div class="upd-card">${logoHtml()}<h2>Mise à jour obligatoire</h2><div class="hint">Tu as la v${esc(cur)} · nouvelle version : v${esc(st.version)}</div>${body}</div>`;
+    const dl = $("#updDl"); if (dl) dl.onclick = () => A.openDownload();
+    const nw = $("#updNow"); if (nw) nw.onclick = () => A.installUpdate();
+  }
+  if (A && A.onUpdate) { A.onUpdate(showUpdate); try { showUpdate(A.getUpdate()); } catch (_) {} }
+
   /* ---------- démarrage ---------- */
   applyWindow();
-  let start = "encours";
-  try { start = localStorage.getItem("atelier-tab-ov") || "encours"; } catch (_) {}
+  // l'appli s'ouvre toujours sur l'accueil
+  let start = "accueil";
   // attend que les données soient chargées pour ouvrir la page
   const boot = setInterval(() => { if (typeof D !== "undefined" && D) { clearInterval(boot); go(start); } }, 50);
   window.gmGo = go;

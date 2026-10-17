@@ -1,7 +1,7 @@
 {
   "name": "atelier-kamas",
   "productName": "Atelier Kamas",
-  "version": "2.1.5",
+  "version": "2.2.0",
   "description": "Atelier Kamas : métiers et familier au meilleur prix (Dofus 3, serveur Dakal)",
   "author": "Yenadiel",
   "homepage": "https://github.com/Yenadiel/atelier-kamas",
@@ -110,6 +110,15 @@
       "maintainer": "Yenadiel",
       "artifactName": "AtelierKamas-${version}-Linux.${ext}"
     },
-    "publish": null
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Yenadiel",
+        "repo": "atelier-kamas"
+      }
+    ]
+  },
+  "dependencies": {
+    "electron-updater": "^6.3.9"
   }
 }
