@@ -21,7 +21,7 @@ Windows peut afficher « Windows a protégé votre ordinateur » : clique « Inf
 
 **La fenêtre ne s'affiche pas :**
 1. **Icône près de l'horloge** : cherche l'icône dorée « K » à côté de l'horloge (elle est peut-être dans les icônes cachées ^). Clic droit dessus, puis **Recentrer la fenêtre**.
-2. **Pilote graphique** : dans le même menu, active **Mode sans accélération graphique**. L'appli redémarre en contournant le pilote de la carte graphique. Elle passe d'ailleurs seule dans ce mode si le processus graphique plante.
+2. **Pilote graphique** : depuis la 2.1.4, l'appli dessine en mode logiciel sous Windows, ce qui évite les fenêtres qui restent invisibles avec certains pilotes. Pour réactiver l'accélération graphique, coche **Accélération graphique** dans le même menu. Si la fenêtre ne s'affiche plus ensuite, décoche-la.
 3. **Windows 11** : vérifie que **Contrôle intelligent des applications** (Sécurité Windows → Contrôle des applications et du navigateur) ne bloque pas l'appli. Ce contrôle refuse les applis non signées, parfois sans message clair. Il faut alors le mettre sur « Désactivé ».
 4. **Antivirus tiers** (Avast, Norton, Kaspersky…) : ajoute l'appli en exception.
 5. **Journal de diagnostic** : clic droit sur l'icône, puis **Ouvrir le journal**. Le fichier est `%APPDATA%\Atelier Kamas\journal.txt`. Envoie-le avec ta remarque.

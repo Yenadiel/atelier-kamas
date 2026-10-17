@@ -28,9 +28,14 @@ function log(...a) {
 }
 process.on('uncaughtException', e => log('ERREUR', e));
 
-// ---- mode sans accélération graphique (pilotes récalcitrants) ----
+// ---- accélération graphique ----
+// L'appli n'a besoin d'aucune puissance graphique. Sous Windows, certains pilotes
+// n'affichent rien dans une fenêtre sans bordure (l'appli tourne, la fenêtre reste
+// invisible) : on dessine donc en mode logiciel par défaut. Réactivable via l'icône K.
+const gpuOnFlag = () => path.join(app.getPath('userData'), 'avec-gpu');
 const noGpuFlag = () => path.join(app.getPath('userData'), 'sans-gpu');
-const NO_GPU = process.argv.includes('--sans-gpu') || fs.existsSync(noGpuFlag());
+const NO_GPU = process.argv.includes('--sans-gpu') || fs.existsSync(noGpuFlag()) ||
+  (process.platform === 'win32' && !fs.existsSync(gpuOnFlag()) && !process.argv.includes('--avec-gpu'));
 if (NO_GPU) app.disableHardwareAcceleration();
 
 let win = null;
@@ -128,8 +133,11 @@ function createTray() {
       { label: 'Afficher Atelier Kamas', click: () => { if (!win) createWindow(); else { if (win.isMinimized()) win.restore(); win.show(); win.focus(); } } },
       { label: 'Recentrer la fenêtre', click: recenter },
       { type: 'separator' },
-      { label: 'Mode sans accélération graphique', type: 'checkbox', checked: NO_GPU, click: () => {
-          try { NO_GPU ? fs.rmSync(noGpuFlag(), { force: true }) : fs.writeFileSync(noGpuFlag(), '1'); } catch {}
+      { label: 'Accélération graphique (si la fenêtre s\'affiche bien)', type: 'checkbox', checked: !NO_GPU, click: () => {
+          try {
+            if (NO_GPU) { fs.rmSync(noGpuFlag(), { force: true }); fs.writeFileSync(gpuOnFlag(), '1'); }
+            else { fs.rmSync(gpuOnFlag(), { force: true }); fs.writeFileSync(noGpuFlag(), '1'); }
+          } catch {}
           app.relaunch(); app.exit(0);
         } },
       { label: 'Ouvrir le journal (diagnostic)', click: () => shell.openPath(logFile()) },
@@ -206,7 +214,7 @@ else {
   app.on('child-process-gone', (e, d) => {
     log('processus arrêté', d.type, d.reason, d.exitCode);
     if (d.type === 'GPU' && d.reason !== 'clean-exit' && !NO_GPU) {
-      try { fs.writeFileSync(noGpuFlag(), '1'); } catch {}
+      try { fs.rmSync(gpuOnFlag(), { force: true }); fs.writeFileSync(noGpuFlag(), '1'); } catch {}
       app.relaunch(); app.exit(0);
     }
   });
