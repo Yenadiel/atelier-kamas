@@ -36,8 +36,19 @@ function onScreen(b) {
   });
 }
 
+// Remise au premier plan : le jeu en plein écran repasse devant à chaque clic.
+// Mais si l'utilisateur va dans la barre des tâches (icônes cachées, menu Démarrer,
+// horloge…), on laisse la place aux menus de Windows quelques secondes.
+let shellUntil = 0;
+function cursorOnTaskbar() {
+  const p = screen.getCursorScreenPoint();
+  const a = screen.getDisplayNearestPoint(p).workArea;
+  return !(p.x >= a.x && p.x < a.x + a.width && p.y >= a.y && p.y < a.y + a.height);
+}
 function keepOnTop() {
-  if (!win || win.isDestroyed() || !win.isVisible() || !onTop) return;
+  if (!win || win.isDestroyed() || !win.isVisible() || win.isMinimized() || !onTop) return;
+  if (cursorOnTaskbar()) { shellUntil = Date.now() + 6000; return; }
+  if (Date.now() < shellUntil) return;
   win.setAlwaysOnTop(true, 'screen-saver', 1);
   win.moveTop();
 }
@@ -62,7 +73,8 @@ function createWindow() {
   win.loadURL('atelier://app/index.html?app');
   win.once('ready-to-show', () => win.show());
   // le jeu en plein écran reprend le dessus à chaque clic : on remet la fenêtre devant
-  win.on('blur', () => { keepOnTop(); setTimeout(keepOnTop, 150); setTimeout(keepOnTop, 600); });
+  win.on('blur', () => { if (cursorOnTaskbar()) { shellUntil = Date.now() + 6000; return; } setTimeout(keepOnTop, 150); setTimeout(keepOnTop, 600); });
+  win.on('focus', () => { shellUntil = 0; });
   win.on('moved', saveState);
   win.on('resized', saveState);
   win.on('close', saveState);
@@ -119,7 +131,7 @@ else {
     createWindow();
     // filet de sécurité : la page enregistre ses propres raccourcis au chargement
     globalShortcut.register('CommandOrControl+Shift+K', toggleWindow);
-    setInterval(keepOnTop, 1000);
+    setInterval(keepOnTop, 1500);
   });
   app.on('activate', () => { if (!win) createWindow(); else win.show(); });
   app.on('will-quit', () => globalShortcut.unregisterAll());
