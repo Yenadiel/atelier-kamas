@@ -17,6 +17,17 @@ Toutes les versions sont dans l'onglet **[Releases](../../releases)** :
 
 Windows peut afficher « Windows a protégé votre ordinateur » : clique « Informations complémentaires », puis « Exécuter quand même ». L'appli n'est pas signée par un éditeur.
 
+## En cas de souci (Windows)
+
+**La fenêtre ne s'affiche pas :**
+1. **Icône près de l'horloge** : cherche l'icône dorée « K » à côté de l'horloge (elle est peut-être dans les icônes cachées ^). Clic droit dessus, puis **Recentrer la fenêtre**.
+2. **Pilote graphique** : dans le même menu, active **Mode sans accélération graphique**. L'appli redémarre en contournant le pilote de la carte graphique. Elle passe d'ailleurs seule dans ce mode si le processus graphique plante.
+3. **Windows 11** : vérifie que **Contrôle intelligent des applications** (Sécurité Windows → Contrôle des applications et du navigateur) ne bloque pas l'appli. Ce contrôle refuse les applis non signées, parfois sans message clair. Il faut alors le mettre sur « Désactivé ».
+4. **Antivirus tiers** (Avast, Norton, Kaspersky…) : ajoute l'appli en exception.
+5. **Journal de diagnostic** : clic droit sur l'icône, puis **Ouvrir le journal**. Le fichier est `%APPDATA%\Atelier Kamas\journal.txt`. Envoie-le avec ta remarque.
+
+**Relancer l'appli alors qu'elle tourne déjà** la ramène à l'écran, recentrée si elle était hors de vue.
+
 ## L'interface
 
 - **Une seule petite fenêtre** (380 × 640 par défaut, redimensionnable), sans bordure et toujours au premier plan. Elle repasse devant Dofus dès que tu cliques dans le jeu.

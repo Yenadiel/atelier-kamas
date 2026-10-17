@@ -1,6 +1,6 @@
 // Atelier Kamas — appli de bureau (Windows, macOS, Linux)
 // Une seule petite fenêtre sans bordure, toujours au premier plan, façon compagnon de jeu.
-const { app, BrowserWindow, protocol, globalShortcut, ipcMain, shell, screen } = require('electron');
+const { app, BrowserWindow, protocol, globalShortcut, ipcMain, shell, screen, Tray, Menu, nativeImage } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
@@ -17,7 +17,24 @@ const TYPES = {
   '.css': 'text/css; charset=utf-8', '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.txt': 'text/plain; charset=utf-8'
 };
 
+// ---- journal (diagnostic) : %APPDATA%/Atelier Kamas/journal.txt ----
+const logFile = () => path.join(app.getPath('userData'), 'journal.txt');
+function log(...a) {
+  try {
+    const f = logFile();
+    if (fs.existsSync(f) && fs.statSync(f).size > 512 * 1024) fs.renameSync(f, f + '.old');
+    fs.appendFileSync(f, `[${new Date().toISOString()}] ${a.map(x => (x && x.stack) || String(x)).join(' ')}\n`);
+  } catch {}
+}
+process.on('uncaughtException', e => log('ERREUR', e));
+
+// ---- mode sans accélération graphique (pilotes récalcitrants) ----
+const noGpuFlag = () => path.join(app.getPath('userData'), 'sans-gpu');
+const NO_GPU = process.argv.includes('--sans-gpu') || fs.existsSync(noGpuFlag());
+if (NO_GPU) app.disableHardwareAcceleration();
+
 let win = null;
+let tray = null;
 let onTop = true;
 const shortcutMap = {};
 
@@ -71,7 +88,18 @@ function createWindow() {
   win.webContents.on('will-navigate', (e, url) => { if (!url.startsWith('atelier://')) { e.preventDefault(); shell.openExternal(url); } });
 
   win.loadURL('atelier://app/index.html?app');
-  win.once('ready-to-show', () => win.show());
+  // la fenêtre s'affiche dès qu'elle est prête… et dans tous les cas au bout de 4 s
+  const reveal = (why) => {
+    if (!win || win.isDestroyed() || win.isVisible()) return;
+    log('affichage de la fenêtre (' + why + ')');
+    win.show();
+  };
+  win.once('ready-to-show', () => reveal('prête'));
+  win.webContents.once('did-finish-load', () => reveal('page chargée'));
+  setTimeout(() => reveal('délai de sécurité'), 4000);
+  win.webContents.on('did-fail-load', (e, code, desc, url) => log('échec de chargement', code, desc, url));
+  win.webContents.on('render-process-gone', (e, d) => { log('page plantée', d.reason); if (d.reason !== 'clean-exit') setTimeout(() => win && !win.isDestroyed() && win.reload(), 500); });
+  win.webContents.on('console-message', (e, level, msg) => { if (level >= 3) log('page :', msg); });
   // le jeu en plein écran reprend le dessus à chaque clic : on remet la fenêtre devant
   win.on('blur', () => { if (cursorOnTaskbar()) { shellUntil = Date.now() + 6000; return; } setTimeout(keepOnTop, 150); setTimeout(keepOnTop, 600); });
   win.on('focus', () => { shellUntil = 0; });
@@ -79,6 +107,38 @@ function createWindow() {
   win.on('resized', saveState);
   win.on('close', saveState);
   win.on('closed', () => { win = null; });
+}
+
+function recenter() {
+  if (!win) return createWindow();
+  const wa = screen.getPrimaryDisplay().workArea;
+  win.setBounds({ width: 380, height: 640, x: wa.x + wa.width - 400, y: wa.y + 40 });
+  if (win.isMinimized()) win.restore();
+  win.show(); win.focus();
+  saveState();
+}
+
+function createTray() {
+  try {
+    let img = nativeImage.createFromPath(path.join(__dirname, process.platform === 'win32' ? 'icon.ico' : 'icon.png'));
+    if (process.platform !== 'win32') img = img.resize({ width: 18, height: 18 });
+    tray = new Tray(img);
+    tray.setToolTip('Atelier Kamas');
+    const menu = () => Menu.buildFromTemplate([
+      { label: 'Afficher Atelier Kamas', click: () => { if (!win) createWindow(); else { if (win.isMinimized()) win.restore(); win.show(); win.focus(); } } },
+      { label: 'Recentrer la fenêtre', click: recenter },
+      { type: 'separator' },
+      { label: 'Mode sans accélération graphique', type: 'checkbox', checked: NO_GPU, click: () => {
+          try { NO_GPU ? fs.rmSync(noGpuFlag(), { force: true }) : fs.writeFileSync(noGpuFlag(), '1'); } catch {}
+          app.relaunch(); app.exit(0);
+        } },
+      { label: 'Ouvrir le journal (diagnostic)', click: () => shell.openPath(logFile()) },
+      { type: 'separator' },
+      { label: 'Quitter', click: () => app.quit() }
+    ]);
+    tray.setContextMenu(menu());
+    tray.on('click', () => { if (!win) createWindow(); else { if (win.isMinimized()) win.restore(); win.show(); win.focus(); } });
+  } catch (e) { log('icône de notification impossible', e); }
 }
 
 function toggleWindow() {
@@ -117,7 +177,14 @@ ipcMain.handle('set-shortcuts', (e, map) => {
 
 if (!app.requestSingleInstanceLock()) { app.quit(); }
 else {
-  app.on('second-instance', () => { if (win) { if (win.isMinimized()) win.restore(); win.show(); win.focus(); } });
+  // relancer l'appli alors qu'elle tourne déjà : on ramène la fenêtre au centre de l'écran principal si besoin
+  app.on('second-instance', () => {
+    log('seconde instance : on ré-affiche la fenêtre');
+    if (!win) return createWindow();
+    if (win.isMinimized()) win.restore();
+    if (!onScreen(win.getBounds())) recenter();
+    win.show(); win.focus();
+  });
   app.whenReady().then(() => {
     protocol.handle('atelier', req => {
       let p = decodeURIComponent(new URL(req.url).pathname);
@@ -128,10 +195,20 @@ else {
       try { return new Response(fs.readFileSync(f), { headers: { 'content-type': type } }); }
       catch { return new Response('Introuvable', { status: 404 }); }
     });
+    log(`démarrage v${app.getVersion()} · ${process.platform} ${process.getSystemVersion ? process.getSystemVersion() : ''}${NO_GPU ? ' · sans accélération graphique' : ''}`);
     createWindow();
+    createTray();
     // filet de sécurité : la page enregistre ses propres raccourcis au chargement
     globalShortcut.register('CommandOrControl+Shift+K', toggleWindow);
     setInterval(keepOnTop, 1500);
+  });
+  // si le processus graphique plante, on relance automatiquement sans accélération graphique
+  app.on('child-process-gone', (e, d) => {
+    log('processus arrêté', d.type, d.reason, d.exitCode);
+    if (d.type === 'GPU' && d.reason !== 'clean-exit' && !NO_GPU) {
+      try { fs.writeFileSync(noGpuFlag(), '1'); } catch {}
+      app.relaunch(); app.exit(0);
+    }
   });
   app.on('activate', () => { if (!win) createWindow(); else win.show(); });
   app.on('will-quit', () => globalShortcut.unregisterAll());
