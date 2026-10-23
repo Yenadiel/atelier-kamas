@@ -387,6 +387,7 @@ td .it .ico{--s:28px}
       <div class="f" style="display:flex;flex-direction:column;gap:5px"><span class="lbl">Niveaux</span>
         <div class="lvlpair"><input type="number" id="lvlFrom" min="1" max="199" value="1" aria-label="Niveau actuel"><span class="arrow">→</span><input type="number" id="lvlTo" min="2" max="200" value="200" aria-label="Niveau visé"></div></div>
       <label class="f"><span class="lbl">XP déjà gagnée dans le niveau</span><input type="number" id="lvlXp" min="0" value="0" style="width:110px"></label>
+      <label class="f"><span class="lbl">Bonus XP événement (%)</span><input type="number" id="xpBonus" min="0" max="500" step="5" value="0" style="width:110px" title="Bonus d'XP métier pendant un événement : 50 = +50 % (un craft à 2 000 XP en donne 3 000)."></label>
       <div style="display:flex;flex-direction:column;gap:5px"><span class="lbl">Objectif</span>
         <div class="seg" role="group" aria-label="Objectif"><button id="modeCheap" aria-pressed="true">Le moins cher</button><button id="modeFast" aria-pressed="false">Le moins de crafts</button><button id="modeGuide" aria-pressed="false">Parcours guide</button></div></div>
       <details class="adv" style="flex:1 1 260px">
@@ -541,7 +542,9 @@ function iconByName(name,size){const ids=byName.get(norm(name));return ids?icon(
 
 /* ===== moteur ===== */
 /* correction XP : écart constaté en jeu par rapport à la formule (réglable, calibrable depuis une étape) */
-const XF=()=>1+(plan.opts.xpCorr!=null?+plan.opts.xpCorr:-6)/100;
+/* bonus XP d'événement (%), appliqué en plus de la correction */
+const XB=()=>1+(+plan.opts.xpBonus||0)/100;
+const XF=()=>(1+(plan.opts.xpCorr!=null?+plan.opts.xpCorr:-6)/100)*XB();
 /* recettes faisables : pas de recette liée à une quête ; métiers de récolte = consommables vie / énergie */
 const HARVEST=new Set([2,24,26,28,36,41]);let _vit=null,_quest=null;
 const vitSet=()=>_vit||(_vit=new Set(D.vit||[])),questSet=()=>_quest||(_quest=new Set(D.quest||[]));
@@ -829,7 +832,7 @@ function renderPlan(){
   if(vf)h=`<div class="note leaf">🍞 <b>Métier de récolte :</b> le plan n'utilise que les consommables qui rendent des PV ou de l'énergie (pains, potions, poissons, viandes). Les recettes de quête sont exclues. Réglable dans les réglages.</div>`+h;
   R.innerHTML=h;
   R.querySelectorAll("input[data-calib]").forEach(el=>el.addEventListener("change",()=>{const v=parseValue(el.value||"");if(!(v>0))return;
-    const s=res.segs[+el.dataset.calib],raw=craftXpRaw(s.k.r[2],s.k.r[3],s.from);if(!raw)return;
+    const s=res.segs[+el.dataset.calib],raw=craftXpRaw(s.k.r[2],s.k.r[3],s.from)*XB();if(!raw)return;
     const c=Math.round((v/raw-1)*1000)/10;plan.opts.xpCorr=clamp(c,-50,50);$("#xpCorr").value=plan.opts.xpCorr;savePlan();renderPlan();renderCart();
     toast(`Correction XP réglée à ${c>0?"+":""}${fmtN(c,1)} % · plan recalculé`);}));
   R.querySelectorAll("input[data-done]").forEach(cb=>cb.onchange=()=>{const set=new Set(plan.done[job]||[]);cb.checked?set.add(cb.dataset.done):set.delete(cb.dataset.done);plan.done[job]=[...set];savePlan();renderPlan();});
@@ -1377,7 +1380,7 @@ function setMode(m){plan.opts.mode=m;$("#modeFast").setAttribute("aria-pressed",
 $("#modeGuide").onclick=()=>{setMode("guide");savePlan();renderPlan();renderCart();};
 $("#modeFast").onclick=()=>{setMode("fast");savePlan();renderPlan();renderCart();};
 $("#modeCheap").onclick=()=>{setMode("cheap");savePlan();renderPlan();renderCart();};
-[["step","step",1,50],["maxGap","gap",0,199],["tax","tax",0,50],["xpCorr","xpCorr",-50,50]].forEach(([id,k,a,b])=>$("#"+id).onchange=e=>{plan.opts[k]=clamp(+e.target.value||0,a,b);e.target.value=plan.opts[k];savePlan();renderPlan();renderCart();});
+[["step","step",1,50],["maxGap","gap",0,199],["tax","tax",0,50],["xpCorr","xpCorr",-50,50],["xpBonus","xpBonus",0,500]].forEach(([id,k,a,b])=>$("#"+id).onchange=e=>{plan.opts[k]=clamp(+e.target.value||0,a,b);e.target.value=plan.opts[k];savePlan();renderPlan();renderCart();});
 $("#server").onchange=e=>{plan.opts.server=e.target.value.trim()||"Dakal";savePlan();renderPlan();};
 $("#btnBilan").onclick=renderBilan;
 $("#craftMode").onchange=e=>{plan.opts.craftMode=e.target.value;savePlan();renderAll();};
@@ -1420,7 +1423,7 @@ $("#btnWipeYes").onclick=()=>{prices={};savePrices();$("#wipeConfirm").hidden=tr
   if(!plan.opts.craftMode)plan.opts.craftMode=plan.opts.craft===false?"never":"always";if(p&&p.lots)userLots=p.lots;
   $("#rJob").innerHTML=Object.entries(D.jobs).sort((a,b)=>a[1].localeCompare(b[1],"fr")).map(([id,n])=>`<option value="${id}">${esc(n)}</option>`).join("");
   plan.done=plan.done||{};plan.guides=plan.guides||{};plan.guideInfo=plan.guideInfo||{};plan.bought=Array.isArray(plan.bought)?plan.bought:[];if(!D.jobs[plan.job])plan.job=27;
-  setMode(plan.opts.mode||"fast");$("#craftMode").value=plan.opts.craftMode||"always";$("#autoAvoid").value=String(plan.opts.autoAvoid||0);$("#optResell").checked=plan.opts.resell;$("#optNoQuest").checked=plan.opts.noQuest!==false;$("#optVitOnly").checked=plan.opts.vitOnly!==false;$("#tax").value=plan.opts.tax;$("#maxGap").value=plan.opts.gap;$("#xpCorr").value=plan.opts.xpCorr!=null?plan.opts.xpCorr:-6;$("#step").value=plan.opts.step||10;$("#server").value=plan.opts.server||"Dakal";
+  setMode(plan.opts.mode||"fast");$("#craftMode").value=plan.opts.craftMode||"always";$("#autoAvoid").value=String(plan.opts.autoAvoid||0);$("#optResell").checked=plan.opts.resell;$("#optNoQuest").checked=plan.opts.noQuest!==false;$("#optVitOnly").checked=plan.opts.vitOnly!==false;$("#tax").value=plan.opts.tax;$("#maxGap").value=plan.opts.gap;$("#xpCorr").value=plan.opts.xpCorr!=null?plan.opts.xpCorr:-6;$("#xpBonus").value=plan.opts.xpBonus||0;$("#step").value=plan.opts.step||10;$("#server").value=plan.opts.server||"Dakal";
   renderAll();
   loadSharedPrices();
 })().catch(e=>{console.error(e);$("#dataInfo").textContent="Recettes non chargées";$("#route").innerHTML='<div class="card empty">Les recettes n\'ont pas pu se charger. Recharge la page.</div>';});

@@ -65,6 +65,7 @@ Windows peut afficher « Windows a protégé votre ordinateur » : clique « Inf
   - Deux modes : « le moins cher » (programmation dynamique sur les niveaux, au kamas près) ou « le moins de crafts ».
   - Écart max de recette réglable.
   - Correction d'XP calibrable depuis une étape.
+  - Bonus XP d'événement (%) : multiplie l'XP de chaque craft et recalcule le plan pour atteindre le niveau visé.
   - Recettes de quête exclues. Les métiers de récolte se limitent aux consommables qui rendent vie ou énergie.
 - **Liste de courses**
   - Onglets « À acheter » (par objet ou par ressource), « À crafter » et « Acquis ».
@@ -201,12 +202,13 @@ Quelques choix faits pendant le relevé :
 ### XP de craft
 
 ```
-xp = floor(20 × niveauRecette × coef / 100 / (écart^1.1 / 10 + 1) × (1 + correction / 100))
+xp = floor(20 × niveauRecette × coef / 100 / (écart^1.1 / 10 + 1) × (1 + correction / 100) × (1 + bonus / 100))
 ```
 
 - **Écart** : niveau du métier moins niveau de la recette.
 - **XP par niveau** : on suppose qu'un niveau demande 20 × niveau XP.
 - **Correction** : −6 % par défaut. Les tests en jeu montraient 500 à 1500 XP manquantes en fin d'étape. On peut la régler finement en saisissant l'« XP réelle du 1ᵉʳ craft » sur une étape.
+- **Bonus** : bonus XP d'événement, 0 par défaut. Il s'applique en plus de la correction (50 % : un craft à 2 000 XP en donne 3 000).
 
 ### Recettes exclues
 
