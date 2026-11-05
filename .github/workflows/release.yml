@@ -32,7 +32,7 @@ jobs:
         include:
           - os: windows-latest
             cmd: dist:win
-          - os: macos-latest
+          - os: macos-15-intel
             cmd: dist:mac
           - os: ubuntu-latest
             cmd: dist:linux
