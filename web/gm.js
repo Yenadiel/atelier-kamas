@@ -188,6 +188,14 @@
     try { scErrors = (await A.setShortcuts(ui.shortcuts)) || []; } catch (_) { scErrors = []; }
     if (cur === "reglages") markShortcutErrors();
   }
+  // listes déroulantes : on suspend le « toujours devant » le temps du choix, sinon la liste se referme au survol
+  if (A && A.holdTop) {
+    const isSel = (t) => t && t.tagName === "SELECT";
+    document.addEventListener("mousedown", (e) => { if (isSel(e.target)) A.holdTop(true); }, true);
+    document.addEventListener("focusin", (e) => { if (isSel(e.target)) A.holdTop(true); });
+    document.addEventListener("change", (e) => { if (isSel(e.target)) setTimeout(() => A.holdTop(false), 300); }, true);
+    document.addEventListener("focusout", (e) => { if (isSel(e.target)) A.holdTop(false); });
+  }
   if (A && A.onForceOpaque) A.onForceOpaque(() => { ui.opacity = 1; saveUi(); if (cur === "reglages") renderSettings(); toast("Fenêtre remise à 100 % d'opacité"); });
   if (A && A.onShortcut) A.onShortcut((name) => {
     if (name === "prev") clickIn("#cPrev");

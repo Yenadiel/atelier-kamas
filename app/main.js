@@ -71,9 +71,13 @@ function keepOnTop() {
   if (!win || win.isDestroyed() || !win.isVisible() || win.isMinimized() || !onTop) return;
   if (cursorOnTaskbar()) { shellUntil = Date.now() + 6000; return; }
   if (Date.now() < shellUntil) return;
+  // une liste déroulante est ouverte dans l'appli : remettre la fenêtre devant la refermerait
+  if (Date.now() < holdUntil) return;
   win.setAlwaysOnTop(true, 'screen-saver', 1);
   win.moveTop();
 }
+let holdUntil = 0;
+ipcMain.on('hold-top', (e, on) => { holdUntil = on ? Date.now() + 20000 : 0; });
 
 function createWindow() {
   const wa = screen.getPrimaryDisplay().workArea;
