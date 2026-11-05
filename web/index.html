@@ -1230,7 +1230,7 @@ function renderPet(){
 
 /* ===== FAMILIER : acheter niveau 0, monter, revendre (relevé HDV) ===== */
 function renderResale(cost,missing){const el=$("#petResale");if(!el)return;
-  if(!HDV){el.innerHTML=`<h2>Revendre un familier monté</h2><p class="hint">Relevé HDV en cours de chargement…</p>`;return;}
+  if(!HDV){el.innerHTML=`<h2>Revendre un familier monté</h2><p class="hint">Le relevé HDV n'a pas pu être chargé. Ferme et relance l'appli ; si ça persiste, envoie le journal (menu de l'icône K → journal).</p>`;return;}
   const list=HDV.familiers.filter(f=>f.t===resaleType).map(f=>{const sell=f.med||null,buy=f.min||null;
     return {...f,sell,buy,gain:sell!=null&&buy!=null?sell-buy-cost:null};});
   list.sort((a,b)=>(a.gain==null)-(b.gain==null)||(b.gain||0)-(a.gain||0)||(b.v||0)-(a.v||0));
@@ -1446,7 +1446,9 @@ $("#btnWipeYes").onclick=()=>{prices={};savePrices();$("#wipeConfirm").hidden=tr
   try{const t=localStorage.getItem(TABKEY)||(OVERLAY?"encours":null);if(t)document.querySelector(`nav.tabs button[data-tab="${t}"]`)?.click();}catch(e){}
   const [data]=await Promise.all([fetch("data.json").then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}),store.init()]);
   D=data;
-  fetch("hdv.json").then(r=>r.ok?r.json():null).then(h=>{if(h){HDV=h;if(!$("#tab-familier").hidden)renderPet();}}).catch(()=>{});
+  // relevé HDV des familiers : livré dans data.json (même chargement que le reste), hdv.json en secours
+  if(D.hdv&&D.hdv.familiers)HDV=D.hdv;
+  else fetch("hdv.json?t="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(h=>{if(h&&h.familiers){HDV=h;renderPet();}}).catch(e=>console.warn("hdv.json",e));
   for(const [id,it] of Object.entries(D.items)){const k=norm(it[0]);if(!byName.has(k))byName.set(k,[]);byName.get(k).push(+id);}
   for(const r of D.recipes){(recipesByJob[r[1]]=recipesByJob[r[1]]||[]).push(r);if(!recipeByResult.has(r[0]))recipeByResult.set(r[0],r);}
   const dl=document.createElement("datalist");dl.id="resList";dl.innerHTML=[...new Set(Object.values(D.items).map(i=>i[0]))].sort((a,b)=>a.localeCompare(b,"fr")).map(n=>`<option value="${esc(n)}">`).join("");document.body.appendChild(dl);
