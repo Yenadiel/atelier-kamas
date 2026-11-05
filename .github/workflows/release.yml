@@ -37,6 +37,7 @@ jobs:
           - os: ubuntu-latest
             cmd: dist:linux
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
     defaults:
       run:
         working-directory: app
@@ -63,7 +64,9 @@ jobs:
             app/dist/*.blockmap
             app/dist/latest*.yml
   release:
+    # publie même si une plateforme a échoué (ex. pas de machine macOS disponible) : Windows et Linux ne doivent pas attendre
     needs: [version, build]
+    if: ${{ !cancelled() && needs.version.result == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
@@ -75,6 +78,7 @@ jobs:
         run: |
           T="v${{ needs.version.outputs.v }}"
           ls -la out
+          ls out/*.exe >/dev/null 2>&1 || { echo "Pas de build Windows : rien à publier"; exit 1; }
           printf '%s\n' \
             "**Windows** : \`…-Windows-Installation.exe\` (se met à jour tout seul ensuite) ou \`…-Windows-Portable.exe\`. Au premier lancement : « Informations complémentaires » → « Exécuter quand même »." \
             "" \
