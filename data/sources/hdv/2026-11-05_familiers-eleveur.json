@@ -1,0 +1,3302 @@
+{
+ "serveur": "Dakal",
+ "date": "2026-11-05",
+ "source": "enregistrement HDV de Yenadiel (familiers, montiliers, ressources éleveur), lu par OCR",
+ "notes": [
+  "prix en kamas ; offres_visibles = prix des lots affichés (1/10/100 pour les ressources)",
+  "prix_par_niveau : niveau du familier lu dans l’infobulle de l’offre survolée",
+  "marche = Cours du marché (médiane, moyenne, articles vendus) sur l’onglet sélectionné",
+  "pas encore appliqué dans l’appli"
+ ],
+ "objets": [
+  {
+   "id": 33328,
+   "nom": "Extrait d'Amour",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 1619,
+   "offres_visibles": [
+    4,
+    1779,
+    15553,
+    169998
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1206.2,
+   "alerte": null
+  },
+  {
+   "id": 33329,
+   "nom": "Extrait d'Endurance",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 2295,
+   "offres_visibles": [
+    4,
+    2500,
+    31491,
+    5000003
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1208.0,
+   "alerte": null
+  },
+  {
+   "id": 33331,
+   "nom": "Extrait d'Expérience de monture",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 892,
+   "offres_visibles": [
+    4,
+    19999,
+    49999,
+    244442
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1209.8,
+   "alerte": null
+  },
+  {
+   "id": 33330,
+   "nom": "Extrait de Maturité",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 2416,
+   "offres_visibles": [
+    4,
+    3683,
+    22993,
+    214799
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1211.0,
+   "alerte": null
+  },
+  {
+   "id": 33327,
+   "nom": "Extrait de gain de Sérénité",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 778,
+   "offres_visibles": [
+    4,
+    788,
+    6996,
+    82495
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1212.2,
+   "alerte": null
+  },
+  {
+   "id": 33326,
+   "nom": "Extrait de perte de Sérénité",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 867,
+   "offres_visibles": [
+    2,
+    4,
+    849,
+    4494,
+    111983
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1212.8,
+   "alerte": null
+  },
+  {
+   "id": 33349,
+   "nom": "Gigantesque Extrait d'Amour",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 1006,
+   "offres_visibles": [
+    2,
+    4,
+    1196,
+    9994,
+    99896
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1213.6,
+   "alerte": null
+  },
+  {
+   "id": 33351,
+   "nom": "Gigantesque Extrait de Maturité",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 5449,
+   "offres_visibles": [
+    4,
+    7179,
+    54761,
+    547910
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1219.0,
+   "alerte": null
+  },
+  {
+   "id": 33347,
+   "nom": "Gigantesque Extrait de perte de Sérénité",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 75,
+   "offres_visibles": [
+    4,
+    70,
+    754,
+    7591,
+    288000
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1220.4,
+   "alerte": null
+  },
+  {
+   "id": 33401,
+   "nom": "Gigantesque Philtre d'Amour",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 1618,
+   "offres_visibles": [
+    2997,
+    19473,
+    193995
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1221.2,
+   "alerte": null
+  },
+  {
+   "id": 33403,
+   "nom": "Gigantesque Philtre de Maturité",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 3994,
+   "offres_visibles": [
+    4,
+    5148,
+    41954,
+    399887
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1227.0,
+   "alerte": null
+  },
+  {
+   "id": 33400,
+   "nom": "Gigantesque Philtre de gain de Sérénité",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 4329,
+   "offres_visibles": [
+    2,
+    4,
+    3999,
+    74999,
+    599991
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1228.0,
+   "alerte": null
+  },
+  {
+   "id": 33454,
+   "nom": "Gigantesque Potion d'Amour",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 8974,
+   "offres_visibles": [
+    4,
+    14997,
+    89563,
+    894998
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1229.4,
+   "alerte": null
+  },
+  {
+   "id": 33457,
+   "nom": "Gigantesque Potion d'Expérience de monture",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 10545,
+   "offres_visibles": [
+    4,
+    15999,
+    124840
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1230.6,
+   "alerte": null
+  },
+  {
+   "id": 33453,
+   "nom": "Gigantesque Potion de gain de Sérénité",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 7628,
+   "offres_visibles": [
+    2,
+    4,
+    9498,
+    89999
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1232.2,
+   "alerte": null
+  },
+  {
+   "id": 33502,
+   "nom": "Gigantesque Élixir de Maturité",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 25550,
+   "offres_visibles": [
+    64998
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1239.4,
+   "alerte": null
+  },
+  {
+   "id": 33499,
+   "nom": "Gigantesque Élixir de gain de Sérénité",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 14920,
+   "offres_visibles": [],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1240.0,
+   "alerte": null
+  },
+  {
+   "id": 33498,
+   "nom": "Gigantesque Élixir de perte de Sérénité",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 19999,
+   "offres_visibles": [
+    7,
+    549999
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1241.0,
+   "alerte": null
+  },
+  {
+   "id": 33391,
+   "nom": "Grand Philtre d'Amour",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 1542,
+   "offres_visibles": [
+    1424,
+    13897,
+    129997
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1248.8,
+   "alerte": null
+  },
+  {
+   "id": 33493,
+   "nom": "Grand Élixir de Maturité",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 13153,
+   "offres_visibles": [
+    4,
+    30000,
+    250000,
+    2250000
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1256.8,
+   "alerte": null
+  },
+  {
+   "id": 33442,
+   "nom": "Grande Potion de gain de Sérénité",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 6219,
+   "offres_visibles": [
+    6665,
+    699979,
+    5000003
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1264.0,
+   "alerte": null
+  },
+  {
+   "id": 33359,
+   "nom": "Minuscule Philtre d'Amour",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 821,
+   "offres_visibles": [
+    12497,
+    60000,
+    5000003
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1270.0,
+   "alerte": null
+  },
+  {
+   "id": 33412,
+   "nom": "Minuscule Potion d'Amour",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 1195,
+   "offres_visibles": [
+    1385,
+    10800,
+    108800
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1275.4,
+   "alerte": null
+  },
+  {
+   "id": 33415,
+   "nom": "Minuscule Potion d'Expérience de monture",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 82,
+   "offres_visibles": [
+    2,
+    9899,
+    5000003
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1276.4,
+   "alerte": null
+  },
+  {
+   "id": 33476,
+   "nom": "Petit Élixir d'Expérience de monture",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 16374,
+   "offres_visibles": [
+    28775,
+    279691
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1295.0,
+   "alerte": null
+  },
+  {
+   "id": 33421,
+   "nom": "Petite Potion de gain de Sérénité",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 5675,
+   "offres_visibles": [
+    4,
+    74888,
+    5000003
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1301.6,
+   "alerte": null
+  },
+  {
+   "id": 33436,
+   "nom": "Potion d'Expérience de monture",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 70,
+   "offres_visibles": [],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1414.6,
+   "alerte": null
+  },
+  {
+   "id": 33480,
+   "nom": "Élixir de perte de Sérénité",
+   "type": "Carburant d'enclos",
+   "prix_moyen": 10929,
+   "offres_visibles": [
+    999990,
+    5000003
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1316.4,
+   "alerte": null
+  },
+  {
+   "id": 8153,
+   "nom": "Abra Kadabra",
+   "type": "Familier",
+   "prix_moyen": 1519997,
+   "offres_visibles": [
+    149994,
+    6999998
+   ],
+   "prix_par_niveau": {
+    "0": [
+     149
+    ]
+   },
+   "marche": {
+    "7j": {
+     "median": 149994,
+     "moyen": 149994
+    },
+    "30j": {
+     "median": 149999,
+     "vendus": 5
+    }
+   },
+   "video_s": 3.0,
+   "alerte": null
+  },
+  {
+   "id": 7714,
+   "nom": "Atouin",
+   "type": "Familier",
+   "prix_moyen": 197111,
+   "offres_visibles": [
+    199997,
+    199998,
+    200000,
+    210000,
+    700000,
+    2400005,
+    22500012
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 199995,
+     "moyen": 197111,
+     "vendus": 7
+    }
+   },
+   "video_s": 14.6,
+   "alerte": null
+  },
+  {
+   "id": 7706,
+   "nom": "Bilby",
+   "type": "Familier",
+   "prix_moyen": 161280,
+   "offres_visibles": [
+    67499,
+    350000,
+    449526,
+    499999,
+    530000,
+    6000000,
+    7999999
+   ],
+   "prix_par_niveau": {
+    "100": [
+     7999999
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 63743,
+     "moyen": 161280,
+     "vendus": 14
+    }
+   },
+   "video_s": 39.8,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 11971,
+   "nom": "Bisouglours",
+   "type": "Familier",
+   "prix_moyen": 3040649,
+   "offres_visibles": [
+    777777,
+    810000,
+    845000,
+    900000,
+    950000,
+    990000,
+    995000,
+    999999,
+    1199999,
+    1299999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 2939875,
+     "moyen": 3040648,
+     "vendus": 165
+    }
+   },
+   "video_s": 47.6,
+   "alerte": null
+  },
+  {
+   "id": 15133,
+   "nom": "Black Tiwabbit",
+   "type": "Familier",
+   "prix_moyen": 3449444,
+   "offres_visibles": [
+    299999,
+    324996,
+    324997,
+    330000,
+    444444,
+    498765,
+    500000,
+    600000,
+    700000,
+    900000,
+    1250000,
+    4400000,
+    35999999
+   ],
+   "prix_par_niveau": {
+    "100": [
+     4400000
+    ]
+   },
+   "marche": {},
+   "video_s": 59.4,
+   "alerte": null
+  },
+  {
+   "id": 16276,
+   "nom": "Bloalak",
+   "type": "Familier",
+   "prix_moyen": 3481792,
+   "offres_visibles": [
+    479999,
+    480000,
+    490000,
+    498999,
+    500000,
+    624999,
+    7599999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 625000,
+     "moyen": 3481792,
+     "vendus": 22
+    }
+   },
+   "video_s": 66.0,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 15978,
+   "nom": "Blokus",
+   "type": "Familier",
+   "prix_moyen": 354799,
+   "offres_visibles": [
+    354000,
+    3499999,
+    8500000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 354000,
+     "moyen": 354799,
+     "vendus": 5
+    }
+   },
+   "video_s": 75.6,
+   "alerte": null
+  },
+  {
+   "id": 11966,
+   "nom": "Blérodoudou",
+   "type": "Familier",
+   "prix_moyen": 4690874,
+   "offres_visibles": [
+    2800000,
+    4000000,
+    4400000,
+    5499999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 3971281,
+     "moyen": 4690874,
+     "vendus": 227
+    }
+   },
+   "video_s": 90.4,
+   "alerte": null
+  },
+  {
+   "id": 17023,
+   "nom": "Bontique",
+   "type": "Familier",
+   "prix_moyen": 1488817,
+   "offres_visibles": [
+    348000,
+    400000,
+    499999,
+    649251,
+    5500008
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 100.4,
+   "alerte": null
+  },
+  {
+   "id": 14433,
+   "nom": "Boskito",
+   "type": "Familier",
+   "prix_moyen": null,
+   "offres_visibles": [
+    129999,
+    139899,
+    159999,
+    185000,
+    200000,
+    220000,
+    350000,
+    600000,
+    7999999,
+    14985659,
+    17578996
+   ],
+   "prix_par_niveau": {
+    "100": [
+     7999999
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 144800,
+     "vendus": 11
+    }
+   },
+   "video_s": 108.4,
+   "alerte": null
+  },
+  {
+   "id": 9594,
+   "nom": "Bouloute du Parrain",
+   "type": "Familier",
+   "prix_moyen": 50270,
+   "offres_visibles": [
+    80000,
+    96000,
+    98500,
+    149999,
+    150000,
+    6000005
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 27999,
+     "moyen": 50270,
+     "vendus": 11
+    }
+   },
+   "video_s": 143.6,
+   "alerte": null
+  },
+  {
+   "id": 17028,
+   "nom": "Brâkarien",
+   "type": "Familier",
+   "prix_moyen": 348349,
+   "offres_visibles": [
+    399999,
+    450000,
+    484444,
+    490000,
+    500000,
+    589250,
+    4299999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 390271,
+     "moyen": 348348,
+     "vendus": 13
+    }
+   },
+   "video_s": 152.0,
+   "alerte": null
+  },
+  {
+   "id": 11955,
+   "nom": "Bulbisou",
+   "type": "Familier",
+   "prix_moyen": 4777985,
+   "offres_visibles": [
+    549998,
+    700000,
+    820000,
+    949000,
+    950000,
+    980000,
+    1450000,
+    1799999,
+    1819777
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 4156149,
+     "vendus": 227
+    }
+   },
+   "video_s": 157.6,
+   "alerte": null
+  },
+  {
+   "id": 13667,
+   "nom": "Bulbouture",
+   "type": "Familier",
+   "prix_moyen": 1413998,
+   "offres_visibles": [
+    8999888,
+    8999998
+   ],
+   "prix_par_niveau": {
+    "100": [
+     8999,
+     8999888
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 974999,
+     "moyen": 1413998
+    }
+   },
+   "video_s": 175.2,
+   "alerte": null
+  },
+  {
+   "id": 2076,
+   "nom": "Bwak d'Air",
+   "type": "Familier",
+   "prix_moyen": 501422,
+   "offres_visibles": [
+    339890,
+    340000,
+    799999,
+    850000,
+    920000,
+    999999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 280,
+     "moyen": 501421,
+     "vendus": 7
+    }
+   },
+   "video_s": 185.2,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 2074,
+   "nom": "Bwak de Feu",
+   "type": "Familier",
+   "prix_moyen": 1741397,
+   "offres_visibles": [
+    248980,
+    450000,
+    520000,
+    609999,
+    750000,
+    898888,
+    899999,
+    1000000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 1693330,
+     "vendus": 15
+    }
+   },
+   "video_s": 201.0,
+   "alerte": null
+  },
+  {
+   "id": 2077,
+   "nom": "Bwak de Terre",
+   "type": "Familier",
+   "prix_moyen": 902799,
+   "offres_visibles": [
+    89789,
+    150000,
+    154000,
+    165000,
+    199999,
+    499999,
+    500000,
+    988888,
+    3999999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 324999,
+     "moyen": 902799,
+     "vendus": 10
+    }
+   },
+   "video_s": 210.4,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 8000,
+   "nom": "Bworky",
+   "type": "Familier",
+   "prix_moyen": 1016812,
+   "offres_visibles": [
+    800000,
+    850000,
+    1400000,
+    2200000,
+    2400000,
+    2450000,
+    3000000,
+    3200000,
+    3500000,
+    4500000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 612665,
+     "vendus": 92
+    }
+   },
+   "video_s": 218.6,
+   "alerte": null
+  },
+  {
+   "id": 8561,
+   "nom": "Bébé Pandawa",
+   "type": "Familier",
+   "prix_moyen": 5300454,
+   "offres_visibles": [
+    2500000,
+    3200000,
+    3333333,
+    6888888
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 228.2,
+   "alerte": null
+  },
+  {
+   "id": 1728,
+   "nom": "Chacha",
+   "type": "Familier",
+   "prix_moyen": 63085,
+   "offres_visibles": [],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 11683,
+     "moyen": 62991,
+     "vendus": 916
+    }
+   },
+   "video_s": 239.4,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 9617,
+   "nom": "Chacha Angora",
+   "type": "Familier",
+   "prix_moyen": 2712416,
+   "offres_visibles": [
+    500000,
+    600000,
+    899999,
+    1199999,
+    1400000,
+    5000000
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 247.4,
+   "alerte": null
+  },
+  {
+   "id": 6718,
+   "nom": "Chacha Blanc",
+   "type": "Familier",
+   "prix_moyen": 7585,
+   "offres_visibles": [
+    19500
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 6990,
+     "moyen": 7585,
+     "vendus": 82
+    }
+   },
+   "video_s": 255.8,
+   "alerte": null
+  },
+  {
+   "id": 15110,
+   "nom": "Chachyène",
+   "type": "Familier",
+   "prix_moyen": 788233,
+   "offres_visibles": [
+    16987,
+    50000,
+    69999,
+    70000,
+    99999,
+    3000000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 10901,
+     "moyen": 788233,
+     "vendus": 84
+    }
+   },
+   "video_s": 264.0,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 17700,
+   "nom": "Chaperlipopette",
+   "type": "Familier",
+   "prix_moyen": 3905166,
+   "offres_visibles": [
+    700000,
+    899999,
+    999999,
+    4999999,
+    5000000,
+    5500000,
+    5800000,
+    48900000
+   ],
+   "prix_par_niveau": {
+    "100": [
+     5500000
+    ]
+   },
+   "marche": {
+    "30j": {
+     "moyen": 3905165,
+     "vendus": 28
+    }
+   },
+   "video_s": 272.2,
+   "alerte": null
+  },
+  {
+   "id": 10107,
+   "nom": "Chauffe-souris",
+   "type": "Familier",
+   "prix_moyen": 992998,
+   "offres_visibles": [
+    449994,
+    1409000
+   ],
+   "prix_par_niveau": {
+    "52": [
+     1409000
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 550000,
+     "moyen": 992997,
+     "vendus": 22
+    }
+   },
+   "video_s": 284.0,
+   "alerte": null
+  },
+  {
+   "id": 11014,
+   "nom": "Chauffe-souris Délavée",
+   "type": "Familier",
+   "prix_moyen": 1641591,
+   "offres_visibles": [
+    126899,
+    300000,
+    500000
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 290.4,
+   "alerte": null
+  },
+  {
+   "id": 10657,
+   "nom": "Chercheur d'Ogrines",
+   "type": "Familier",
+   "prix_moyen": 401248,
+   "offres_visibles": [
+    7500000
+   ],
+   "prix_par_niveau": {
+    "100": [
+     7
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 394164,
+     "moyen": 401248,
+     "vendus": 4
+    }
+   },
+   "video_s": 293.4,
+   "alerte": null
+  },
+  {
+   "id": 11012,
+   "nom": "Chienchien Tigré",
+   "type": "Familier",
+   "prix_moyen": 3237557,
+   "offres_visibles": [
+    399999,
+    449998,
+    449999,
+    450000,
+    490000,
+    499999,
+    500000,
+    735000,
+    775000,
+    780000,
+    789999,
+    790000,
+    795000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 814411,
+     "moyen": 3237557,
+     "vendus": 15
+    }
+   },
+   "video_s": 304.4,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 9623,
+   "nom": "Crocodaille",
+   "type": "Familier",
+   "prix_moyen": 1361665,
+   "offres_visibles": [
+    650000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 175000,
+     "vendus": 7
+    }
+   },
+   "video_s": 318.6,
+   "alerte": null
+  },
+  {
+   "id": 11765,
+   "nom": "Cromeugnon",
+   "type": "Familier",
+   "prix_moyen": 10992917,
+   "offres_visibles": [
+    45999989
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 9999999,
+     "moyen": 10992917,
+     "vendus": 23
+    }
+   },
+   "video_s": 329.4,
+   "alerte": null
+  },
+  {
+   "id": 7520,
+   "nom": "Croum",
+   "type": "Familier",
+   "prix_moyen": 951285,
+   "offres_visibles": [
+    658999,
+    690000,
+    889967,
+    889999,
+    1800000,
+    7500000
+   ],
+   "prix_par_niveau": {
+    "100": [
+     7500000
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 793333,
+     "moyen": 951285,
+     "vendus": 4
+    }
+   },
+   "video_s": 337.6,
+   "alerte": null
+  },
+  {
+   "id": 18626,
+   "nom": "Dauge",
+   "type": "Familier",
+   "prix_moyen": 2049999,
+   "offres_visibles": [
+    2499989
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 2049999,
+     "moyen": 2049999,
+     "vendus": 2
+    }
+   },
+   "video_s": 345.8,
+   "alerte": null
+  },
+  {
+   "id": 9624,
+   "nom": "Dragoune Noire",
+   "type": "Familier",
+   "prix_moyen": 152997,
+   "offres_visibles": [
+    120000,
+    310000,
+    350000,
+    700000,
+    4999999
+   ],
+   "prix_par_niveau": {
+    "100": [
+     4999999
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 153995,
+     "moyen": 152997,
+     "vendus": 3
+    }
+   },
+   "video_s": 364.6,
+   "alerte": null
+  },
+  {
+   "id": 7519,
+   "nom": "Dragoune Rose",
+   "type": "Familier",
+   "prix_moyen": 149999,
+   "offres_visibles": [
+    119999,
+    350000,
+    799999,
+    7999999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 149999,
+     "moyen": 149999
+    }
+   },
+   "video_s": 372.0,
+   "alerte": null
+  },
+  {
+   "id": 16122,
+   "nom": "Drakopin",
+   "type": "Familier",
+   "prix_moyen": 3519074,
+   "offres_visibles": [
+    249999,
+    329999,
+    350000,
+    500000,
+    680000,
+    850000,
+    1000000,
+    2999999,
+    3500000,
+    12000000,
+    13333333,
+    19110000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 296688,
+     "moyen": 3519074,
+     "vendus": 535
+    }
+   },
+   "video_s": 380.6,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 8154,
+   "nom": "El Scarador",
+   "type": "Familier",
+   "prix_moyen": 4392368,
+   "offres_visibles": [
+    364999,
+    400000,
+    1000000,
+    2499000,
+    14999999,
+    35000000
+   ],
+   "prix_par_niveau": {
+    "100": [
+     14999999
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 3024994,
+     "moyen": 4392368,
+     "vendus": 33
+    }
+   },
+   "video_s": 395.4,
+   "alerte": null
+  },
+  {
+   "id": 16116,
+   "nom": "Eliôme",
+   "type": "Familier",
+   "prix_moyen": 4499998,
+   "offres_visibles": [
+    1899999,
+    4444444,
+    6984666,
+    14900000,
+    14994944,
+    23999999
+   ],
+   "prix_par_niveau": {
+    "100": [
+     6984666,
+     14994944
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 4499998,
+     "moyen": 4499998,
+     "vendus": 2
+    }
+   },
+   "video_s": 406.4,
+   "alerte": null
+  },
+  {
+   "id": 14545,
+   "nom": "Fosfo",
+   "type": "Familier",
+   "prix_moyen": 639999,
+   "offres_visibles": [
+    639999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 639999,
+     "moyen": 639999,
+     "vendus": 2
+    }
+   },
+   "video_s": 419.4,
+   "alerte": null
+  },
+  {
+   "id": 7518,
+   "nom": "Fotome",
+   "type": "Familier",
+   "prix_moyen": 308666,
+   "offres_visibles": [
+    350000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 302333,
+     "moyen": 308666,
+     "vendus": 4
+    }
+   },
+   "video_s": 423.8,
+   "alerte": null
+  },
+  {
+   "id": 8693,
+   "nom": "Fëanor",
+   "type": "Familier",
+   "prix_moyen": 7210521,
+   "offres_visibles": [
+    4199999,
+    4389999,
+    4390000,
+    4399999,
+    4498000,
+    4499000,
+    4999999,
+    6499999,
+    6999111,
+    7400000,
+    7499999
+   ],
+   "prix_par_niveau": {
+    "100": [
+     6499999
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 6499998,
+     "moyen": 7210521,
+     "vendus": 23
+    }
+   },
+   "video_s": 431.8,
+   "alerte": null
+  },
+  {
+   "id": 10544,
+   "nom": "Gelutin",
+   "type": "Familier",
+   "prix_moyen": 1297576,
+   "offres_visibles": [
+    90000,
+    95000,
+    135000,
+    138547,
+    140001,
+    150000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 359599,
+     "moyen": 1297576
+    }
+   },
+   "video_s": 448.0,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 11783,
+   "nom": "Givrefoux",
+   "type": "Familier",
+   "prix_moyen": 7115067,
+   "offres_visibles": [],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 6176665,
+     "moyen": 7115066,
+     "vendus": 76
+    }
+   },
+   "video_s": 461.2,
+   "alerte": null
+  },
+  {
+   "id": 11015,
+   "nom": "Gupin",
+   "type": "Familier",
+   "prix_moyen": 396497,
+   "offres_visibles": [
+    445000,
+    7499999,
+    19999999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 371498,
+     "moyen": 396497,
+     "vendus": 4
+    }
+   },
+   "video_s": 495.4,
+   "alerte": null
+  },
+  {
+   "id": 11858,
+   "nom": "Gwo Tofu Ventripotent",
+   "type": "Familier",
+   "prix_moyen": 7168169,
+   "offres_visibles": [
+    600000,
+    620000,
+    999999,
+    1199999,
+    1400000,
+    2222222,
+    2499999,
+    3999999,
+    4999998,
+    7000000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 6475000,
+     "moyen": 7180885,
+     "vendus": 89
+    }
+   },
+   "video_s": 504.6,
+   "alerte": null
+  },
+  {
+   "id": 15469,
+   "nom": "Homlett",
+   "type": "Familier",
+   "prix_moyen": 200000,
+   "offres_visibles": [
+    500000,
+    8000000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 200000,
+     "moyen": 200000,
+     "vendus": 2
+    }
+   },
+   "video_s": 519.0,
+   "alerte": null
+  },
+  {
+   "id": 13661,
+   "nom": "Kafarce",
+   "type": "Familier",
+   "prix_moyen": 685305,
+   "offres_visibles": [],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 19999,
+     "moyen": 685305,
+     "vendus": 21
+    }
+   },
+   "video_s": 535.6,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 11950,
+   "nom": "Kanigloups",
+   "type": "Familier",
+   "prix_moyen": 4202119,
+   "offres_visibles": [],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 3847734,
+     "moyen": 4198085,
+     "vendus": 298
+    }
+   },
+   "video_s": 554.0,
+   "alerte": null
+  },
+  {
+   "id": 7911,
+   "nom": "Koalak Sanguin",
+   "type": "Familier",
+   "prix_moyen": 1067616,
+   "offres_visibles": [
+    44444,
+    45000,
+    59898,
+    90000,
+    150000,
+    190000,
+    220000,
+    350000,
+    400000,
+    599999,
+    800000,
+    1899999,
+    14999999
+   ],
+   "prix_par_niveau": {
+    "93": [
+     1899999
+    ],
+    "100": [
+     14999999
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 44868,
+     "moyen": 1067615,
+     "vendus": 43
+    }
+   },
+   "video_s": 563.0,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 13673,
+   "nom": "Kokulte",
+   "type": "Familier",
+   "prix_moyen": 7432178,
+   "offres_visibles": [
+    1200000,
+    1600000,
+    1833946,
+    1998999,
+    2000000,
+    2125000
+   ],
+   "prix_par_niveau": {
+    "72": [
+     2149999
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 7286539,
+     "moyen": 7401652,
+     "vendus": 1323
+    }
+   },
+   "video_s": 576.4,
+   "alerte": null
+  },
+  {
+   "id": 11013,
+   "nom": "Kouin-Kouin Noir",
+   "type": "Familier",
+   "prix_moyen": 400000,
+   "offres_visibles": [
+    449999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 400000,
+     "moyen": 400000
+    }
+   },
+   "video_s": 683.8,
+   "alerte": null
+  },
+  {
+   "id": 11104,
+   "nom": "Kouin-Kouin amélioré",
+   "type": "Familier",
+   "prix_moyen": 207395,
+   "offres_visibles": [
+    148999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 199998,
+     "moyen": 207395,
+     "vendus": 3
+    }
+   },
+   "video_s": 690.2,
+   "alerte": null
+  },
+  {
+   "id": 13230,
+   "nom": "Kroliméa",
+   "type": "Familier",
+   "prix_moyen": null,
+   "offres_visibles": [
+    124998,
+    800000,
+    7999999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 999998,
+     "vendus": 8
+    }
+   },
+   "video_s": 712.4,
+   "alerte": null
+  },
+  {
+   "id": 7705,
+   "nom": "Léopardo",
+   "type": "Familier",
+   "prix_moyen": 4874798,
+   "offres_visibles": [
+    1499997,
+    5000000,
+    5200000,
+    5666555,
+    5666666,
+    22999999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 4509499,
+     "moyen": 4874798
+    }
+   },
+   "video_s": 724.4,
+   "alerte": null
+  },
+  {
+   "id": 7707,
+   "nom": "Marcassin",
+   "type": "Familier",
+   "prix_moyen": 7094359,
+   "offres_visibles": [
+    490000,
+    1999999,
+    2300000,
+    6999999,
+    23777775
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 5999997,
+     "moyen": 7094359,
+     "vendus": 18
+    }
+   },
+   "video_s": 739.6,
+   "alerte": null
+  },
+  {
+   "id": 10864,
+   "nom": "Meuch",
+   "type": "Familier",
+   "prix_moyen": 549999,
+   "offres_visibles": [],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 754.6,
+   "alerte": null
+  },
+  {
+   "id": 13000,
+   "nom": "Meulourd",
+   "type": "Familier",
+   "prix_moyen": 1901331,
+   "offres_visibles": [
+    103000,
+    759999,
+    789300,
+    6000005
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 101998,
+     "vendus": 5
+    }
+   },
+   "video_s": 755.8,
+   "alerte": null
+  },
+  {
+   "id": 31885,
+   "nom": "Microsmoglob",
+   "type": "Familier",
+   "prix_moyen": 2376581,
+   "offres_visibles": [
+    184998,
+    245000,
+    347000,
+    350000,
+    399999,
+    400000,
+    1649999,
+    1850000
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 762.8,
+   "alerte": null
+  },
+  {
+   "id": 7891,
+   "nom": "Mini Wa",
+   "type": "Familier",
+   "prix_moyen": 3657828,
+   "offres_visibles": [
+    173000,
+    250000,
+    455555,
+    500000,
+    550000,
+    7000000
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 776.6,
+   "alerte": null
+  },
+  {
+   "id": 7522,
+   "nom": "Minimino",
+   "type": "Familier",
+   "prix_moyen": 394073,
+   "offres_visibles": [
+    89999,
+    8299999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 91111,
+     "moyen": 394073,
+     "vendus": 3
+    }
+   },
+   "video_s": 781.0,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 19531,
+   "nom": "Molosk",
+   "type": "Familier",
+   "prix_moyen": 347730,
+   "offres_visibles": [
+    15000,
+    40000,
+    50000,
+    100000,
+    155555,
+    199000,
+    199999,
+    200000,
+    450000,
+    650000,
+    980000,
+    1000000,
+    1000008
+   ],
+   "prix_par_niveau": {
+    "0": [
+     4997
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 36614,
+     "moyen": 347730,
+     "vendus": 47
+    }
+   },
+   "video_s": 788.0,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 16295,
+   "nom": "Moumoute",
+   "type": "Familier",
+   "prix_moyen": 422812,
+   "offres_visibles": [
+    83993,
+    5999999,
+    14999999
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 811.2,
+   "alerte": null
+  },
+  {
+   "id": 6716,
+   "nom": "Nomoon",
+   "type": "Familier",
+   "prix_moyen": null,
+   "offres_visibles": [],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "vendus": 500
+    }
+   },
+   "video_s": 828.0,
+   "alerte": null
+  },
+  {
+   "id": 7414,
+   "nom": "Petit Chacha Blanc",
+   "type": "Familier",
+   "prix_moyen": 1124554,
+   "offres_visibles": [
+    699999,
+    5234522,
+    13999999
+   ],
+   "prix_par_niveau": {
+    "100": [
+     5234522
+    ]
+   },
+   "marche": {},
+   "video_s": 840.4,
+   "alerte": null
+  },
+  {
+   "id": 7415,
+   "nom": "Petit Chienchien Noir",
+   "type": "Familier",
+   "prix_moyen": 432282,
+   "offres_visibles": [
+    244000,
+    321111,
+    459999,
+    599998,
+    850000,
+    1000000,
+    3499999,
+    4999987
+   ],
+   "prix_par_niveau": {
+    "0": [
+     244
+    ],
+    "100": [
+     4999987
+    ]
+   },
+   "marche": {},
+   "video_s": 850.2,
+   "alerte": null
+  },
+  {
+   "id": 15254,
+   "nom": "Phortiche",
+   "type": "Familier",
+   "prix_moyen": 1439732,
+   "offres_visibles": [
+    199998,
+    5600000,
+    19999999
+   ],
+   "prix_par_niveau": {
+    "80": [
+     5430000,
+     5600000
+    ]
+   },
+   "marche": {},
+   "video_s": 865.2,
+   "alerte": null
+  },
+  {
+   "id": 7708,
+   "nom": "Pioute bleu",
+   "type": "Familier",
+   "prix_moyen": 1622033,
+   "offres_visibles": [],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "moyen": 1753300,
+     "vendus": 178
+    }
+   },
+   "video_s": 887.2,
+   "alerte": null
+  },
+  {
+   "id": 7709,
+   "nom": "Pioute jaune",
+   "type": "Familier",
+   "prix_moyen": 639918,
+   "offres_visibles": [
+    279998,
+    280000,
+    281000,
+    285000,
+    286950,
+    289000,
+    290000,
+    350001,
+    469999,
+    480000,
+    499999,
+    500000,
+    550000,
+    600000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 212999,
+     "moyen": 639918,
+     "vendus": 103
+    }
+   },
+   "video_s": 891.0,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 7710,
+   "nom": "Pioute rose",
+   "type": "Familier",
+   "prix_moyen": 741047,
+   "offres_visibles": [
+    64998,
+    64999,
+    65000,
+    69999,
+    70000,
+    75000,
+    90000,
+    100000,
+    112500,
+    120000,
+    149999,
+    150000,
+    170000
+   ],
+   "prix_par_niveau": {
+    "42": [
+     100000
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 570766,
+     "moyen": 741047,
+     "vendus": 84
+    }
+   },
+   "video_s": 909.2,
+   "alerte": null
+  },
+  {
+   "id": 7711,
+   "nom": "Pioute rouge",
+   "type": "Familier",
+   "prix_moyen": 549008,
+   "offres_visibles": [
+    49998,
+    50000,
+    60000,
+    63000,
+    64000,
+    70000,
+    72999,
+    89999,
+    99999,
+    100000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 243749,
+     "moyen": 549008,
+     "vendus": 152
+    }
+   },
+   "video_s": 901.6,
+   "alerte": null
+  },
+  {
+   "id": 7712,
+   "nom": "Pioute vert",
+   "type": "Familier",
+   "prix_moyen": 661302,
+   "offres_visibles": [
+    150000,
+    179999,
+    188888,
+    199999,
+    210000,
+    230000,
+    238980,
+    248999,
+    249997,
+    249998
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 332888,
+     "moyen": 661301,
+     "vendus": 114
+    }
+   },
+   "video_s": 918.8,
+   "alerte": null
+  },
+  {
+   "id": 7713,
+   "nom": "Pioute violet",
+   "type": "Familier",
+   "prix_moyen": 118538,
+   "offres_visibles": [
+    49000,
+    50000,
+    51000,
+    55000,
+    58999,
+    60000,
+    99999,
+    115000,
+    150000,
+    300000,
+    999999,
+    1000000,
+    5000000
+   ],
+   "prix_par_niveau": {
+    "100": [
+     5000000
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 69999,
+     "moyen": 118538,
+     "vendus": 13
+    }
+   },
+   "video_s": 930.2,
+   "alerte": null
+  },
+  {
+   "id": 10866,
+   "nom": "Pykur",
+   "type": "Familier",
+   "prix_moyen": 1000000,
+   "offres_visibles": [
+    2099999,
+    2200000
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 941.2,
+   "alerte": null
+  },
+  {
+   "id": 6978,
+   "nom": "Péki",
+   "type": "Familier",
+   "prix_moyen": 1758747,
+   "offres_visibles": [
+    109992,
+    5500000
+   ],
+   "prix_par_niveau": {
+    "100": [
+     5500000
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 237500,
+     "moyen": 1758747,
+     "vendus": 4
+    }
+   },
+   "video_s": 949.6,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 10863,
+   "nom": "Raknaille",
+   "type": "Familier",
+   "prix_moyen": 370754,
+   "offres_visibles": [
+    345000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "moyen": 370754,
+     "vendus": 5
+    }
+   },
+   "video_s": 956.2,
+   "alerte": null
+  },
+  {
+   "id": 12994,
+   "nom": "Rauleur",
+   "type": "Familier",
+   "prix_moyen": 786880,
+   "offres_visibles": [
+    230899,
+    2000000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 36721,
+     "moyen": 786879,
+     "vendus": 10
+    }
+   },
+   "video_s": 960.8,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 8677,
+   "nom": "Ross",
+   "type": "Familier",
+   "prix_moyen": 3774943,
+   "offres_visibles": [
+    399999,
+    8444444,
+    14910000
+   ],
+   "prix_par_niveau": {
+    "0": [
+     399
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 2399943,
+     "moyen": 3774943,
+     "vendus": 4
+    }
+   },
+   "video_s": 967.4,
+   "alerte": null
+  },
+  {
+   "id": 12988,
+   "nom": "Scarakiri",
+   "type": "Familier",
+   "prix_moyen": 2009848,
+   "offres_visibles": [],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1000.4,
+   "alerte": null
+  },
+  {
+   "id": 12133,
+   "nom": "Serpète",
+   "type": "Familier",
+   "prix_moyen": 173995,
+   "offres_visibles": [
+    129999,
+    599999,
+    5999999
+   ],
+   "prix_par_niveau": {
+    "0": [
+     29999
+    ],
+    "100": [
+     722299
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 173995,
+     "moyen": 173995,
+     "vendus": 2
+    }
+   },
+   "video_s": 1006.2,
+   "alerte": null
+  },
+  {
+   "id": 9785,
+   "nom": "Shushu de Rushu",
+   "type": "Familier",
+   "prix_moyen": 1999999,
+   "offres_visibles": [
+    1999999
+   ],
+   "prix_par_niveau": {
+    "0": [
+     1999999
+    ]
+   },
+   "marche": {},
+   "video_s": 1012.4,
+   "alerte": null
+  },
+  {
+   "id": 15249,
+   "nom": "Snouffle",
+   "type": "Familier",
+   "prix_moyen": 1349999,
+   "offres_visibles": [
+    385987
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1018.2,
+   "alerte": null
+  },
+  {
+   "id": 12982,
+   "nom": "Sourisette",
+   "type": "Familier",
+   "prix_moyen": 1403332,
+   "offres_visibles": [
+    399997,
+    745999,
+    2300000,
+    5999999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "vendus": 5,
+     "moyen": 1403332
+    }
+   },
+   "video_s": 1022.6,
+   "alerte": null
+  },
+  {
+   "id": 16269,
+   "nom": "Tanuk",
+   "type": "Familier",
+   "prix_moyen": null,
+   "offres_visibles": [
+    125000,
+    799999,
+    989999,
+    7600000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 493499,
+     "vendus": 15
+    }
+   },
+   "video_s": 1029.6,
+   "alerte": null
+  },
+  {
+   "id": 15607,
+   "nom": "Tatouf",
+   "type": "Familier",
+   "prix_moyen": 8963760,
+   "offres_visibles": [
+    1380000,
+    9500000,
+    13000000,
+    17190000
+   ],
+   "prix_par_niveau": {
+    "0": [
+     1500000
+    ],
+    "89": [
+     9500000
+    ],
+    "100": [
+     13000000
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 9333333,
+     "moyen": 8963760,
+     "vendus": 40
+    }
+   },
+   "video_s": 1037.2,
+   "alerte": null
+  },
+  {
+   "id": 8155,
+   "nom": "Tifoux",
+   "type": "Familier",
+   "prix_moyen": 2019199,
+   "offres_visibles": [
+    399000,
+    700000,
+    799999,
+    800000,
+    900000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 499,
+     "vendus": 5,
+     "moyen": 2019199
+    }
+   },
+   "video_s": 1064.6,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 11011,
+   "nom": "Tifoux Tigré",
+   "type": "Familier",
+   "prix_moyen": 1384334,
+   "offres_visibles": [
+    99000,
+    250000,
+    270000,
+    299999,
+    450000,
+    499999,
+    500000,
+    589297,
+    1000000,
+    3999999
+   ],
+   "prix_par_niveau": {
+    "90": [
+     3999999
+    ]
+   },
+   "marche": {},
+   "video_s": 1073.2,
+   "alerte": null
+  },
+  {
+   "id": 17795,
+   "nom": "Tirubim",
+   "type": "Familier",
+   "prix_moyen": 439999,
+   "offres_visibles": [],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1080.0,
+   "alerte": null
+  },
+  {
+   "id": 17379,
+   "nom": "Titard",
+   "type": "Familier",
+   "prix_moyen": 2624999,
+   "offres_visibles": [
+    262499925
+   ],
+   "prix_par_niveau": {
+    "0": [
+     1
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 2624999,
+     "moyen": 2624999,
+     "vendus": 2
+    }
+   },
+   "video_s": 1082.0,
+   "alerte": null
+  },
+  {
+   "id": 9619,
+   "nom": "Tiwabbit Kiafin",
+   "type": "Familier",
+   "prix_moyen": 1487301,
+   "offres_visibles": [
+    599999,
+    1000000,
+    2000000,
+    3990000,
+    6999999
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 1425000,
+     "moyen": 1487301,
+     "vendus": 7
+    }
+   },
+   "video_s": 1096.8,
+   "alerte": null
+  },
+  {
+   "id": 10865,
+   "nom": "Tofoudre",
+   "type": "Familier",
+   "prix_moyen": 2993898,
+   "offres_visibles": [
+    397988,
+    500000,
+    670000,
+    699999,
+    750000,
+    799999,
+    3000000,
+    4000000,
+    7999900
+   ],
+   "prix_par_niveau": {
+    "100": [
+     7999900
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 3299631,
+     "moyen": 2993898,
+     "vendus": 533
+    }
+   },
+   "video_s": 1106.2,
+   "alerte": null
+  },
+  {
+   "id": 13679,
+   "nom": "Toukancre",
+   "type": "Familier",
+   "prix_moyen": 784331,
+   "offres_visibles": [
+    945992,
+    1000000,
+    5000006
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1130.2,
+   "alerte": null
+  },
+  {
+   "id": 10106,
+   "nom": "Vampyrette",
+   "type": "Familier",
+   "prix_moyen": 70,
+   "offres_visibles": [
+    500000
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1140.0,
+   "alerte": null
+  },
+  {
+   "id": 7703,
+   "nom": "Vilain Petit Corbac",
+   "type": "Familier",
+   "prix_moyen": 376493,
+   "offres_visibles": [
+    377987,
+    7700000
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1139.2,
+   "alerte": null
+  },
+  {
+   "id": 1748,
+   "nom": "Wabbit",
+   "type": "Familier",
+   "prix_moyen": 1464554,
+   "offres_visibles": [],
+   "prix_par_niveau": {
+    "100": [
+     8
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 10816,
+     "moyen": 1369233,
+     "vendus": 166
+    }
+   },
+   "video_s": 1152.6,
+   "alerte": "moyenne tirée par quelques ventes très chères (niveau 100, légendaire ou botting)"
+  },
+  {
+   "id": 8211,
+   "nom": "Walk",
+   "type": "Familier",
+   "prix_moyen": 2956721,
+   "offres_visibles": [],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 1899999,
+     "moyen": 2956721,
+     "vendus": 15
+    }
+   },
+   "video_s": 1164.4,
+   "alerte": null
+  },
+  {
+   "id": 7892,
+   "nom": "Willy le Relou",
+   "type": "Familier",
+   "prix_moyen": 979855,
+   "offres_visibles": [
+    107996,
+    300000,
+    345000,
+    500000,
+    600000,
+    699999,
+    700000,
+    722222,
+    4999999,
+    8499993
+   ],
+   "prix_par_niveau": {
+    "98": [
+     4999999
+    ]
+   },
+   "marche": {},
+   "video_s": 1173.8,
+   "alerte": null
+  },
+  {
+   "id": 31862,
+   "nom": "Zarbichon",
+   "type": "Familier",
+   "prix_moyen": 1399999,
+   "offres_visibles": [
+    1490990,
+    2299999
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1184.0,
+   "alerte": null
+  },
+  {
+   "id": 11777,
+   "nom": "Écumouth",
+   "type": "Familier",
+   "prix_moyen": 1600812,
+   "offres_visibles": [
+    680000,
+    700000,
+    3000000,
+    5500000,
+    20910000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 874999,
+     "vendus": 13,
+     "moyen": 1600812
+    }
+   },
+   "video_s": 1189.2,
+   "alerte": null
+  },
+  {
+   "id": 33470,
+   "nom": "Animakina Dragodinde de Génération 9",
+   "type": "Makina",
+   "prix_moyen": 1894,
+   "offres_visibles": [
+    2,
+    4,
+    5,
+    2785,
+    25996,
+    348998
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1327.8,
+   "alerte": null
+  },
+  {
+   "id": 33469,
+   "nom": "Kromakina Volkorne de Génération 9",
+   "type": "Makina",
+   "prix_moyen": 70,
+   "offres_visibles": [
+    4,
+    6997,
+    39999,
+    299997
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1359.2,
+   "alerte": null
+  },
+  {
+   "id": 33478,
+   "nom": "Optimakina Dragodinde de Génération 9",
+   "type": "Makina",
+   "prix_moyen": 34001,
+   "offres_visibles": [
+    49998,
+    539899
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1364.8,
+   "alerte": null
+  },
+  {
+   "id": 33538,
+   "nom": "Optimakina Muldo de Génération 9",
+   "type": "Makina",
+   "prix_moyen": 21716,
+   "offres_visibles": [
+    4,
+    230000,
+    5900003
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1370.0,
+   "alerte": null
+  },
+  {
+   "id": 33479,
+   "nom": "Optimakina Volkorne de Génération 9",
+   "type": "Makina",
+   "prix_moyen": 15982,
+   "offres_visibles": [
+    4,
+    15000,
+    158993,
+    1000000
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1375.4,
+   "alerte": null
+  },
+  {
+   "id": 13603,
+   "nom": "Balafreux",
+   "type": "Montilier",
+   "prix_moyen": 16753537,
+   "offres_visibles": [
+    18999997
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 18000000,
+     "moyen": 16753537,
+     "vendus": 5
+    }
+   },
+   "video_s": 30.0,
+   "alerte": null
+  },
+  {
+   "id": 19291,
+   "nom": "Bouflux",
+   "type": "Montilier",
+   "prix_moyen": 6967649,
+   "offres_visibles": [
+    4099999,
+    5999999,
+    6000000,
+    9500000,
+    10000000,
+    10555555,
+    25999999
+   ],
+   "prix_par_niveau": {
+    "91": [
+     9500000
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 6437465,
+     "moyen": 6967649,
+     "vendus": 34
+    }
+   },
+   "video_s": 116.8,
+   "alerte": null
+  },
+  {
+   "id": 19286,
+   "nom": "Bouftor",
+   "type": "Montilier",
+   "prix_moyen": 4029117,
+   "offres_visibles": [
+    1498999,
+    2000000
+   ],
+   "prix_par_niveau": {
+    "0": [
+     1
+    ],
+    "65": [
+     2000000
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 2539999,
+     "moyen": 4029117,
+     "vendus": 16
+    }
+   },
+   "video_s": 128.6,
+   "alerte": null
+  },
+  {
+   "id": 14854,
+   "nom": "Brûlih",
+   "type": "Montilier",
+   "prix_moyen": 276564,
+   "offres_visibles": [
+    229998
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 156.0,
+   "alerte": null
+  },
+  {
+   "id": 12541,
+   "nom": "Dragouf",
+   "type": "Montilier",
+   "prix_moyen": 232998,
+   "offres_visibles": [
+    94998,
+    300000,
+    550000,
+    1200000,
+    8000000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 108995,
+     "moyen": 232997,
+     "vendus": 10
+    }
+   },
+   "video_s": 353.4,
+   "alerte": null
+  },
+  {
+   "id": 29456,
+   "nom": "Gowelan",
+   "type": "Montilier",
+   "prix_moyen": 2641224,
+   "offres_visibles": [
+    1289998,
+    2500000,
+    3000000,
+    8500000
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "moyen": 2641224,
+     "vendus": 20
+    }
+   },
+   "video_s": 486.2,
+   "alerte": null
+  },
+  {
+   "id": 12963,
+   "nom": "Hurledent",
+   "type": "Montilier",
+   "prix_moyen": 2459539,
+   "offres_visibles": [],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 2016666,
+     "moyen": 2435729
+    }
+   },
+   "video_s": 527.0,
+   "alerte": null
+  },
+  {
+   "id": 29430,
+   "nom": "Koliphant Mamukil",
+   "type": "Montilier",
+   "prix_moyen": 18570922,
+   "offres_visibles": [
+    11000000,
+    11100000,
+    11200000,
+    17999999,
+    29495000,
+    30000000,
+    30999999,
+    34994944,
+    35999999,
+    41999998
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 16233163,
+     "moyen": 18570922,
+     "vendus": 65
+    }
+   },
+   "video_s": 603.2,
+   "alerte": null
+  },
+  {
+   "id": 29433,
+   "nom": "Koliphant Zenusha",
+   "type": "Montilier",
+   "prix_moyen": 20053828,
+   "offres_visibles": [
+    13999999,
+    16996997,
+    29000000,
+    30000000,
+    35999999,
+    43999998
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 17635832,
+     "moyen": 20053827,
+     "vendus": 38
+    }
+   },
+   "video_s": 607.4,
+   "alerte": null
+  },
+  {
+   "id": 29431,
+   "nom": "Koliphant de Lexandre",
+   "type": "Montilier",
+   "prix_moyen": 20407930,
+   "offres_visibles": [
+    14738998,
+    14738999,
+    14960000,
+    15399900,
+    39000000,
+    42950000
+   ],
+   "prix_par_niveau": {
+    "80": [
+     15399990
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 20573374,
+     "moyen": 20407929,
+     "vendus": 160
+    }
+   },
+   "video_s": 623.4,
+   "alerte": null
+  },
+  {
+   "id": 29432,
+   "nom": "Koliphant de Tarkaj",
+   "type": "Montilier",
+   "prix_moyen": 16902282,
+   "offres_visibles": [
+    13999999,
+    18698999,
+    48999898,
+    49899798
+   ],
+   "prix_par_niveau": {},
+   "marche": {
+    "30j": {
+     "median": 14599998,
+     "moyen": 16902282,
+     "vendus": 21
+    }
+   },
+   "video_s": 646.0,
+   "alerte": null
+  },
+  {
+   "id": 14848,
+   "nom": "Kompost",
+   "type": "Montilier",
+   "prix_moyen": 1473570,
+   "offres_visibles": [
+    438997,
+    8999999,
+    14999999,
+    25000000
+   ],
+   "prix_par_niveau": {
+    "200": [
+     8999999
+    ]
+   },
+   "marche": {},
+   "video_s": 657.4,
+   "alerte": null
+  },
+  {
+   "id": 18088,
+   "nom": "Kougnard",
+   "type": "Montilier",
+   "prix_moyen": 12376888,
+   "offres_visibles": [
+    6499999,
+    6850000,
+    6900000,
+    6999999,
+    7000000,
+    8999999,
+    9909999,
+    9999999,
+    10000000,
+    12899990
+   ],
+   "prix_par_niveau": {
+    "80": [
+     9999999
+    ],
+    "85": [
+     5000000
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 9666666,
+     "moyen": 12376887,
+     "vendus": 25
+    }
+   },
+   "video_s": 662.2,
+   "alerte": null
+  },
+  {
+   "id": 13182,
+   "nom": "Kramkram",
+   "type": "Montilier",
+   "prix_moyen": 4428037,
+   "offres_visibles": [
+    4439
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 701.4,
+   "alerte": null
+  },
+  {
+   "id": 14827,
+   "nom": "Kwaltess",
+   "type": "Montilier",
+   "prix_moyen": 3555000,
+   "offres_visibles": [
+    3555000
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 718.0,
+   "alerte": null
+  },
+  {
+   "id": 31886,
+   "nom": "Monture du Vénérable",
+   "type": "Montilier",
+   "prix_moyen": 1289864,
+   "offres_visibles": [
+    1150,
+    1499999,
+    1999999,
+    8900998,
+    14999999
+   ],
+   "prix_par_niveau": {
+    "0": [
+     1150
+    ]
+   },
+   "marche": {
+    "30j": {
+     "moyen": 1289864,
+     "vendus": 2
+    }
+   },
+   "video_s": 801.0,
+   "alerte": null
+  },
+  {
+   "id": 15243,
+   "nom": "Phorror",
+   "type": "Montilier",
+   "prix_moyen": 289229,
+   "offres_visibles": [
+    244999
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 860.2,
+   "alerte": null
+  },
+  {
+   "id": 13465,
+   "nom": "Sakochère",
+   "type": "Montilier",
+   "prix_moyen": 17975038,
+   "offres_visibles": [
+    12222222,
+    12800000,
+    12850000,
+    13700000,
+    13999999,
+    14200000,
+    14300000,
+    15299999,
+    18498999,
+    28000000,
+    35999999,
+    36999999,
+    49876542
+   ],
+   "prix_par_niveau": {
+    "80": [
+     2222222
+    ],
+    "84": [
+     14300000
+    ],
+    "100": [
+     18498999
+    ]
+   },
+   "marche": {
+    "30j": {
+     "median": 16999992,
+     "moyen": 17976876,
+     "vendus": 285
+    }
+   },
+   "video_s": 975.4,
+   "alerte": null
+  },
+  {
+   "id": 14833,
+   "nom": "Siroko",
+   "type": "Montilier",
+   "prix_moyen": 536877,
+   "offres_visibles": [
+    434998
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1016.4,
+   "alerte": null
+  },
+  {
+   "id": 25292,
+   "nom": "Teh'Niak",
+   "type": "Montilier",
+   "prix_moyen": 729448,
+   "offres_visibles": [
+    59998,
+    400000,
+    499999,
+    500000,
+    590000,
+    600000,
+    4850000,
+    11000000
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1058.0,
+   "alerte": null
+  },
+  {
+   "id": 20125,
+   "nom": "Croquette enrichie",
+   "type": "Nourriture pour familier",
+   "prix_moyen": 24968,
+   "offres_visibles": [
+    4,
+    34949,
+    359998,
+    3999998
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1382.0,
+   "alerte": null
+  },
+  {
+   "id": 27006,
+   "nom": "Croquette infusée de l'Abraknyde",
+   "type": "Nourriture pour familier",
+   "prix_moyen": 6656233,
+   "offres_visibles": [
+    1,
+    6962662
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1385.0,
+   "alerte": null
+  },
+  {
+   "id": 27010,
+   "nom": "Croquette infusée de l'Arakne",
+   "type": "Nourriture pour familier",
+   "prix_moyen": 7999999,
+   "offres_visibles": [
+    7999999
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1386.6,
+   "alerte": null
+  },
+  {
+   "id": 27002,
+   "nom": "Croquette infusée du Bwak",
+   "type": "Nourriture pour familier",
+   "prix_moyen": 5149248,
+   "offres_visibles": [
+    2,
+    7,
+    32,
+    7762961
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1390.0,
+   "alerte": null
+  },
+  {
+   "id": 27003,
+   "nom": "Croquette infusée du Chafer",
+   "type": "Nourriture pour familier",
+   "prix_moyen": 7999977,
+   "offres_visibles": [
+    1,
+    7999997
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1392.8,
+   "alerte": null
+  },
+  {
+   "id": 26999,
+   "nom": "Croquette infusée du Kanig",
+   "type": "Nourriture pour familier",
+   "prix_moyen": 7087398,
+   "offres_visibles": [
+    1,
+    7058934
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1396.0,
+   "alerte": null
+  },
+  {
+   "id": 26997,
+   "nom": "Croquette infusée du Moskito",
+   "type": "Nourriture pour familier",
+   "prix_moyen": 7215408,
+   "offres_visibles": [
+    7
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1397.8,
+   "alerte": null
+  },
+  {
+   "id": 26996,
+   "nom": "Croquette infusée du Mulou",
+   "type": "Nourriture pour familier",
+   "prix_moyen": 2500000,
+   "offres_visibles": [
+    2
+   ],
+   "prix_par_niveau": {
+    "200": [
+     2
+    ]
+   },
+   "marche": {},
+   "video_s": 1399.4,
+   "alerte": null
+  },
+  {
+   "id": 27016,
+   "nom": "Croquette infusée du Noeul",
+   "type": "Nourriture pour familier",
+   "prix_moyen": 6082313,
+   "offres_visibles": [
+    4,
+    7,
+    5850634
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1400.6,
+   "alerte": null
+  },
+  {
+   "id": 26998,
+   "nom": "Croquette infusée du Trool",
+   "type": "Nourriture pour familier",
+   "prix_moyen": 34846145,
+   "offres_visibles": [
+    4,
+    7,
+    34979988
+   ],
+   "prix_par_niveau": {},
+   "marche": {},
+   "video_s": 1403.6,
+   "alerte": null
+  }
+ ]
+}
