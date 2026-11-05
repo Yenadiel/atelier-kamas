@@ -1,1 +1,180 @@
-{"serveur":"Dakal","maj":"","prix":{}}
+{
+ "serveur": "Dakal",
+ "maj": "2026-11-05",
+ "prix": {
+  "33328": {
+   "p": 1619,
+   "d": "2026-11-05",
+   "n": "Extrait d'Amour",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33329": {
+   "p": 2295,
+   "d": "2026-11-05",
+   "n": "Extrait d'Endurance",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33331": {
+   "p": 892,
+   "d": "2026-11-05",
+   "n": "Extrait d'Expérience de monture",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33330": {
+   "p": 2416,
+   "d": "2026-11-05",
+   "n": "Extrait de Maturité",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33327": {
+   "p": 778,
+   "d": "2026-11-05",
+   "n": "Extrait de gain de Sérénité",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33326": {
+   "p": 867,
+   "d": "2026-11-05",
+   "n": "Extrait de perte de Sérénité",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33349": {
+   "p": 1006,
+   "d": "2026-11-05",
+   "n": "Gigantesque Extrait d'Amour",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33351": {
+   "p": 5449,
+   "d": "2026-11-05",
+   "n": "Gigantesque Extrait de Maturité",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33347": {
+   "p": 75,
+   "d": "2026-11-05",
+   "n": "Gigantesque Extrait de perte de Sérénité",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33401": {
+   "p": 1618,
+   "d": "2026-11-05",
+   "n": "Gigantesque Philtre d'Amour",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33403": {
+   "p": 3994,
+   "d": "2026-11-05",
+   "n": "Gigantesque Philtre de Maturité",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33400": {
+   "p": 4329,
+   "d": "2026-11-05",
+   "n": "Gigantesque Philtre de gain de Sérénité",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33454": {
+   "p": 8974,
+   "d": "2026-11-05",
+   "n": "Gigantesque Potion d'Amour",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33457": {
+   "p": 10545,
+   "d": "2026-11-05",
+   "n": "Gigantesque Potion d'Expérience de monture",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33453": {
+   "p": 7628,
+   "d": "2026-11-05",
+   "n": "Gigantesque Potion de gain de Sérénité",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33391": {
+   "p": 1542,
+   "d": "2026-11-05",
+   "n": "Grand Philtre d'Amour",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33493": {
+   "p": 13153,
+   "d": "2026-11-05",
+   "n": "Grand Élixir de Maturité",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33442": {
+   "p": 6219,
+   "d": "2026-11-05",
+   "n": "Grande Potion de gain de Sérénité",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33359": {
+   "p": 821,
+   "d": "2026-11-05",
+   "n": "Minuscule Philtre d'Amour",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33412": {
+   "p": 1195,
+   "d": "2026-11-05",
+   "n": "Minuscule Potion d'Amour",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33415": {
+   "p": 82,
+   "d": "2026-11-05",
+   "n": "Minuscule Potion d'Expérience de monture",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33476": {
+   "p": 16374,
+   "d": "2026-11-05",
+   "n": "Petit Élixir d'Expérience de monture",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33421": {
+   "p": 5675,
+   "d": "2026-11-05",
+   "n": "Petite Potion de gain de Sérénité",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33480": {
+   "p": 10929,
+   "d": "2026-11-05",
+   "n": "Élixir de perte de Sérénité",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33470": {
+   "p": 1894,
+   "d": "2026-11-05",
+   "n": "Animakina Dragodinde de Génération 9",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33469": {
+   "p": 70,
+   "d": "2026-11-05",
+   "n": "Kromakina Volkorne de Génération 9",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33478": {
+   "p": 34001,
+   "d": "2026-11-05",
+   "n": "Optimakina Dragodinde de Génération 9",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33538": {
+   "p": 21716,
+   "d": "2026-11-05",
+   "n": "Optimakina Muldo de Génération 9",
+   "par": "Yenadiel (vidéo HDV)"
+  },
+  "33479": {
+   "p": 15982,
+   "d": "2026-11-05",
+   "n": "Optimakina Volkorne de Génération 9",
+   "par": "Yenadiel (vidéo HDV)"
+  }
+ }
+}

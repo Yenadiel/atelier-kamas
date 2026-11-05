@@ -72,6 +72,8 @@ textarea{width:100%;min-height:150px;font-family:var(--f-num);font-size:.82rem;r
 .pill.gold{background:var(--gold-soft);color:var(--ink)}
 .pill.leaf{background:var(--leaf-soft);color:var(--leaf)}
 .pill.warn{background:var(--warn-soft);color:var(--warn)}
+.tblwrap{overflow-x:auto;margin:0 -4px}.tbl{width:100%;border-collapse:collapse;font-size:.88rem}.tbl th{text-align:left;font-size:.75rem;color:var(--muted);font-weight:700;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:middle}.tbl .nm{display:flex;align-items:center;gap:6px;min-width:160px}.tbl th.num,.tbl td.num{text-align:right;white-space:nowrap}
 .num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
 .toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:800;font-size:.9rem;z-index:40;box-shadow:var(--shadow)}
 
@@ -445,6 +447,7 @@ td .it .ico{--s:28px}
     <div class="card pad stack" id="petRank"></div>
     <aside class="purse card pad stack" id="petPurse"></aside>
   </div>
+  <div class="card pad stack" id="petResale"></div>
 </section>
 
 <!-- =========== PRIX =========== -->
@@ -528,7 +531,7 @@ function setSave(s){$("#saveState").innerHTML={ok:'<span class="dot ok"></span>S
 let D=null,byName=new Map(),recipesByJob={},recipeByResult=new Map();
 let prices={};
 let userLots={};
-let pet={foods:{},cur:0,lvl:100,target:179591,croq:25000};
+let pet={foods:{},cur:0,lvl:100,target:179591,croq:25000};let HDV=null,resaleAll=false,resaleType="F";
 let plan={job:27,levels:{},opts:{mode:"cheap",v13:1,craftMode:"always",resell:false,tax:0,gap:20,step:10,server:"Dakal"},cart:[],done:{},bought:[],stock:{},cartFilter:"all",guides:{},guideInfo:{}};
 const PET_TABLE=[0,1,2,3,5,7,9,11,13,15,18,21,24,28,32,37,42,48,55,62,70,79,89,101,114,128,144,162,182,204,228,255,285,318,355,396,441,491,546,607,675,750,832,923,1023,1134,1256,1391,1539,1702,1882,2080,2298,2537,2800,3089,3407,3756,4140,4561,5023,5530,6087,6698,7368,8102,8907,9789,10755,11814,12974,14244,15634,17156,18822,20645,22640,24822,27208,29818,32672,35792,39202,42929,47002,51452,56314,61625,67426,73761,80678,88230,96475,105475,115298,126018,137715,150478,164402,179591];
 const JOB_ICON={2:"Bois de Frêne",11:"Épée de Boisaille",13:"Arc de Boisaille",15:"Bottes de l'Aventurier",16:"Anneau de l'Aventurier",24:"Fer",26:"Potion de Mini Soin",27:"Coiffe de l'Aventurier",28:"Blé",36:"Goujon",41:"Viande Hachée",60:"Bouclier de l'Aventurier",65:"Clef du Donjon des Bworks",79:"Filet de capture"};
@@ -1169,8 +1172,9 @@ function renderPet(){
   // ration réaliste : on répartit l'XP sur plusieurs aliments, chacun plafonné à une quantité trouvable à l'HDV
   const cap=pet.cap===0?Infinity:(+pet.cap||200);
   const pool=rows.filter(r=>r.cpx!=null&&!(r.id!=null&&avoidWhy(r.id))).sort((a,b)=>a.cpx-b.cpx);
-  const ration=[];{let left=need;for(const r of pool){if(left<=0)break;const q=Math.min(cap,Math.ceil(left/r.xp));if(q<=0)continue;ration.push({r,q,k:q*r.p});left-=q*r.xp;}
-    ration.left=Math.max(0,left);}
+  const rationFor=n=>{const out=[];let left=n;for(const r of pool){if(left<=0)break;const q=Math.min(cap,Math.ceil(left/r.xp));if(q<=0)continue;out.push({r,q,k:q*r.p});left-=q*r.xp;}out.left=Math.max(0,left);return out;};
+  const ration=rationFor(need);
+  const full=rationFor(PET_TABLE[99]||179591),fullCost=full.reduce((s,x)=>s+x.k,0);
   const rationCost=ration.reduce((s,x)=>s+x.k,0);
   if(petQ)rows=rows.filter(r=>norm(r.n).includes(petQ));
   rows.forEach(r=>r.av=r.id!=null&&!!avoidWhy(r.id));
@@ -1207,6 +1211,7 @@ function renderPet(){
      ${ration.map(x=>`<div class="row spread" style="gap:6px;font-size:.85rem"><span style="min-width:0;display:flex;gap:6px;align-items:center">${x.r.id!=null?icon(x.r.id,24):""}<b class="num">${fmtN(x.q)}×</b> ${x.r.id!=null?nameBtn(x.r.id):esc(x.r.n)}</span><span class="num">${fmtK(x.k)}</span></div>`).join("")}
      ${ration.left>0?`<p class="hint" style="color:var(--warn)">Il manque encore ${fmtN(ration.left)} XP avec ce plafond : augmente la quantité max ou ajoute des aliments.</p>`:""}</div>
      <p class="hint">Les quantités sont plafonnées pour rester trouvables à l'HDV. Compare le total avec le prix d'un familier déjà niveau 100.</p>`:""}`;
+  renderResale(fullCost,full.left);
   $("#petSearch").oninput=e=>{petQ=norm(e.target.value);petShow=40;const pos=e.target.selectionStart;renderPet();const el=$("#petSearch");el.focus();try{el.setSelectionRange(pos,pos);}catch(_){}};
   const pm=$("#petMore");if(pm)pm.onclick=()=>{petShow+=40;renderPet();};
   $("#btnPetImport").onclick=()=>{const rows=analysePet($("#petImport").value);
@@ -1222,6 +1227,25 @@ function renderPet(){
   $("#petCap").onchange=e=>{pet.cap=+e.target.value;savePet();renderPet();};
   $("#petLvl").onchange=e=>{const l=clamp(+e.target.value||100,2,100);pet.lvl=l;pet.target=PET_TABLE[l-1];savePet();renderPet();};
   [["petCur","cur"],["petTarget","target"],["croqPrice","croq"]].forEach(([id,k])=>$("#"+id).onchange=e=>{pet[k]=Math.max(0,+e.target.value||0);savePet();renderPet();});}
+
+/* ===== FAMILIER : acheter niveau 0, monter, revendre (relevé HDV) ===== */
+function renderResale(cost,missing){const el=$("#petResale");if(!el)return;
+  if(!HDV){el.innerHTML=`<h2>Revendre un familier monté</h2><p class="hint">Relevé HDV en cours de chargement…</p>`;return;}
+  const list=HDV.familiers.filter(f=>f.t===resaleType).map(f=>{const sell=f.med||null,buy=f.min||null;
+    return {...f,sell,buy,gain:sell!=null&&buy!=null?sell-buy-cost:null};});
+  list.sort((a,b)=>(a.gain==null)-(b.gain==null)||(b.gain||0)-(a.gain||0)||(b.v||0)-(a.v||0));
+  const shown=resaleAll?list:list.slice(0,15);
+  el.innerHTML=`<div class="row spread"><h2>Revendre un ${resaleType==="F"?"familier":"montilier"} monté</h2>
+    <div class="seg" role="group"><button data-rt="F" aria-pressed="${resaleType==="F"}">Familiers</button><button data-rt="M" aria-pressed="${resaleType==="M"}">Montiliers</button></div></div>
+  <p class="hint">Relevé HDV Dakal du ${HDV.date.split("-").reverse().join("/")} (ta vidéo). Gain estimé = prix de vente médian sur 30 jours − offre la moins chère en vente − nourriture jusqu'au niveau 100 avec ta ration réaliste (<b class="gold">${fmtK(cost)}</b>${missing>0?`, il manque ${fmtN(missing)} XP avec ton plafond`:""}). La médiane écarte les ventes extrêmes ; ⚠ signale une moyenne tirée vers le haut par quelques ventes très chères (niveau 100, légendaire ou botting).${resaleType==="M"?" Pour les montiliers, l'XP de montée peut différer : le gain est indicatif.":""}</p>
+  <div class="tblwrap"><table class="tbl"><thead><tr><th>${resaleType==="F"?"Familier":"Montilier"}</th><th class="num">Achat (offre min.)</th><th class="num">Vendu médian 30 j</th><th class="num">Ventes 30 j</th><th class="num">Annonce niv. 100</th><th class="num">Gain estimé</th></tr></thead>
+  <tbody>${shown.map(f=>`<tr><td><span class="nm">${f.id&&D.items[f.id]?icon(f.id,24):""}<b>${esc(f.n)}</b>${f.al?'<span class="pill warn" title="Moyenne '+fmtK(f.moy)+' bien au-dessus de la médiane">⚠</span>':""}</span></td>
+    <td class="num">${f.buy?fmtK(f.buy):"—"}</td><td class="num">${f.sell?fmtK(f.sell):f.moy?`<span class="meta">moy. ${fmtK(f.moy)}</span>`:"—"}</td><td class="num">${f.v!=null?fmtN(f.v):"—"}</td>
+    <td class="num">${f.l100?fmtK(f.l100):"—"}</td><td class="num"><b style="color:${f.gain==null?"inherit":f.gain>0?"var(--leaf)":"var(--warn)"}">${f.gain==null?"—":(f.gain>0?"+":"")+fmtK(f.gain)}</b></td></tr>`).join("")}</tbody></table></div>
+  ${list.length>15?`<button class="btn" id="resaleMore">${resaleAll?"Afficher les 15 meilleurs":`Afficher les ${list.length}`}</button>`:""}
+  <p class="hint">Les prix « niv. 100 » sont des annonces, pas des ventes. Vérifie toujours le niveau dans l'infobulle avant d'acheter : l'offre la moins chère n'est pas forcément niveau 0.</p>`;
+  el.querySelectorAll("[data-rt]").forEach(b=>b.onclick=()=>{resaleType=b.dataset.rt;resaleAll=false;renderPet();});
+  const m=$("#resaleMore");if(m)m.onclick=()=>{resaleAll=!resaleAll;renderPet();};}
 
 /* ===== FAMILIER : import de tableaux d'XP ===== */
 function analysePet(text){
@@ -1422,6 +1446,7 @@ $("#btnWipeYes").onclick=()=>{prices={};savePrices();$("#wipeConfirm").hidden=tr
   try{const t=localStorage.getItem(TABKEY)||(OVERLAY?"encours":null);if(t)document.querySelector(`nav.tabs button[data-tab="${t}"]`)?.click();}catch(e){}
   const [data]=await Promise.all([fetch("data.json").then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}),store.init()]);
   D=data;
+  fetch("hdv.json").then(r=>r.ok?r.json():null).then(h=>{if(h){HDV=h;if(!$("#tab-familier").hidden)renderPet();}}).catch(()=>{});
   for(const [id,it] of Object.entries(D.items)){const k=norm(it[0]);if(!byName.has(k))byName.set(k,[]);byName.get(k).push(+id);}
   for(const r of D.recipes){(recipesByJob[r[1]]=recipesByJob[r[1]]||[]).push(r);if(!recipeByResult.has(r[0]))recipeByResult.set(r[0],r);}
   const dl=document.createElement("datalist");dl.id="resList";dl.innerHTML=[...new Set(Object.values(D.items).map(i=>i[0]))].sort((a,b)=>a.localeCompare(b,"fr")).map(n=>`<option value="${esc(n)}">`).join("");document.body.appendChild(dl);
