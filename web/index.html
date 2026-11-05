@@ -1166,13 +1166,19 @@ function renderPet(){
   let rows=[...map.values()].map(r=>{const p=prices[r.k]?prices[r.k].p:(r.id!=null?priceOf(r.id):null);return {...r,p,cpx:p!=null&&r.xp>0?p/r.xp:null};});
   rows.push({k:null,n:"Croquette enrichie",xp:500,p:+pet.croq||null,cpx:pet.croq?pet.croq/500:null,src:"jeu"});
   const nKnown=rows.filter(r=>r.cpx!=null).length;
+  // ration réaliste : on répartit l'XP sur plusieurs aliments, chacun plafonné à une quantité trouvable à l'HDV
+  const cap=pet.cap===0?Infinity:(+pet.cap||200);
+  const pool=rows.filter(r=>r.cpx!=null&&!(r.id!=null&&avoidWhy(r.id))).sort((a,b)=>a.cpx-b.cpx);
+  const ration=[];{let left=need;for(const r of pool){if(left<=0)break;const q=Math.min(cap,Math.ceil(left/r.xp));if(q<=0)continue;ration.push({r,q,k:q*r.p});left-=q*r.xp;}
+    ration.left=Math.max(0,left);}
+  const rationCost=ration.reduce((s,x)=>s+x.k,0);
   if(petQ)rows=rows.filter(r=>norm(r.n).includes(petQ));
   rows.forEach(r=>r.av=r.id!=null&&!!avoidWhy(r.id));
   rows.sort((a,b)=>(a.cpx==null)-(b.cpx==null)||a.av-b.av||a.cpx-b.cpx);
   const best=rows.find(r=>r.cpx!=null&&!r.av),croqRank=rows.findIndex(r=>r.k===null)+1;
   $("#petRank").innerHTML=`<div class="row spread"><h2>Meilleure nourriture</h2><input id="petSearch" type="search" placeholder="Rechercher une ressource…" value="${esc(petQ)}" aria-label="Rechercher une ressource"></div>
   <p class="hint">${fmtN(nKnown)} ressources classées par kamas par XP avec tes prix Dakal. XP par ressource : ton tableur (${fmtN(Object.keys(D.petsrc||{}).length)} ressources mesurées par lot de 1 000), complété par DofusTool, et tes propres saisies en priorité. ${croqRank>0&&!petQ?`La croquette enrichie arrive ${croqRank===1?"1ʳᵉ":croqRank+"ᵉ"}.`:""} Avant d'acheter en masse, vérifie l'XP de ton choix dans la fenêtre « Nourrir ».</p>
-  <div class="rank">${rows.slice(0,petShow).map((r,i)=>{const q=r.xp>0?Math.ceil(need/r.xp):null;return `<div class="food${r===best?" best":""}"><span class="pos">${r.cpx==null?"·":i+1}</span><div class="frame">${r.id!=null?icon(r.id,40):iconByName(r.n,40)}</div>
+  <div class="rank">${rows.slice(0,petShow).map((r,i)=>{const q=r.xp>0?Math.min(cap,Math.ceil(need/r.xp)):null;return `<div class="food${r===best?" best":""}"><span class="pos">${r.cpx==null?"·":i+1}</span><div class="frame">${r.id!=null?icon(r.id,40):iconByName(r.n,40)}</div>
     <div style="min-width:0"><b>${esc(r.n)}</b><div class="meta">${r.av?'<span class="pill warn">⛔ contournée</span> ':""}${fmtN(r.xp,4)} XP / unité${q!=null?` · ${fmtN(q)} à acheter`:""}${r.mine?' · <span class="pill">ma valeur</span>':r.src==="DofusTool"?' · <span class="pill">DofusTool</span>':""}</div></div>
     <div class="pr">${r.k?`<input class="price${r.p==null?" missing":""}${!prices[r.k]&&r.p!=null?" ref":""}" data-petprice="${esc(r.k)}" inputmode="decimal" placeholder="prix ?" value="${r.p==null?"":Math.round(r.p)}" aria-label="Prix de ${esc(r.n)}">`:`<span class="num">${fmtN(r.p)}</span>`}</div>
     <div class="kx"><b>${r.cpx==null?"—":fmtN(r.cpx,2)}</b><div class="meta">${r.cpx==null?"":fmtK(q*r.p)+" au total"}</div></div>
@@ -1195,8 +1201,12 @@ function renderPet(){
    <div class="row"><label class="f"><span class="lbl">Niveau visé</span><input type="number" id="petLvl" min="2" max="100" value="${pet.lvl}"></label><label class="f" style="flex:1"><span class="lbl">XP à atteindre</span><input type="number" id="petTarget" min="1" value="${pet.target}" style="width:100%"></label></div>
    <label class="f"><span class="lbl">Prix d'une croquette enrichie</span><input type="number" id="croqPrice" min="0" value="${pet.croq}" style="width:100%"></label>
    <div class="meter leaf"><i style="width:${pet.target?Math.min(100,Math.round(100*pet.cur/pet.target)):0}%"></i></div>
-   <div class="big"><div><b>${fmtN(need)}</b><span class="lbl">XP restante</span></div><div><b class="gold">${best?fmtK(Math.ceil(need/best.xp)*best.p):"?"}</b><span class="lbl">kamas au mieux</span></div></div>
-   ${best?`<p class="hint">Avec ${esc(best.n)} : ${fmtN(Math.ceil(need/best.xp))} unités. Compare avec le prix d'un familier déjà niveau 100 à l'HDV.</p>`:""}`;
+   <div class="big"><div><b>${fmtN(need)}</b><span class="lbl">XP restante</span></div><div><b class="gold">${ration.length?fmtK(rationCost):"?"}</b><span class="lbl">kamas (ration réaliste)</span></div></div>
+   <label class="f"><span class="lbl">Quantité max par ressource</span><select id="petCap">${[[50,"50"],[100,"100"],[200,"200 (conseillé)"],[500,"500"],[1000,"1 000"],[0,"sans limite"]].map(([v,t])=>`<option value="${v}" ${(pet.cap===undefined?200:pet.cap)===v?"selected":""}>${t}</option>`).join("")}</select></label>
+   ${ration.length?`<div class="stack" style="gap:4px"><div class="lbl">Ration réaliste · ${ration.length} aliment${ration.length>1?"s":""}</div>
+     ${ration.map(x=>`<div class="row spread" style="gap:6px;font-size:.85rem"><span style="min-width:0;display:flex;gap:6px;align-items:center">${x.r.id!=null?icon(x.r.id,24):""}<b class="num">${fmtN(x.q)}×</b> ${x.r.id!=null?nameBtn(x.r.id):esc(x.r.n)}</span><span class="num">${fmtK(x.k)}</span></div>`).join("")}
+     ${ration.left>0?`<p class="hint" style="color:var(--warn)">Il manque encore ${fmtN(ration.left)} XP avec ce plafond : augmente la quantité max ou ajoute des aliments.</p>`:""}</div>
+     <p class="hint">Les quantités sont plafonnées pour rester trouvables à l'HDV. Compare le total avec le prix d'un familier déjà niveau 100.</p>`:""}`;
   $("#petSearch").oninput=e=>{petQ=norm(e.target.value);petShow=40;const pos=e.target.selectionStart;renderPet();const el=$("#petSearch");el.focus();try{el.setSelectionRange(pos,pos);}catch(_){}};
   const pm=$("#petMore");if(pm)pm.onclick=()=>{petShow+=40;renderPet();};
   $("#btnPetImport").onclick=()=>{const rows=analysePet($("#petImport").value);
@@ -1209,6 +1219,7 @@ function renderPet(){
   $("#petRank").querySelectorAll("input[data-petprice]").forEach(el=>el.addEventListener("change",()=>{const k=el.dataset.petprice,raw=el.value.trim();
     if(!raw)delete prices[k];else{const v=parseValue(raw);if(!isFinite(v))return;prices[k]={n:(pet.foods[k]&&pet.foods[k].n)||(byName.get(k)?itName(byName.get(k)[0]):k),p:v,d:today(),s:"Moi"};}savePrices();renderPricesTab();renderPet();}));
   $("#petRank").querySelectorAll("[data-petdel]").forEach(b=>b.onclick=()=>{delete pet.foods[b.dataset.petdel];savePet();renderPet();});
+  $("#petCap").onchange=e=>{pet.cap=+e.target.value;savePet();renderPet();};
   $("#petLvl").onchange=e=>{const l=clamp(+e.target.value||100,2,100);pet.lvl=l;pet.target=PET_TABLE[l-1];savePet();renderPet();};
   [["petCur","cur"],["petTarget","target"],["croqPrice","croq"]].forEach(([id,k])=>$("#"+id).onchange=e=>{pet[k]=Math.max(0,+e.target.value||0);savePet();renderPet();});}
 
