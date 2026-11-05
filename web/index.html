@@ -1206,7 +1206,7 @@ function renderPet(){
    <label class="f"><span class="lbl">Prix d'une croquette enrichie</span><input type="number" id="croqPrice" min="0" value="${pet.croq}" style="width:100%"></label>
    <div class="meter leaf"><i style="width:${pet.target?Math.min(100,Math.round(100*pet.cur/pet.target)):0}%"></i></div>
    <div class="big"><div><b>${fmtN(need)}</b><span class="lbl">XP restante</span></div><div><b class="gold">${ration.length?fmtK(rationCost):"?"}</b><span class="lbl">kamas (ration réaliste)</span></div></div>
-   <label class="f"><span class="lbl">Quantité max par ressource</span><select id="petCap">${[[50,"50"],[100,"100"],[200,"200 (conseillé)"],[500,"500"],[1000,"1 000"],[0,"sans limite"]].map(([v,t])=>`<option value="${v}" ${(pet.cap===undefined?200:pet.cap)===v?"selected":""}>${t}</option>`).join("")}</select></label>
+   <div class="f"><span class="lbl">Quantité max par ressource (200 conseillé)</span><div class="seg" role="group" id="petCap" style="flex-wrap:wrap">${[[50,"50"],[100,"100"],[200,"200"],[500,"500"],[1000,"1 000"],[0,"∞"]].map(([v,t])=>`<button data-cap="${v}" aria-pressed="${(pet.cap===undefined?200:pet.cap)===v}" title="${v?v+" max par ressource":"sans limite"}">${t}</button>`).join("")}</div></div>
    ${ration.length?`<div class="stack" style="gap:4px"><div class="lbl">Ration réaliste · ${ration.length} aliment${ration.length>1?"s":""}</div>
      ${ration.map(x=>`<div class="row spread" style="gap:6px;font-size:.85rem"><span style="min-width:0;display:flex;gap:6px;align-items:center">${x.r.id!=null?icon(x.r.id,24):""}<b class="num">${fmtN(x.q)}×</b> ${x.r.id!=null?nameBtn(x.r.id):esc(x.r.n)}</span><span class="num">${fmtK(x.k)}</span></div>`).join("")}
      ${ration.left>0?`<p class="hint" style="color:var(--warn)">Il manque encore ${fmtN(ration.left)} XP avec ce plafond : augmente la quantité max ou ajoute des aliments.</p>`:""}</div>
@@ -1224,7 +1224,7 @@ function renderPet(){
   $("#petRank").querySelectorAll("input[data-petprice]").forEach(el=>el.addEventListener("change",()=>{const k=el.dataset.petprice,raw=el.value.trim();
     if(!raw)delete prices[k];else{const v=parseValue(raw);if(!isFinite(v))return;prices[k]={n:(pet.foods[k]&&pet.foods[k].n)||(byName.get(k)?itName(byName.get(k)[0]):k),p:v,d:today(),s:"Moi"};}savePrices();renderPricesTab();renderPet();}));
   $("#petRank").querySelectorAll("[data-petdel]").forEach(b=>b.onclick=()=>{delete pet.foods[b.dataset.petdel];savePet();renderPet();});
-  $("#petCap").onchange=e=>{pet.cap=+e.target.value;savePet();renderPet();};
+  $("#petCap").querySelectorAll("[data-cap]").forEach(b=>b.onclick=()=>{pet.cap=+b.dataset.cap;savePet();renderPet();});
   $("#petLvl").onchange=e=>{const l=clamp(+e.target.value||100,2,100);pet.lvl=l;pet.target=PET_TABLE[l-1];savePet();renderPet();};
   [["petCur","cur"],["petTarget","target"],["croqPrice","croq"]].forEach(([id,k])=>$("#"+id).onchange=e=>{pet[k]=Math.max(0,+e.target.value||0);savePet();renderPet();});}
 

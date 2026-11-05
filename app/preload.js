@@ -10,6 +10,8 @@ contextBridge.exposeInMainWorld('atelier', {
   close: () => ipcRenderer.send('win-close'),
   setOpacity: (v) => ipcRenderer.send('win-opacity', v),
   setOnTop: (v) => ipcRenderer.send('win-on-top', !!v),
+  // met en pause le « toujours devant » pendant qu'une liste déroulante est ouverte (sinon elle se referme)
+  holdTop: (on) => ipcRenderer.send('hold-top', !!on),
   holdTop: (on) => ipcRenderer.send('hold-top', !!on),
   setZoom: (z) => webFrame.setZoomFactor(Math.max(0.7, Math.min(1.5, +z || 1))),
   setShortcuts: (map) => ipcRenderer.invoke('set-shortcuts', map),
