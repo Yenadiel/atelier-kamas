@@ -26,7 +26,9 @@ seen, stuffs, page = {}, 0, 1
 while True:
     j = get(page)
     for doc in j.get('docs', []):
-        stuffs += 1; lv = doc.get('level') or 200; got = []
+        stuffs += 1; got = []
+        try: lv = int(doc.get('level') or 200)
+        except Exception: lv = 200
         names({k: v for k, v in doc.items() if k not in ('title', 'name', 'slug', 'author', 'user', 'createdBy', 'updatedBy')}, got)
         for n in set(got):
             i = by.get(norm(n))
