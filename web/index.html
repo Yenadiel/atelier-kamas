@@ -405,6 +405,7 @@ td .it .ico{--s:28px}
           <label class="f"><span class="lbl">Intermédiaires (planches, alliages, potions…)</span><select id="craftMode"><option value="always">Toujours les fabriquer moi-même</option><option value="best">Fabriquer seulement si moins cher</option><option value="never">Toujours les acheter</option></select></label>
           <label class="f"><span class="lbl">Contourner automatiquement</span><select id="autoAvoid"><option value="0">Non, je choisis moi-même</option><option value="1.5">si mon prix dépasse 1,5× la moyenne HDV</option><option value="2">si mon prix dépasse 2× la moyenne HDV</option><option value="3">si mon prix dépasse 3× la moyenne HDV</option></select></label>
           <label class="chk"><input type="checkbox" id="optResell">Déduire la revente des crafts</label>
+          <label class="chk" title="Les objets portés dans les stuffs de Huzounet sont les plus achetés : on les choisit en priorité (compte comme 35 % moins cher) pour pouvoir revendre les crafts"><input type="checkbox" id="optHuz" checked>Priorité aux objets des stuffs Huzounet (revendables)</label>
           <label class="chk" title="Recettes qui ne se craftent que pendant une quête (Pain Phecte, Huile de Pichon, offrandes Pandala…)"><input type="checkbox" id="optNoQuest" checked>Exclure les recettes de quête</label>
           <label class="chk" title="Paysan, Alchimiste, Pêcheur, Chasseur : seulement les pains, potions, poissons et viandes qui rendent des PV ou de l'énergie"><input type="checkbox" id="optVitOnly" checked>Récolte : seulement les consommables vie / énergie</label>
         </div>
@@ -600,7 +601,12 @@ function itemCost(id,depth=0,stack=new Set()){
       stack.delete(id);if(ok&&(!best||cm==="always"||sum<best.c))best={c:sum,how:"craft"};}}
   if(depth===0||best)costMemo.set(id,best);return best;}
 function recipeCost(r){let sum=0;for(let i=0;i<r[4].length;i+=2){const c=itemCost(r[4][i]);if(!c)return null;sum+=c.c*r[4][i+1];}
-  if(plan.opts.resell){const sp=priceOf(r[0]);if(sp!=null)sum-=sp*(1-plan.opts.tax/100);}return sum;}
+  if(plan.opts.resell){const sp=priceOf(r[0]);if(sp!=null)sum-=sp*(1-plan.opts.tax/100);}
+  // objets des stuffs Huzounet : demandés à l'HDV, donc revendables → priorité (coût compté 35 % plus bas)
+  if(plan.opts.huz!==false&&isHuz(r[0])&&sum>0)sum*=1-HUZ_BONUS;
+  return sum;}
+const HUZ_BONUS=0.35;let HUZ=null;
+const isHuz=id=>!!(HUZ&&HUZ.objets&&HUZ.objets[id]);
 function less(a,b){for(let i=0;i<Math.max(a.length,b.length);i++){const x=a[i]??0,y=b[i]??0;if(x<y-1e-12)return true;if(x>y+1e-12)return false;}return false;}
 const GAPF=Array.from({length:201},(_,g)=>1/(Math.pow(g,1.1)/10+1));
 const xpFast=(L,ratio,lvl)=>lvl<L?0:Math.floor(20*L*ratio/100*GAPF[lvl-L]*XF());
@@ -822,7 +828,7 @@ function renderPlan(){
     const {acc,crafts}=needsOfSegs([s]);const cc=costOf(acc);
     h+=`<article class="card step${isDone?" done":""}">
       <div class="step-head"><div class="step-no">${i+1}</div><div class="rslot">${icon(r[0],44)}</div>
-        <div class="step-title"><div class="lv">NIV. ${s.from} → ${s.to}</div><h3>${esc(itName(r[0]))}</h3><div class="sub">recette niv. ${r[2]}${s.partial?` · <span class="pill warn">limité à ton stock de ${esc(s.partial)}</span>`:""}${res.guided?(s.off?' · <span class="pill">hors guide</span>':' · <span class="pill leaf">guide</span>'):""}</div>
+        <div class="step-title"><div class="lv">NIV. ${s.from} → ${s.to}</div><h3>${esc(itName(r[0]))}</h3><div class="sub">recette niv. ${r[2]}${isHuz(r[0])?` · <span class="pill leaf" title="Porté dans ${HUZ.objets[r[0]][1]} stuff${HUZ.objets[r[0]][1]>1?"s":""} de Huzounet : se revend bien">stuff Huz</span>`:""}${s.partial?` · <span class="pill warn">limité à ton stock de ${esc(s.partial)}</span>`:""}${res.guided?(s.off?' · <span class="pill">hors guide</span>':' · <span class="pill leaf">guide</span>'):""}</div>
           <div class="row" style="gap:6px;margin-top:6px"><span class="pill gold">${s.xpLo===s.xpHi?fmtN(s.xpLo):fmtN(s.xpLo)+"–"+fmtN(s.xpHi)} XP / craft</span><span class="pill">${fmtN(s.xp)} XP gagnée</span>${s.k.c!=null?`<span class="pill">${fmtN(s.k.c/s.xpHi,1)}–${fmtN(s.k.c/s.xpLo,1)} kamas / XP</span>`:""}</div>
           <label class="calib" title="Crafte une fois au niveau ${s.from} et tape l'XP gagnée : toute l'XP de l'outil se recale dessus">XP réelle du 1ᵉʳ craft (niv. ${s.from}) <input data-calib="${i}" inputmode="numeric" placeholder="${fmtN(s.xpHi)}"></label></div>
         <div class="step-k"><b>×${fmtN(s.n)}</b><span>crafts</span></div></div>
@@ -1426,6 +1432,7 @@ $("#btnLot").onclick=()=>{const k=norm($("#lotName").value),ids=byName.get(k);if
   const l={};for(const s of LOT_SIZES){const v=parseValue($("#lot"+s).value||"");if(isFinite(v)&&v>0)l[s]=v;}
   if(!Object.keys(l).length){toast("Indique au moins un prix de lot");return;}userLots[ids[0]]=l;savePrices();renderAll();toast("Prix par lot enregistrés");};
 $("#optResell").onchange=e=>{plan.opts.resell=e.target.checked;savePlan();renderPlan();renderCart();};
+$("#optHuz").onchange=e=>{plan.opts.huz=e.target.checked;costMemo=new Map();savePlan();renderPlan();renderCart();};
 $("#optNoQuest").onchange=e=>{plan.opts.noQuest=e.target.checked;savePlan();renderAll();};
 $("#optVitOnly").onchange=e=>{plan.opts.vitOnly=e.target.checked;savePlan();renderAll();};
 $("#btnPreview").onclick=()=>{const {rows,skipped}=analyse($("#pasteBox").value);pending=rows;$("#btnImport").disabled=!rows.length;
@@ -1444,7 +1451,8 @@ $("#btnWipeYes").onclick=()=>{prices={};savePrices();$("#wipeConfirm").hidden=tr
 /* ===== démarrage ===== */
 (async function start(){
   try{const t=localStorage.getItem(TABKEY)||(OVERLAY?"encours":null);if(t)document.querySelector(`nav.tabs button[data-tab="${t}"]`)?.click();}catch(e){}
-  const [data]=await Promise.all([fetch("data.json").then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}),store.init()]);
+  const [data,huz]=await Promise.all([fetch("data.json").then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}),fetch("huz.json").then(r=>r.ok?r.json():null).catch(()=>null),store.init()]);
+  HUZ=huz||data.huz||null;
   D=data;
   // relevé HDV des familiers : livré dans data.json (même chargement que le reste), hdv.json en secours
   if(D.hdv&&D.hdv.familiers)HDV=D.hdv;
@@ -1461,7 +1469,7 @@ $("#btnWipeYes").onclick=()=>{prices={};savePrices();$("#wipeConfirm").hidden=tr
   if(!plan.opts.craftMode)plan.opts.craftMode=plan.opts.craft===false?"never":"always";if(p&&p.lots)userLots=p.lots;
   $("#rJob").innerHTML=Object.entries(D.jobs).sort((a,b)=>a[1].localeCompare(b[1],"fr")).map(([id,n])=>`<option value="${id}">${esc(n)}</option>`).join("");
   plan.done=plan.done||{};plan.guides=plan.guides||{};plan.guideInfo=plan.guideInfo||{};plan.bought=Array.isArray(plan.bought)?plan.bought:[];if(!D.jobs[plan.job])plan.job=27;
-  setMode(plan.opts.mode||"fast");$("#craftMode").value=plan.opts.craftMode||"always";$("#autoAvoid").value=String(plan.opts.autoAvoid||0);$("#optResell").checked=plan.opts.resell;$("#optNoQuest").checked=plan.opts.noQuest!==false;$("#optVitOnly").checked=plan.opts.vitOnly!==false;$("#tax").value=plan.opts.tax;$("#maxGap").value=plan.opts.gap;$("#xpCorr").value=plan.opts.xpCorr!=null?plan.opts.xpCorr:-6;$("#xpBonus").value=plan.opts.xpBonus||0;$("#step").value=plan.opts.step||10;$("#server").value=plan.opts.server||"Dakal";
+  setMode(plan.opts.mode||"fast");$("#craftMode").value=plan.opts.craftMode||"always";$("#autoAvoid").value=String(plan.opts.autoAvoid||0);$("#optResell").checked=plan.opts.resell;$("#optHuz").checked=plan.opts.huz!==false;$("#optNoQuest").checked=plan.opts.noQuest!==false;$("#optVitOnly").checked=plan.opts.vitOnly!==false;$("#tax").value=plan.opts.tax;$("#maxGap").value=plan.opts.gap;$("#xpCorr").value=plan.opts.xpCorr!=null?plan.opts.xpCorr:-6;$("#xpBonus").value=plan.opts.xpBonus||0;$("#step").value=plan.opts.step||10;$("#server").value=plan.opts.server||"Dakal";
   renderAll();
   loadSharedPrices();
 })().catch(e=>{console.error(e);$("#dataInfo").textContent="Recettes non chargées";$("#route").innerHTML='<div class="card empty">Les recettes n\'ont pas pu se charger. Recharge la page.</div>';});
